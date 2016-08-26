@@ -10,7 +10,7 @@ basePath: /
 produces:
   - application/json
 paths:
-  /company/{companyId}/topics.json:
+  /companies/{companyId}/topics.json:
     get:
       summary: "Get Company Topics"
       description: "Getting the authenticated user’s details"
