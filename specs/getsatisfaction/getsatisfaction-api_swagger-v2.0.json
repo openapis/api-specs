@@ -27,6 +27,13 @@
             "type": "string"
           },
           {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "sort",
             "in": "query",
             "description": "Sort topics by value",
@@ -41,20 +48,6 @@
             ]
           },
           {
-            "name": "style",
-            "in": "query",
-            "description": "Filter by style",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "question",
-              "problem",
-              "praise",
-              "idea",
-              "update"
-            ]
-          },
-          {
             "name": "status",
             "in": "query",
             "description": "Filter by style",
@@ -66,6 +59,20 @@
               "active",
               "complete",
               "rejected"
+            ]
+          },
+          {
+            "name": "style",
+            "in": "query",
+            "description": "Filter by style",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "question",
+              "problem",
+              "praise",
+              "idea",
+              "update"
             ]
           }
         ],
@@ -304,6 +311,10 @@
                     }
                   },
                   "description": "a list of topic objects within a data envelope"
+                },
+                "total": {
+                  "type": "integer",
+                  "description": "number of results"
                 }
               }
             }
@@ -317,6 +328,13 @@
         "description": "Getting the authenticated user’s details",
         "parameters": [
           {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "sort",
             "in": "query",
             "description": "Sort topics by value",
@@ -331,20 +349,6 @@
             ]
           },
           {
-            "name": "style",
-            "in": "query",
-            "description": "Filter by style",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "question",
-              "problem",
-              "praise",
-              "idea",
-              "update"
-            ]
-          },
-          {
             "name": "status",
             "in": "query",
             "description": "Filter by style",
@@ -356,6 +360,20 @@
               "active",
               "complete",
               "rejected"
+            ]
+          },
+          {
+            "name": "style",
+            "in": "query",
+            "description": "Filter by style",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "question",
+              "problem",
+              "praise",
+              "idea",
+              "update"
             ]
           }
         ],
@@ -594,6 +612,10 @@
                     }
                   },
                   "description": "a list of topic objects within a data envelope"
+                },
+                "total": {
+                  "type": "integer",
+                  "description": "number of results"
                 }
               }
             }
@@ -1135,6 +1157,10 @@
             }
           },
           "description": "a list of topic objects within a data envelope"
+        },
+        "total": {
+          "type": "integer",
+          "description": "number of results"
         }
       }
     }
