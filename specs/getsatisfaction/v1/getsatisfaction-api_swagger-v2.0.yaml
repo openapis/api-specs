@@ -14,6 +14,8 @@ paths:
     get:
       summary: "Get Company Topics"
       description: "Getting the authenticated user’s details"
+      tags:
+        - topic
       parameters:
         - name: "companyId"
           in: "path"
@@ -60,8 +62,6 @@ paths:
             - update
       produces:
       - application/json
-      tags:
-        - User
       responses:
         "200":
           description: "a list of topic objects within a data envelope."
@@ -71,6 +71,8 @@ paths:
     get:
       summary: "Get Company Topics"
       description: "Getting the authenticated user’s details"
+      tags:
+        - topic
       parameters:
         - name: "page"
           in: "query"

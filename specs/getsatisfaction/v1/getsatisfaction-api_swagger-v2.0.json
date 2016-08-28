@@ -80,7 +80,7 @@
           "application/json"
         ],
         "tags": [
-          "User"
+          "topic"
         ],
         "responses": {
           "200": {
@@ -381,7 +381,7 @@
           "application/json"
         ],
         "tags": [
-          "User"
+          "topic"
         ],
         "responses": {
           "200": {
