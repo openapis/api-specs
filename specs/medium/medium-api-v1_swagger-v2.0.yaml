@@ -9,15 +9,25 @@ schemes:
 basePath: /v1
 produces:
   - application/json
+externalDocs:
+  description: Medium REST API docs 
+  url: https://github.com/Medium/medium-api-docs
+tags:
+- name: user
+  description: Operations on users
+- name: publication
+  description: Operations on publications
+- name: post
+  description: Operations on posts
+- name: image
+  description: Operations on images
 paths:
   /me:
     get:
       summary: "User Profile"
       description: "Getting the authenticated user’s details"
-      produces:
-      - application/json
       tags:
-        - User
+        - user
       responses:
         "200":
           description: "a User object within a data envelope."
@@ -40,14 +50,15 @@ paths:
     get:
       summary: "User Publications"
       description: "Listing the user’s publications"
+      tags:
+        - publication
       parameters:
         - name: "userId"
           in: "path"
           description: "The id of the user being queried"
           required: true
           type: "string"
-      tags:
-        - Publications
+
       responses:
         "200":
           description: "a list of publication objects"
@@ -81,14 +92,14 @@ paths:
     get:
       summary: "Publication Contributors"
       description: "Fetching contributors for a publication"
+      tags:
+        - publication
       parameters:
         - name: "publicationId"
           in: "path"
           description: "The id of the publication being queried"
           required: true
           type: "string"
-      tags:
-        - Publications
       responses:
         "200":
           description: "the contributors as list of resources under a publication"
@@ -131,6 +142,8 @@ paths:
     post:
       summary: "Creating a post"
       description: "Creates a post on the authenticated user’s profile."
+      tags:
+        - post
       parameters:
         - name: "authorId"
           in: "path"
@@ -174,6 +187,8 @@ paths:
     post:
       summary: "Creating a post under a publication"
       description: "This API allows creating a post and associating it with a publication on Medium"
+      tags:
+        - post
       parameters:
         - name: "publicationId"
           in: "path"
@@ -217,6 +232,8 @@ paths:
     post:
       summary: "Uploading an image"
       description: "Medium will automatically side-load any images specified by the src attribute on an <img> tag in post content when creating a post. However, if you are building a desktop integration and have local image files that you wish to send, you may use the images endpoint."
+      tags:
+        - image
       responses:
         "200":
           description: "an Image object within a data envelope."
