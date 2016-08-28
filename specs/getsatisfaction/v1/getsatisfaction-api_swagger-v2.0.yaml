@@ -27,6 +27,7 @@ paths:
           description: "Page number"
           required: false
           type: integer
+          default: 1
         - name: "sort"
           in: "query"
           description: "Sort topics by value"
@@ -38,6 +39,7 @@ paths:
             - most_replies
             - most_me_toos
             - unanswered
+          default: ""
         - name: "status"
           in: "query"
           description: "Filter by style"
@@ -49,6 +51,7 @@ paths:
             - active
             - complete
             - rejected
+          default: ""
         - name: "style"
           in: "query"
           description: "Filter by style"
@@ -60,6 +63,7 @@ paths:
             - praise
             - idea
             - update
+          default: ""
       produces:
       - application/json
       responses:
@@ -79,6 +83,7 @@ paths:
           description: "Page number"
           required: false
           type: integer
+          default: 1
         - name: "sort"
           in: "query"
           description: "Sort topics by value"
@@ -90,6 +95,7 @@ paths:
             - most_replies
             - most_me_toos
             - unanswered
+          default: ""
         - name: "status"
           in: "query"
           description: "Filter by style"
@@ -101,6 +107,7 @@ paths:
             - active
             - complete
             - rejected
+          default: ""
         - name: "style"
           in: "query"
           description: "Filter by style"
@@ -112,6 +119,7 @@ paths:
             - praise
             - idea
             - update
+          default: ""
       produces:
       - application/json
       tags:

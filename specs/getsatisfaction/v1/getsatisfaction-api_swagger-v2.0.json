@@ -18,6 +18,9 @@
       "get": {
         "summary": "Get Company Topics",
         "description": "Getting the authenticated user’s details",
+        "tags": [
+          "topic"
+        ],
         "parameters": [
           {
             "name": "companyId",
@@ -31,7 +34,8 @@
             "in": "query",
             "description": "Page number",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "default": 1
           },
           {
             "name": "sort",
@@ -45,7 +49,8 @@
               "most_replies",
               "most_me_toos",
               "unanswered"
-            ]
+            ],
+            "default": ""
           },
           {
             "name": "status",
@@ -59,7 +64,8 @@
               "active",
               "complete",
               "rejected"
-            ]
+            ],
+            "default": ""
           },
           {
             "name": "style",
@@ -73,14 +79,12 @@
               "praise",
               "idea",
               "update"
-            ]
+            ],
+            "default": ""
           }
         ],
         "produces": [
           "application/json"
-        ],
-        "tags": [
-          "topic"
         ],
         "responses": {
           "200": {
@@ -326,13 +330,17 @@
       "get": {
         "summary": "Get Topics",
         "description": "Getting the authenticated user’s details",
+        "tags": [
+          "User"
+        ],
         "parameters": [
           {
             "name": "page",
             "in": "query",
             "description": "Page number",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "default": 1
           },
           {
             "name": "sort",
@@ -346,7 +354,8 @@
               "most_replies",
               "most_me_toos",
               "unanswered"
-            ]
+            ],
+            "default": ""
           },
           {
             "name": "status",
@@ -360,7 +369,8 @@
               "active",
               "complete",
               "rejected"
-            ]
+            ],
+            "default": ""
           },
           {
             "name": "style",
@@ -374,14 +384,12 @@
               "praise",
               "idea",
               "update"
-            ]
+            ],
+            "default": ""
           }
         ],
         "produces": [
           "application/json"
-        ],
-        "tags": [
-          "topic"
         ],
         "responses": {
           "200": {
