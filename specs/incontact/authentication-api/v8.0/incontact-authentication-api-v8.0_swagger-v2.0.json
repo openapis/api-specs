@@ -1,0 +1,23 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Authentication commands",
+    "version": "8.0",
+    "title": "AuthenticationAPI"
+  },
+  "tags": [
+    {
+      "name": "Authenticate",
+      "description": "Authentication Management"
+    }
+  ],
+  "schemes": [ "https" ],
+  "paths": {
+    "/agents/{agentId}/reset-password": {
+      "$ref": "Authentication/Authenticate#/reset_password"
+    },
+    "/agents/change-password": {
+      "$ref": "Authentication/Authenticate#/change_password"
+    }
+  }
+}

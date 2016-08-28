@@ -1,0 +1,339 @@
+{
+  "scheduled_callbacks": {
+    "post": {
+      "tags": [ "ScheduledCallbacks" ],
+      "summary": "Creates a Scheduled Callback",
+      "operationId": "Create Scheduled Callback",
+      "responseClass": "callbackId",
+      "description": "This method allows you to create a Scheduled Callback request for either an Outbound Skill identified by skillId or an Agent identified by targetAgentId.  These Callbacks are also referred to as Promise Keepers or Promises.  It will return a valid callbackId if successful.<br/><br/><b>NOTE:</b> scheduleDate must be passed in ISO 8601 format.<div class='tabs_wrapper' data-path='admin_scheduledCallbacks_postCallBacks.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {          
+          "$ref": "#/definitions/parameters/phoneNumber",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/skillId",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/scheduleDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/firstName"
+        },
+        {
+          "$ref": "#/definitions/parameters/lastName"
+        },
+        {
+          "$ref": "#/definitions/parameters/targetAgentId"
+        },
+        {
+          "$ref": "#/definitions/parameters/notes"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postScheduledCallbackResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid Skill Id</p><p>Invalid Target Agent Id</p><p>Invalid Schedule Date</p><p>Invalid Phone Number</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "scheduled_callbacks_callbackId": {
+    "put": {
+      "tags": [ "ScheduledCallbacks" ],
+      "summary": "Updates a Scheduled Callback",
+      "operationId": "Update Scheduled Callback",
+      "description": "This method allows you to update an exisiting Scheduled Callback identified by callbackId.  These Callbacks are also referred to as Promise Keepers or Promises.<div class='tabs_wrapper' data-path='admin_scheduledCallbacks_putCallBacks.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/callbackId"
+        },
+        {
+          "$ref": "#/definitions/parameters/phoneNumber"
+        },
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/scheduleDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/firstName"
+        },
+        {
+          "$ref": "#/definitions/parameters/lastName"
+        },
+        {
+          "$ref": "#/definitions/parameters/targetAgentId"
+        },
+        {
+          "$ref": "#/definitions/parameters/notes"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Invalid Skill Id</p><p>Invalid Target Agent Id</p><p>Invalid Schedule Date</p><p>Invalid Phone Number</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Callback Id"
+        }
+      }
+    },
+    "delete": {
+      "tags": [ "ScheduledCallbacks" ],
+      "summary": "Deletes a Scheduled Callback",
+      "operationID": "Delete Scheduled Callback",
+      "responseClass": "",
+      "description": "This method allows you to delete an exisiting Scheduled Callback identified by callbackId.  These Callbacks are also referred to as Promise Keepers or Promises.<div class='tabs_wrapper' data-path='admin_scheduledCallbacks_deleteCallBacks.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/callbackId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden"
+        },
+        "404": {
+          "description": "<p>Invalid callbackID.</p><p>Callback already closed.</p>"
+        }
+      }
+    }
+  },
+  "agents_agentId_scheduled_callbacks": {
+    "get": {
+      "tags": [ "ScheduledCallbacks" ],
+      "summary": "Returns Scheduled Callbacks for an Agent",
+      "operationId": "Agent Scheduled Callbacks",
+      "responseClass": "Callbacks",
+      "description": "This method allows you to request any waiting Scheduled Callback requests for the Agent identified by agentId in order to display them to the Agent in your application.  These Callbacks are also referred to as Promise Keepers or Promises.<br/><br/><b><i><span style='color:red'>NOTE: This method replaces the previous GET /agents/{agentId}/callbacks API.</span></i></b><div class='tabs_wrapper' data-path='admin_agents_getCallBacks.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/agentId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getTargetScheduledCallbacksResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Agent Id"
+        }
+      }
+    }
+  },
+  "skills_skillId_scheduled_callbacks": {
+    "get": {
+      "tags": [ "ScheduledCallbacks" ],
+      "summary": "Returns Scheduled Callbacks for an Agent",
+      "operationId": "Skill Scheduled Callbacks",
+      "responseClass": "Callbacks",
+      "description": "This method allows you to request any waiting Scheduled Callback requests for the Skill identified by skillId in order to display them in your application.  These Callbacks are also referred to as Promise Keepers or Promises.</span><div class='tabs_wrapper' data-path='admin_skills_getCallBacks.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/pathSkillId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getTargetScheduledCallbacksResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Skill Id"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "callbackId": {
+        "name": "callbackId",
+        "description": "Callback Id",
+        "required": true,
+        "type": "integer",
+        "format": "int32",
+        "in": "path"
+      },
+      "agentId": {
+        "name": "agentId",
+        "description": "Agent Id",
+        "required": true,
+        "type": "integer",
+        "format": "int32",
+        "in": "path"
+      },
+      "pathSkillId": {
+        "name": "skillId",
+        "description": "Outbound Skill Id",
+        "required": true,
+        "type": "integer",
+        "format": "int32",
+        "in": "path"
+      },
+      "phoneNumber": {
+        "name": "phoneNumber",
+        "description": "Phone number to be dialed by Agent",
+        "type": "string",
+        "in": "query"
+      },
+      "skillId": {
+        "name": "skillId",
+        "description": "Outbound Skill Id to be used for callback",
+        "type": "integer",
+        "format": "int32",
+        "in": "query"
+      },
+      "scheduleDate": {
+        "name": "scheduleDate",
+        "description": "ISO 8601 time requested for Scheduled Callback",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "firstName": {
+        "name": "firstName",
+        "description": "First name of the person requesting a callback",
+        "type": "string",
+        "in": "query"
+      },
+      "lastName": {
+        "name": "lastName",
+        "description": "Last name of the person requesting a callback",
+        "type": "string",
+        "in": "query"
+      },
+      "targetAgentId": {
+        "name": "targetAgentId",
+        "description": "The Agent to which to queue the callback. The skillId must be included as well. Do not pass this parameter if you intend to queue the callback to a Skill",
+        "type": "integer",
+        "format": "int32",
+        "in": "query"
+      },
+      "notes": {
+        "name": "notes",
+        "description": "Any notes for the Scheduled Callback",
+        "type": "string",
+        "in": "query"
+      }
+    },
+    "postScheduledCallbackResponse": {
+      "title": " ",
+      "description": "Scheduled Callback Response",
+      "required": [ "callbackId" ],
+      "properties": {
+        "callbackId": {
+          "type": "integer",
+          "description": "Scheduled Callback Id"
+        }
+      }
+    },
+    "getTargetScheduledCallbacksResponse": {
+      "title": " ",
+      "type": "object",
+      "required": ["calllbacks"],
+      "properties": {
+        "callbacks": {
+          "type": "array",
+          "description": "Collection of Scheduled Call Backs",
+          "items": {
+            "title": "Callback",
+            "description": "",
+            "required": ["callbackId","target","agentId","skillId","dialNumber","origNumber","firstName","lastName","notes","callbackTime"],
+            "properties": {
+              "callbackId": {
+                "type": "integer",
+                "description": "Scheduled Callback Id"
+              },
+              "target": {
+                "type": "string",
+                "description": "\"A\" if targeted to an Agent or \"S\" if targeted to a skill"
+              },
+              "agentId": {
+                "type": "integer",
+                "description": "Agent Id. Will return \"-1\" if not targeted to an Agent"
+              },
+              "skillId": {
+                "type": "integer",
+                "description": "Outbound Skill Id to be used for callback"
+              },
+              "dialNumber": {
+                "type": "string",
+                "description": "Phone number to be dialed by Agent"
+              },
+              "origNumber": {
+                "type": "string",
+                "description": "Phone number from which the Scheduled Callback originated"
+              },
+              "firstName": {
+                "type": "string",
+                "description": "First name of Agent callback is targeted to"
+              },
+              "lastName": {
+                "type": "string",
+                "description": "Last name of Agent callback is targeted to"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Any notes entered into the Scheduled Callback"
+              },
+              "callbackTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO 8601 time requested for Scheduled Callback"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

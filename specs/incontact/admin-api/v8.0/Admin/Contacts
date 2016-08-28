@@ -1,0 +1,776 @@
+{
+  "contacts_contactId_chat_transcript": {
+    "get": {
+      "tags": [ "Contacts" ],
+      "summary": "Returns a Chat Transcript",
+      "operationId": "ChatTranscript",
+      "description": "This method returns the transcript of the Chat contact identified by contactId.<div class='tabs_wrapper' data-path='admin_contacts_getChatTranscript.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getChatTranscriptResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Contact Id"
+        }
+      }
+    }
+  },
+  "contacts-contactId-email-transcript": {
+    "get": {
+      "tags": [ "Contacts" ],
+      "summary": "Returns an Email Transcript",
+      "operationId": "EmailTranscript",
+      "description": "This method returns the transcript of the Email contact identified by contactId.<div class='tabs_wrapper' data-path='admin_contacts_getEmailTranscript.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        },
+        {
+          "name": "includeAttachments",
+          "description": "Indicates if the attachments should be included",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getEmailTranscriptResponse"
+          }
+        },
+        "204": {
+          "description": "No email transcript available"
+        },
+        "400": {
+          "description": "Invalid includeAttachments - {0}"
+        },
+        "404": {
+          "description": "Invalid contactId - '{0}'"
+        }
+      }
+    }
+  },
+  "contacts_contactId_end": {
+    "post": {
+      "tags": [ "Contacts" ],
+      "summary": "Force a contact to be disconnected and to end",
+      "operationId": "endAContact",
+      "description": "<span><p>Can be useful for ending \"stuck\" contacts (where both parties have ended their respective legs, but the contact still shows as \"active\" on the platform).</p><p><b style='color:red;'>WARNING:</b> This will end the contact and disconnect all parties (for phone contacts) without regard to the state of the contact. Use with caution!<div class='tabs_wrapper' data-path='admin_contacts_postContactIDEnd.html'></div></p></span>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Insufficient permissions"
+        },
+        "404": {
+          "description": "Invalid Contact Id"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use POST"
+        },
+        "409": {
+          "description": "Conflict: The contact is already ended"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "contacts_contactId_files": {
+    "get": {
+      "tags": [ "Contacts" ],
+      "summary": "<b><i><span style=color:red>(New in v8.0)</span></i></b> Returns a Contacts Files",
+      "operationId": "ContactFiles",
+      "description": "This method returns the files associates with the Contact identified by \"contactId\".<div class='tabs_wrapper' data-path='admin_contacts_getContactFiles.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "contactId",
+          "description": "ID of the Contact",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "name": "fields",
+          "description": "Comma separated list of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "Files",
+            "description": "Collection of Contact Files",
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "title": "files",
+                  "description": "Files",
+                  "properties": {
+                    "isDeleted": {
+                      "type": "boolean",
+                      "description": "Indicates if file has been deleted from the file system",
+                      "required": true
+                    },
+                    "businessUnitId": {
+                      "type": "integer",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "fileName": {
+                      "type": "string",
+                      "description": "Name of the file",
+                      "required": true
+                    },
+                    "fullFileName": {
+                      "type": "string",
+                      "description": "Full path to file",
+                      "required": true
+                    },
+                    "weblink": {
+                      "type": "boolean",
+                      "description": "Indicates if the file is a weblink for example an Agent indicator",
+                      "required": true
+                    },
+                    "contactId": {
+                      "type": "integer",
+                      "description": "ID of the Contact",
+                      "required": true
+                    },
+                    "createDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the file was created",
+                      "required": true
+                    },
+                    "modifiedDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the file was modified",
+                      "required": true
+                    },
+                    "accessDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the file was last accessed",
+                      "required": true
+                    },
+                    "authorId": {
+                      "type": "integer",
+                      "description": "ID of the User that created the file",
+                      "required": true
+                    },
+                    "modifiedId": {
+                      "type": "integer",
+                      "description": "ID of the User that modified the file",
+                      "required": true
+                    },
+                    "size": {
+                      "type": "integer",
+                      "description": "Size of the file in bytes",
+                      "required": true
+                    },
+                    "physicalBytes": {
+                      "type": "integer",
+                      "description": "Size of the file in bytes including header info",
+                      "required": true
+                    },
+                    "deleteDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the file was deleted",
+                      "required": true
+                    },
+                    "purposeId": {
+                      "type": "integer",
+                      "description": "ID of the type of file",
+                      "required": true
+                    },
+                    "purposeName": {
+                      "type": "integer",
+                      "description": "Name of the type of file",
+                      "required": true
+                    },
+                    "mailStatusId": {
+                      "type": "integer",
+                      "description": "ID of the email contact status",
+                      "required": true
+                    },
+                    "mailStatusName": {
+                      "type": "string",
+                      "description": "Name of the email contact status",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "<p>No files associates with contactId - {parameter value}</p><p>File access for contactId '{parameter value}' pending</p>"
+        },
+        "400": {
+          "description": "<p>Invalid fields list {parameter value}</p><p>Invalid {parameter name} - '{parameter value}'</p>"
+        }
+      }
+    }
+  },
+  "contacts_contactId_monitor": {
+    "post": {
+      "tags": [ "Contacts" ],
+      "summary": "Starts monitoring a phone call",
+      "operationId": "monitorAContactCall",
+      "description": "<span><p>The inContact platform will call the phone number you specify, and begin streaming the voice interaction to that phone. Monitoring is a one-way action: you can hear the conversation, but you can not participate in it.</p><p><b>NOTE:</b> Once you begin monitoring a voice interaction, you can not stop monitoring the interaction without hanging up the \"monitoring\" phone. Also note that this is similar to the monitor API call in the Agent API, except you can not shift to \"coach\", \"barge\" or \"takeover\" modes if the monitoring was begun with this Admin API call.</p><p>This API call is meant to provide a method for monitoring a phone call without having an active agent login. Without an active agent session, \"coaching\", \"barging\", and \"taking over\" can't occur. Even with an active agent session, none of these modes can be entered unless the monitoring was begun using the Agent API monitor API call.</p><p>Note that the phone number is not validated. If the phone number is invalid, the monitor request will fail. However, you will still receive a 202 Accepted status code, indicating that the request to monitor was successfully made. As there is no eventing mechanism for the Admin API, there is no way to know that the phone number provided was bad, and that the monitoring request failed, except to note that the target monitoring phone never rings.<div class='tabs_wrapper' data-path='admin_contacts_postContactIDMonitor.html'></div></p></span>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/postContactMonitorRequest"
+          }
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Number Length Exceeded</p><p>Invalid Phone Number</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Insufficient permissions"
+        },
+        "404": {
+          "description": "Invalid Contact Id"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use POST"
+        },
+        "409": {
+          "description": "Conflict: If contact is ended, or is not a phone contact"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "contacts_contactId_record": {
+    "post": {
+      "tags": [ "Contacts" ],
+      "summary": "Allows to begin the recording of an active phone call",
+      "operationId": "recordAContact",
+      "description": "<u><b>NOTE:</b></u> Once you begin recording a call, there is no way to stop the recording until the call is ended.<div class='tabs_wrapper' data-path='admin_contacts_postContactIDRecord.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Insufficient permissions"
+        },
+        "404": {
+          "description": "Invalid Contact Id"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use POST"
+        },
+        "409": {
+          "description": "Conflict: If contact is ended, or is not a phone contact"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },  
+  "contacts-contactId-tags": {
+    "post": {
+      "tags": [ "Contacts" ],
+      "summary": "Assigns Tags to a Contact",
+      "operationId": "AssignTagsContact",
+      "description": "This method assigns Tags to the contact identified by contactId.<div class='tabs_wrapper' data-path='admin_contacts_postContactTags.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/postContactTagsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postContactTagsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid tags - cannot be null or empty"
+        },
+        "404": {
+          "description": "Invalid contactId - {0}"
+        }
+      }
+    }
+  },
+  "contact_state_description": {
+    "get": {
+      "tags": [ "Contacts" ],
+      "summary": "Returns a list of contact states",
+      "operationId": "getContactStateDescriptions",
+      "description": "Can be useful in presenting categories of contact states in a report or dashboard.<div class='tabs_wrapper' data-path='admin_contacts_getStateDescription.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getContactStateDescriptions"
+          }
+        },
+        "401": {
+          "description": "Unauthorized: token is expired"
+        },
+        "403": {
+          "description": "Insufficient Privileges: security profile prevents access"
+        },
+        "404": {
+          "description": "Not Found: invalid contact state ID"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use GET"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "contact_state_descriptions_stateId": {
+    "get": {
+      "tags": [ "Contacts" ],
+      "summary": "Returns a single contact state",
+      "operationId": "getContactStateById",
+      "description": "Can be useful in presenting categories of contact states in a report or dashboard.<div class='tabs_wrapper' data-path='admin_contacts_getStateDescriptionID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "contactStateId",
+          "description": "Contact State Id",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getContactStateDescriptions"
+           }
+        },
+        "401": {
+          "description": "Unauthorized: token is expired"
+        },
+        "403": {
+          "description": "Insufficient Privileges: security profile prevents access"
+        },
+        "404": {
+          "description": "Invalid Contact State Id"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use GET"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "interactions_contactId_signal": {
+    "post": {
+      "tags": [ "Contacts" ],
+      "summary": "Create a Signal for a Contact",
+      "operationId": "Signal a Contact",
+      "description": "This method can be used to send up to 9 custom data variables into a script environment.  This call can be made outside of an Agent Session with only the contactId value needed.<br/><br/><b>NOTE:</b> This method will cause the active script running for this contact to follow the Onsignal branch in that script.  If there is no Onsignal path defined then this call is effectively ignored for that script.<div class='tabs_wrapper' data-path='admin_contacts_postContactIDSignal.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        },
+        {
+          "name": "p1",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p2",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p3",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p4",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p5",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p6",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p7",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p8",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "p9",
+          "description": "Custom data",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "404": {
+          "description": "Invalid Contact Id"
+        },
+        "403": {
+          "description": "Insufficient permissions"
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "contactId": {
+        "name": "contactId",
+        "description": "Contact Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "contentBodyMetaData": {
+        "in": "body",
+        "name": "",
+        "description": "Content Body",
+        "required": true,
+        "allowMultiple": true
+      }
+    },
+    "getChatTranscriptResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "messages" ],
+      "properties": {
+        "messages": {
+          "title": "ChatTranscript",
+          "type": "object",
+          "required": [ "Messages" ],
+          "properties": {
+            "Messages": {
+              "type": "array",
+              "description": "Collection of Messages",
+              "items": {
+                "title": "Message",
+                "description": "Message",
+                "required": [ "Text", "TimeStamp", "PartyType", "Label", "RoomId" ],
+                "properties": {
+                  "Text": {
+                    "type": "string",
+                    "description": "Message Text"
+                  },
+                  "TimeStamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Message Timestamp"
+                  },
+                  "PartyType": {
+                    "type": "string",
+                    "description": "Message Party Type"
+                  },
+                  "Label": {
+                    "type": "string",
+                    "description": "Message Label"
+                  },
+                  "RoomId": {
+                    "type": "integer",
+                    "description": "Message Room Id"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getEmailTranscriptResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "emails" ],
+      "properties": {
+        "emails": {
+          "type": "array",
+          "description": "Collection of Emails",
+          "items": {
+            "title": "Email",
+            "description": "Email",
+            "required": ["emailTypeId","sentDate","fromAddress","toAddress","ccAddress","bccAddress","subject","bodyHtml"],
+            "properties": {
+              "emailTypeId": {
+                "type": "integer",
+                "description": "ID of the email type such as inbound, reply, forward etc."
+              },
+              "sentDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Date the email was sent"
+              },
+              "fromAddress": {
+                "type": "string",
+                "description": "Address the email was sent from"
+              },
+              "toAddress": {
+                "type": "string",
+                "description": "Address the email was sent to"
+              },
+              "ccAddress": {
+                "type": "string",
+                "description": "Address the email was copied to"
+              },
+              "bccAddress": {
+                "type": "string",
+                "description": "Address the email was blind copied to"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject of the email"
+              },
+              "bodyHtml": {
+                "type": "string",
+                "description": "Body of the email"
+              },
+              "hasAttachments": {
+                "type": "boolean",
+                "description": "Indicates if email has attachments"
+              },
+              "attachments": {
+                "type": "array",
+                "description": "Collection of Attachments",
+                "items": {
+                  "title": "Attachment",
+                  "description": "Attachment",
+                  "required": ["attachmentName","attachment"],
+                  "properties": {
+                    "attachmentName": {
+                      "type": "string",
+                      "description": "Attachment Name"
+                    },
+                    "attachment": {
+                      "type": "string",
+                      "description": "Attachment Content (Base64 encoded)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postContactTagsRequest": {
+      "title": " ",
+      "type": "object",
+      "required": [ "tags" ],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "description": "Collection of Tags to assign",
+          "items": {
+            "title": "Tag",
+            "required": [ "tagId" ],
+            "properties": {
+              "tagId": {
+                "type": "integer",
+                "description": "Tag Id to assign to Contact"
+              }
+            }
+          }
+        }
+      }
+    },
+    "postContactTagsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "errorCount", "tagResults" ],
+            "properties": {
+              "errorCount": {
+                "type": "integer",
+                "description": "Number of unsuccessful tag assignments",
+                "required": true
+              },
+              "tagResults": {
+                "type": "array",
+                "description": "Collection of Tag Results",
+                "items": {
+                  "title": "TagResult",
+                  "description": "",
+                  "required": [ "success" ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Tag Assignment Success State"
+                    },
+                    "tagId": {
+                      "type": "integer",
+                      "description": "Tag Id. Only returned if assignment was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Tag Assignment Error. Only returned if assignment was unsuccessful"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postContactMonitorRequest": {
+      "title": " ",
+      "type": "object",
+      "required": [ "phoneNumber" ],
+      "properties": {
+        "phoneNumber": {
+          "type": "number",
+          "description": "Phone Number"
+        }
+      }
+    },
+    "getContactStateDescriptions": {
+      "title": " ",
+      "type": "object",
+      "required": ["contactStateDescriptions"],
+      "properties": {
+        "contactStateDescriptions": {
+          "type": "array",
+          "description": "Collection of Contact States",
+          "items": {
+            "title": "ContactState",
+            "description": "Contact State",
+            "required": ["ContactStateCategory","ContactStateDescription","ContactStateId"],
+            "properties": {
+              "ContactStateCategory": {
+                "type": "string",
+                "description": "Contact State Category"
+              },
+              "ContactStateDescription": {
+                "type": "string",
+                "description": "Contact State Description"
+              },
+              "ContactStateId": {
+                "type": "integer",
+                "description": "Contact State Id"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

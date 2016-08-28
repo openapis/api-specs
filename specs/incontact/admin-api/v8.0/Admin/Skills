@@ -1,0 +1,3639 @@
+{
+  "campaigns": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns a list of Campaigns",
+      "operationId": "getCampaignID",
+      "responseClass": "Campaigns",
+      "description": "This method returns a list of all Campaigns. A Campaign is a grouping of skills that serve a common business purpose.<div class='tabs_wrapper' data-path='admin_skills_getCampaigns.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/isActiveNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/fieldsNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchStringNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/skipNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/topNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderByNew"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getCampaignsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "campaigns_campaignId": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns a single Campaign",
+      "operationId": "getCampaignById",
+      "responseClass": "Campaigns",
+      "description": "This method returns details of a Campaign identified by campaignId.   A Campaign is a grouping of skills that serve a common business purpose.<div class='tabs_wrapper' data-path='admin_skills_getCampaignID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "campaignId",
+          "description": "Campaign Id",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getCampaignResponse"
+          }
+        },
+        "403": {
+          "description": "<p>Security permissions prevent access to data</p><p>Campaign - {0} is restricted</p>"
+        },
+        "404": {
+          "description": "Invalid {0} - '{1}'"
+        }
+      }
+    }
+  },
+  "skills": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "<b><i><span style='color:red'>(Updated in v8.0)</span></i></b> Returns all Skills",
+      "operationId": "getSkills",
+      "description": "This method returns a complete list of Skills configured in the business unit.<br/><br/><b><i><span style='color:red'>v8.0 NOTE: </span></i></b>Response fields have been added to support Agentless Email and SMS as well as Chat typing indicators.  See descriptions below for details.<div class='tabs_wrapper' data-path='admin_skills_getSkills.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "mediaTypeId",
+          "description": "Filters based on the media type of the Skill",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "outboundStrategy",
+          "description": "Filters based on outbound strategy for the Skill",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "updatedSince",
+          "description": "Returns all Teams updated since ISO 8601 time",
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "isActive",
+          "description": "Filters results based on active status",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "fields",
+          "description": "Comma separated list of elements to return in response",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "searchString",
+          "description": "Used to filter results to objects with the value in key fields",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "skip",
+          "description": "Number of records to skip in the results",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "top",
+          "description": "Number of records to return in the results",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "orderBy",
+          "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        },
+        "404": {
+          "description": "Invalid Skill Id"
+        }
+      }
+    },
+    "post": {
+      "tags": [ "Skills" ],
+      "summary": "Creates a Skill",
+      "operationId": "CreateSkill",
+      "description": "This method creates a Skill.<br/><br/><b>NOTE: </b>Personal Connection skills can be created, however default values of the configuration section will be used.  Editing the configuration parameters will be supported in a subsequent release.  Until then you can edit these parameters through inContact Central<div class='tabs_wrapper' data-path='admin_skills_postSkills.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/postSkillsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postSkillsResponse"
+          }
+        },
+        "400": {
+          "description": "Cannot create more than 100 skills at a time"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "skills_skillId": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "<b><i><span style='color:red'>(Updated in v8.0)</span></i></b> Returns Skill details",
+      "operationId": "getSkillById",
+      "description": "This method returns details for the Skill identified by skillId.<br/><br/><b><i><span style='color:red'>v8.0 NOTE: </span></i></b>Response fields have been added to support Agentless Email and SMS as well as Chat typing indicators.  See descriptions below for details.<div class='tabs_wrapper' data-path='admin_skills_getSkillID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "skillId",
+          "description": "ID of Skill to be fetched",
+          "required": true,
+          "allowMultiple": false,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "name": "fields",
+          "description": "Comma separated list of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "SkillsResultSet",
+            "type": "object",
+            "properties": {
+              "resultSet": {
+                "schema": {
+                  "title": "resultSet",
+                  "description": "Payload Container",
+                  "properties": {
+                    "_links": {
+                      "schema": {
+                        "title": "_links",
+                        "description": "Links used to parse paginated response",
+                        "properties": {
+                          "self": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to same page of results"
+                          },
+                          "next": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to next page of results"
+                          },
+                          "previous": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to previous page of results"
+                          }
+                        }
+                      }
+                    },
+                    "businessUnitId": {
+                      "type": "integer",
+                      "description": "ID of Business Unit",
+                      "required": true
+                    },
+                    "lastPollTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of last database poll.  Value should be passed in \"updatedSince\" parameter on next call",
+                      "required": true
+                    },
+                    "totalRecords": {
+                      "type": "integer",
+                      "description": "Total number of records in the payload",
+                      "required": true
+                    },
+                    "skills": {
+                      "type": "array",
+                      "description": "",
+                      "items": {
+                        "title": "skills",
+                        "description": "",
+                        "properties": {
+                          "skillId": {
+                            "type": "integer",
+                            "description": "The ID of the Skill",
+                            "required": true
+                          },
+                          "skillName": {
+                            "type": "string",
+                            "description": "The name of the Skill",
+                            "required": true
+                          },
+                          "mediaTypeId": {
+                            "type": "integer",
+                            "description": "The media type ID for the Skill's media type (phone, chat, etc.)",
+                            "required": true
+                          },
+                          "mediaTypeName": {
+                            "type": "string",
+                            "description": "The textual description or name of the media type for the Skill",
+                            "required": true
+                          },
+                          "isActive": {
+                            "type": "boolean",
+                            "description": "Indicates if Skill is active",
+                            "required": true
+                          },
+                          "campaignId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "The numerical ID of the campaign with which the Skill is associated",
+                            "required": true
+                          },
+                          "campaignName": {
+                            "type": "string",
+                            "description": "The textual name of the campaign with which the Skill is associated",
+                            "required": true
+                          },
+                          "notes": {
+                            "type": "string",
+                            "description": "Notes associated with the Skill",
+                            "required": true
+                          },
+                          "acwTypeId": {
+                            "type": "integer",
+                            "description": "ID of the ACW tyep. 1 for \"None\", 2 for \"Disposition\", 3 for \"Automatic Wrap-up\"",
+                            "required": true,
+                            "enum": [
+                              "1",
+                              "2",
+                              "3"
+                            ]
+                          },
+                          "stateIdACW": {
+                            "type": "integer",
+                            "description": "ID of the ACW state for the Skill",
+                            "required": true
+                          },
+                          "stateNameACW": {
+                            "type": "string",
+                            "description": "Name of the ACW state for the Skill",
+                            "required": true
+                          },
+                          "maxSecondsACW": {
+                            "type": "integer",
+                            "description": "Maximum number of seconds in ACW state",
+                            "required": true
+                          },
+                          "requireDisposition": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill requires a disposition",
+                            "required": true
+                          },
+                          "allowSecondaryDispositions": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill uses a secondary disposition",
+                            "required": true
+                          },
+                          "scriptDisposition": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill disposition can be set in a script",
+                            "required": true
+                          },
+                          "agentRestTime": {
+                            "type": "integer",
+                            "description": "Time in seconds forced between PC calls",
+                            "required": true
+                          },
+                          "makeTranscriptAvailable": {
+                            "type": "boolean",
+                            "description": "Indicates if the Chat Skill saves a transcript",
+                            "required": true
+                          },
+                          "transcriptFromAddress": {
+                            "type": "string",
+                            "description": "",
+                            "required": true
+                          },
+                          "displayThankyou": {
+                            "type": "boolean",
+                            "description": "Indicates if a Thank You is used on the Skill",
+                            "required": true
+                          },
+                          "thankYouLink": {
+                            "type": "string",
+                            "description": "URL for Thank You used on the Skill",
+                            "required": true
+                          },
+                          "popThankYou": {
+                            "type": "boolean",
+                            "description": "Indicates if a Thank You is popped on the Skill",
+                            "required": true
+                          },
+                          "popThankYouURL": {
+                            "type": "string",
+                            "description": "URL for Thank You that is popped on the Skill",
+                            "required": true
+                          },
+                          "isOutbound": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill is outbound",
+                            "required": true
+                          },
+                          "outboundStrategy": {
+                            "type": "string",
+                            "description": "Outbound strategy assigned to the Skill",
+                            "required": true
+                          },
+                          "isRunning": {
+                            "type": "boolean",
+                            "description": "Indicates if the Personal Connection Skill is running",
+                            "required": true
+                          },
+                          "priorityBlending": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill uses priority blending",
+                            "required": true
+                          },
+                          "callerIdOverride": {
+                            "type": "string",
+                            "description": " If set then the Override Caller ID setting is enabled and this value is used for Caller ID",
+                            "required": true
+                          },
+                          "scriptId": {
+                            "type": "integer",
+                            "description": "The ID of the Script",
+                            "required": true
+                          },
+                          "scriptName": {
+                            "type": "string",
+                            "description": "The Name of the Script",
+                            "required": true
+                          },
+                          "emailFromAddress": {
+                            "type": "string",
+                            "description": "Email address for the Agent on the Skill",
+                            "required": true
+                          },
+                          "emailFromEditable": {
+                            "type": "boolean",
+                            "description": "Indicates if the from email address can be changed on the Skill",
+                            "required": true
+                          },
+                          "emailBccAddress": {
+                            "type": "string",
+                            "description": "Email Bcc address for the Skill",
+                            "required": true
+                          },
+                          "emailParking": {
+                            "type": "boolean",
+                            "description": "Indicates if Email Parking is enabled",
+                            "required": true
+                          },
+                          "chatWarningThreshold": {
+                            "type": "integer",
+                            "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> Time in seconds before a warning is sent about a stale Chat.  Number between 1 and 999",
+                            "required": true
+                          },
+                          "agentTypingIndicator": {
+                            "type": "boolean",
+                            "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> Indicates if the Patron can see an indicator showing the Agent is typing",
+                            "required": true
+                          },
+                          "patronTypingPreview": {
+                            "type": "boolean",
+                            "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> Indicates if the Agent is allowed to see what characters the Patron is typing before they hit send",
+                            "required": true
+                          },
+                          "interruptible": {
+                            "type": "boolean",
+                            "description": "Indicates if Skill is interruptible",
+                            "required": true
+                          },
+                          "callSuppressionScriptId": {
+                            "type": "integer",
+                            "description": "The ID of the suppression Script",
+                            "required": true
+                          },
+                          "reSkillHours": {
+                            "type": "integer",
+                            "description": "Profile ID returned from GET /hours-of-operation",
+                            "required": true
+                          },
+                          "reSkillHoursName": {
+                            "type": "string",
+                            "description": "Profile name returned from GET /hours-of-operation",
+                            "required": true
+                          },
+                          "countReSkillHours": {
+                            "type": "boolean",
+                            "description": "Indicates if reskill hours are counted",
+                            "required": true
+                          },
+                          "minWFIAgents": {
+                            "type": "integer",
+                            "description": "Minimum number of Agents for WFI",
+                            "required": true
+                          },
+                          "useScreenPops": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill uses screen pops",
+                            "required": true
+                          },
+                          "screenPopTriggerEvent": {
+                            "type": "string",
+                            "description": "Determines when the screen pop for the Skill occurs",
+                            "required": true
+                          },
+                          "useCustomScreenPops": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill uses custom screen pops",
+                            "required": true
+                          },
+                          "screenPopDetail": {
+                            "type": "string",
+                            "description": "If set then the Custom Screen Pop type is set to \"Application\" and the value is used as the screenpop",
+                            "required": true
+                          },
+                          "minWorkingTime": {
+                            "type": "integer",
+                            "description": "Minimum time spent on Email contact in seconds",
+                            "required": true
+                          },
+                          "agentless": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill is agentless",
+                            "required": true
+                          },
+                          "agentlessPorts": {
+                            "type": "boolean",
+                            "description": "Indicates number of ports used for agentless",
+                            "required": true,
+                            "enum": [
+                              "1",
+                              "2",
+                              "3",
+                              "4",
+                              "5",
+                              "6",
+                              "7",
+                              "8",
+                              "9",
+                              "10"
+                            ]
+                          },
+                          "initialPriority": {
+                            "type": "integer",
+                            "description": "Initial priority setting for the Skill",
+                            "required": true
+                          },
+                          "acceleration": {
+                            "type": "integer",
+                            "description": "Acceleration rate for the Skill",
+                            "required": true
+                          },
+                          "maxPriority": {
+                            "type": "integer",
+                            "description": "Maximum priority value for the Skill",
+                            "required": true
+                          },
+                          "serviceLevelThreshold": {
+                            "type": "integer",
+                            "description": "SLA threshold in percentage",
+                            "required": true
+                          },
+                          "serviceLevelGoal": {
+                            "type": "integer",
+                            "description": "SLA goal in percentage",
+                            "required": true
+                          },
+                          "enableShortAbandon": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill uses short abandons",
+                            "required": true
+                          },
+                          "shortAbandonThreshold": {
+                            "type": "integer",
+                            "description": "Short abandon threshold in seconds",
+                            "required": true
+                          },
+                          "countShortAbandons": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill counts short abandons",
+                            "required": true
+                          },
+                          "countOtherAbandons": {
+                            "type": "boolean",
+                            "description": "Indicates if the Skill counts other abandons",
+                            "required": true
+                          },
+                          "messageTempateId": {
+                            "type": "integer",
+                            "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> ID of the Message Template assigned to the Skill",
+                            "required": true
+                          },
+                          "smsTransportCodeID": {
+                            "type": "integer",
+                            "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> ID of the SMS transport code",
+                            "required": true
+                          },
+                          "smsTransportCode": {
+                            "type": "string",
+                            "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> SMS transport code",
+                            "required": true
+                          },
+                          "dispositions": {
+                            "type": "array",
+                            "description": "",
+                            "items": {
+                              "title": "skills",
+                              "description": "",
+                              "properties": {
+                                "dispositionId": {
+                                  "type": "integer",
+                                  "description": "The ID of the Disposition",
+                                  "required": true
+                                },
+                                "dispositionName": {
+                                  "type": "string",
+                                  "description": "The name of the Disposition",
+                                  "required": true
+                                },
+                                "priority": {
+                                  "type": "integer",
+                                  "description": "Defines the order of display for the Agent",
+                                  "required": true
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid fields - '{0}'"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{0}', must be an integer</p><p>Invalid skillId - '{0}', does not exist</p>"
+        }
+      }
+    },
+    "put": {
+      "tags": [ "Skills" ],
+      "summary": "Updates a Skill",
+      "operationId": "UpdateSkill",
+      "description": "This method updates a Skill.<br/><br/><b>NOTE: </b>Personal Connection skills can be updated for certain parameters, however values in the configuration section will not be support by this method.  Editing the configuration parameters will be supported in a subsequent release.  Until then you can edit these parameters through inContact Central<div class='tabs_wrapper' data-path='admin_skills_putSkillsID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/putSkillRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Invalid {0} - '{1}'</p><p>Missing required field - '{0}'</p><p>Skill name in use - '{0}'</p><p>Invalid {0} - '{1}', port limit is '{2}'</p><p>Invalid {0} - '{1}', maximum length is {2} characters</p><p>Must include screenPopType and screenPopDetails values together</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Security permissions prevent access to data</p><p>Skill '{0}' is restricted</p>"
+        },
+        "404": {
+          "description": "Invalid or missing skillId"
+        },
+        "409": {
+          "description": "Invalid state.  Cannot update a running skill"
+        }
+      }
+    }
+  },
+  "skills_skillId_start": {
+    "post": {
+      "tags": [ "Skills" ],
+      "summary": "Start a Personal Connection Skill",
+      "description": "This method will allow you to start a Personal Connection Skill identified by skillId.<div class='tabs_wrapper' data-path='admin_skills_postSkillStart.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Forbidden. Check Security Profile permissions"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{1}', not a valid Natural Calling skill</p><p>Invalid skillId - '{1}', cannot be null or empty</p><p>Invalid skillId - '{1}', must be an integer</p>"
+        },
+        "409": {
+          "description": "Invalid state.  Cannot start skill"
+        }
+      }
+    }
+  },
+  "skills_skillId_stop": {
+    "post": {
+      "tags": [ "Skills" ],
+      "summary": "Stop a Personal Connection Skill",
+      "description": "This method will allow you to stop a Personal Connection Skill identified by skillId.<div class='tabs_wrapper' data-path='admin_skills_postSkillStop.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "name": "force",
+          "description": "Forces the Skill to be stopped regardless of state",
+          "type": "boolean",
+          "enum": [ "true", "false" ],
+          "default": false,
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid force - '{1}', must be a boolean true or false"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Forbidden. Check Security Profile permissions"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{1}', not a valid or a non-running Natural Calling skill</p><p>Invalid skillId - '{1}', cannot be null or empty</p><p>Invalid skillId - '{1}', must be an integer</p>"
+        },
+        "409": {
+          "description": "Invalid state.  Cannot stop skill"
+        }
+      }
+    }
+  },
+  "skills_agents": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns Agents assignable for all Skill",
+      "operationId": "getAgentsAllSkills",
+      "responseClass": "AgentSkillAssignmentsV4",
+      "description": "This method will return the Skill Assignment mappings for all skills.  If no value is provided in the \"updatedSince\" parameter, then all active Skill Assignment mappings will be returned.  The maximum duration of changes that are stored in cache is 7 days. <div class='tabs_wrapper' data-path='admin_skills_getSkillAgents.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillsAgentsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid fields list</p><p>Invalid updatedSince</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        }
+      }
+    }
+  },
+  "skills_skillId_agents": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns Agents assigned to a Skill",
+      "operationId": "getAgentsBySkillId",
+      "description": "This method will return the list of Agents, both active and inactive, who have a Skill assignment for the Skill identfied by \"skillId\".  If a value is provided in the \"updatedSince\" parameter, then only Agents whose Skill assignment for this Skill has changed since that value will be returned.  The maximum duration of changes that are stored in cache is 7 days. <br/><br/>In previous versions of this API it returned the list of active Agents who were not <i>currently</i> assigned to this Skill unless you set the \"assigned\" parameter to true.  The default behavior has been changed to return the list of Agents with an <i>active</i> Skill assignment to this Skill. The \"assigned\" parameter has been removed from this API.<div class='tabs_wrapper' data-path='admin_skills_getSkillIDAgents.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchStringNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/skipNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/topNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderByNew"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillAgentsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{0}', does not exist</p><p>Invalid skillId - '{0}', must be an integer</p><p>Invalid skillId - '{0}', cannot be null or empty</p>"
+        }
+      }
+    },
+    "post": {
+      "tags": [ "Skills" ],
+      "summary": "Assign Agents to a Skill",
+      "operationId": "AgentAssignmentsSkill",
+      "description": "This method will assign the list of Agents in the \"agents\" parameter, to a Skill identfied by \"skillId\".<div class='tabs_wrapper' data-path='admin_skills_postSkillIDAgents.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/postSkillAgentsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postSkillAgentsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid agents - cannot be null or empty</p><p>Cannot send more than {0} records in a single call</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{0}'</p><p>Invalid skillId - '{0}', does not exist</p>"
+        }
+      }
+    },
+    "delete": {
+      "tags": [ "Skills" ],
+      "summary": "Remove Skill Agent assignments",
+      "operationId": "RemoveAgentAssignmentsSkill",
+      "description": "This method will remove the assignments for the list of Agents in the \"agents\" parameter for a Skill identfied by \"skillId\".<div class='tabs_wrapper' data-path='admin_skills_deleteSkillIDAgents.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/deleteSkillAgentsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/deleteSkillAgentsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid agents - cannot be null or empty</p><p>Cannot send more than {0} records in a single call</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{0}'</p><p>Invalid skillId - '{0}', does not exist</p>"
+        }
+      }
+    },
+    "put": {
+      "tags": [ "Skills" ],
+      "summary": "Update Skill Agent assignments",
+      "operationId": "ModifyAssignmentsSkill",
+      "description": "This method will modify the Agent assignments for a Skill identfied by \"skillId\".<div class='tabs_wrapper' data-path='admin_skills_putSkillIDAgents.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/postSkillAgentsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postSkillAgentsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid agents - cannot be null or empty</p><p>Cannot send more than {0} records in a single call</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{0}'</p><p>Invalid skillId - '{0}', does not exist</p>"
+        }
+      }
+    }
+  },
+  "skills-skillId-agents-unassigned": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Get Agents that are not assigned to Skill",
+      "operationId": "Get Agents that are not assigned to Skill",
+      "description": "<div class='tabs_wrapper' data-path='admin_skills_getAgentsUnassigned.html'></div>",
+      "responseClass": "",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillAgentsUnassignedResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {parameter name} - '{parameter value}'"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Security permissions prevent access to data</p><p>Skill - '{parameter value}' is restricted</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{parameter value}', cannot be null or empty</p><p>Invalid skillId - '{parameter value}', does not exist</p><p>Invalid skillId - '{parameter value}', must be an integer</p>"
+        }
+      }
+    }
+  },
+  "skills_call_data": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns summary of contacts for all Skills",
+      "operationId": "SKILLCALLDATA",
+      "description": "This method will return summary information about the contacts handled for each Skill in a business unit over the period of time specified by \"startDate\" and \"endDate\".  This information will be returned for all Skills in the business unit that were active during that time period.<br/>This information is updated in 15 minute increments starting at the top of each hour therefore the API will only accept times in 15 minute increments.  If you span multiple 15 minute increments, the data is cumulated and then returned.<br/><br/><b>NOTE:</b> \"startDate\" and \"endDate\" cannot span more than 30 days and can only be in 15 minute increments starting at the top of the hour.<div class='tabs_wrapper' data-path='admin_skills_getSkillsCallData.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillsCallDataResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate. Must be in 15 minute intervals from the start of the hour</p><p>Invalid endDate. Must be in 15 minute intervals from the start of the hour</p><p>startDate can't be greater than endDate</p><p>Invalid date range.endDate no more than 30 day period</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        }
+      }
+    }
+  },
+  "skills_skillId_call_data": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns summary of contacts for a Skill",
+      "operationId": "Skill Call Data",
+      "description": "This method will return summary information about the contacts handled for a Skill identified by \"skillId\" over the period of time specified by \"startDate\" and \"endDate\".  This information will be returned if the Skill was active during that time period.<br/>This information is updated in 15 minute increments starting at the top of each hour therefore the API will only accept times in 15 minute increments.  If you span multiple 15 minute increments, the data is cumulated and then returned.<br/><br/><b>NOTE:</b> \"startDate\" and \"endDate\" cannot span more than 30 days and can only be in 15 minute increments starting at the top of the hour.<div class='tabs_wrapper' data-path='admin_skills_getSkillIdCallData.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillsCallDataResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "skills_skillId_dispositions": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns a Skills Dispositions",
+      "operationId": "Disposition List",
+      "description": "This method returns all available Dispositions for the Skill provided by skillId.  This API replaces the /skills/{skillName}/dispositions API from earlier versions and allows you to get the Dispositions from Skills whose name contains an invalid character such as &amp;.<div class='tabs_wrapper' data-path='admin_skills_getSkillIdDispositions.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchStringNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/fieldsNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/skipNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/topNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderByNew"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillDispositionsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{0}', does not exist</p><p>Invalid skillId - '{0}'</p>"
+        }
+      }
+    }
+  },
+  "skills-skillId-dispositions-unassigned": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns unassigned Dispositions for a Skill",
+      "operationId": "DispositionsNotAssignedSkill",
+      "description": "This method returns all unassigned Dispositions for the Skill provided by \"skillId\".<div class='tabs_wrapper' data-path='admin_skills_getSkillIdDispositionsUnassigned.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillDispositionsUnassignedResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}' "
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "<p>Invalid skillId - '{0}', does not exist</p><p>Invalid skillId - '{0}', must be an integer</p><p>Invalid skillId - '{0}', cannot be null or empty</p>"
+        }
+      }
+    }
+  },
+  "skills-skillId-tags": {
+    "get": {
+      "tags": [ "Skills" ],
+      "summary": "Returns Tags for a Skill",
+      "operationId": "GetTagsSkill",
+      "description": "This method returns all Tags assigned to the Skill identified by \"skillId\".<div class='tabs_wrapper' data-path='admin_skills_getSkillIdTags.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillTagsResponse"
+          }
+        },
+        "204": {
+          "description": "No tags assigned"
+        },
+        "403": {
+          "description": "<p>Security permissions do not allow access to this data</p><p>Skill - '{0}' is restricted</p>"
+        },
+        "404": {
+          "description": "Invalid skillId - {0}"
+        }
+      }
+    },
+    "post": {
+      "tags": [ "Skills" ],
+      "summary": "Assigns a Tag to a Skill",
+      "operationId": "AssignTagSkill",
+      "description": "This method assigns Tags to the Skill identified by \"skillId\".<div class='tabs_wrapper' data-path='admin_skills_postSkillIdTags.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/postSkillTagsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postSkillTagsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid tags - cannot be null or empty"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "Invalid skillId - {0}"
+        }
+      }
+    },
+    "delete": {
+      "tags": [ "Skills" ],
+      "summary": "Removes Tags from a Skill",
+      "operationId": "RemoveTagsSkill",
+      "description": "This method removes Tags from the Skill identified by \"skillId\".<div class='tabs_wrapper' data-path='admin_skills_deleteSkillIdTags.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contentBodyMetaData",
+          "schema": {
+            "$ref": "#/definitions/deleteSkillTagsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/deleteSkillTagsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid tags - cannot be null or empty"
+        },
+        "403": {
+          "description": "<p>Skill - '{0}' is restricted</p><p>Security permissions prevent access to data</p>"
+        },
+        "404": {
+          "description": "Invalid skillId - {0}"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "skillId": {
+        "name": "skillId",
+        "description": "Skill Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "updatedSince": {
+        "name": "updatedSince",
+        "description": "Returns all records updated since ISO 8601 time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "updatedSinceNew": {
+        "name": "updatedSinceNew",
+        "description": "Returns all records updated since ISO 8601 time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "isActiveNew": {
+        "name": "isActive",
+        "description": "Filters results based on active status",
+        "type": "boolean",
+        "in": "query"
+      },
+      "searchString": {
+        "name": "searchString",
+        "description": "Used to filter results to objects with the value in key fields",
+        "type": "string",
+        "in": "query"
+      },
+      "searchStringNew": {
+        "name": "searchString",
+        "description": "Used to filter results to objects with the value in key fields",
+        "type": "string",
+        "in": "query"
+      },
+      "fields": {
+        "name": "fields",
+        "description": "Comma separated list of elements to return in response",
+        "type": "string",
+        "in": "query"
+      },
+      "fieldsNew": {
+        "name": "fields",
+        "description": "Comma separated list of elements to return in response",
+        "type": "string",
+        "in": "query"
+      },
+      "skip": {
+        "name": "skip",
+        "description": "Number of records to skip in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "skipNew": {
+        "name": "skip",
+        "description": "Number of records to skip in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "top": {
+        "name": "top",
+        "description": "Number of records to return in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "topNew": {
+        "name": "top",
+        "description": "Number of records to return in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "orderBy": {
+        "name": "orderBy",
+        "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+        "type": "string",
+        "in": "query"
+      },
+      "orderByNew": {
+        "name": "orderBy",
+        "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+        "type": "string",
+        "in": "query"
+      },
+      "mediaTypeId": {
+        "name": "mediaTypeId",
+        "description": "Filters based on the media type of the Skill",
+        "type": "integer",
+        "in": "query"
+      },
+      "mediaTypeIdNew": {
+        "name": "mediaTypeId",
+        "description": "Filters based on the media type of the Skill",
+        "type": "integer",
+        "in": "query"
+      },
+      "outboundStrategy": {
+        "name": "outboundStrategy",
+        "description": "Filters based on outbound strategy for the Skill",
+        "type": "string",
+        "in": "query"
+      },
+      "outboundStrategyNew": {
+        "name": "outboundStrategy",
+        "description": "Filters based on outbound strategy for the Skill",
+        "type": "string",
+        "in": "query"
+      },
+      "isSkillActive": {
+        "name": "isSkillActive",
+        "description": "Filters based on active state of the Skill",
+        "type": "boolean",
+        "in": "query"
+      },
+      "isSkillActiveNew": {
+        "name": "isSkillActive",
+        "description": "Filters based on active state of the Skill",
+        "type": "boolean",
+        "in": "query"
+      },
+      "contentBodyMetaData": {
+        "in": "body",
+        "name": "",
+        "description": "Content Body",
+        "required": true,
+        "allowMultiple": true
+      },
+      "startDate": {
+        "name": "startDate",
+        "description": "ISO 8601 beginning of report interval",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "endDate": {
+        "name": "endDate",
+        "description": "ISO 8601 end of report interval",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      }
+    },
+    "getCampaignsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "businessUnitId", "totalRecords" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "businessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total number of records in the result set"
+              },
+              "campaigns": {
+                "type": "array",
+                "description": "Collection of Campaigns",
+                "items": {
+                  "title": "Campaign",
+                  "description": "Campaign",
+                  "required": [ "campaignId", "campaignName", "isActive", "description", "notes", "lastUpdateTime" ],
+                  "properties": {
+                    "campaignId": {
+                      "type": "integer",
+                      "description": "Campaign Id"
+                    },
+                    "campaignName": {
+                      "type": "string",
+                      "description": "Campaign Name"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Indicates if Campaign is active"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Campaign Description"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Campaign Notes"
+                    },
+                    "lastUpdateTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Campaign Last Update Time (ISO 8601 time)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getCampaignResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "campaign" ],
+      "properties": {
+        "campaign": {
+          "schema": {
+            "title": "Campaign",
+            "description": "Campaign",
+            "required": [ "campaignId", "campaignName", "isActive", "description", "notes", "lastUpdateTime" ],
+            "properties": {
+              "campaignId": {
+                "type": "integer",
+                "description": "Campaign Id"
+              },
+              "campaignName": {
+                "type": "string",
+                "description": "Campaign Name"
+              },
+              "isActive": {
+                "type": "boolean",
+                "description": "Indicates if Campaign is active"
+              },
+              "description": {
+                "type": "string",
+                "description": "Campaign Description"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Campaign Notes"
+              },
+              "lastUpdateTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Campaign Last Update Time (ISO 8601 time)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "businessUnitId", "lastPollTime", "totalRecords", "skills" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "businessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "lastPollTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO 8601 timestamp of last database poll.  Value should be passed in \"updatedSince\" parameter on next call"
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total number of records in the result set"
+              },
+              "skills": {
+                "type": "array",
+                "description": "Collection of Skills",
+                "items": {
+                  "title": "Skill",
+                  "description": "Skill",
+                  "required": [
+                    "skillId",
+                    "skillName",
+                    "mediaTypeId",
+                    "mediaTypeName",
+                    "isActive",
+                    "campaignId",
+                    "campaignName",
+                    "notes",
+                    "acwTypeId",
+                    "stateIdACW",
+                    "stateNameACW",
+                    "maxSecondsACW",
+                    "requireDisposition",
+                    "allowSecondaryDisposition",
+                    "scriptDisposition",
+                    "agentRestTime",
+                    "makeTranscriptAvailable",
+                    "transcriptFromAddress",
+                    "displayThankyou",
+                    "thankYouLink",
+                    "popThankYou",
+                    "popThankYouURL",
+                    "isOutbound",
+                    "outboundStrategy",
+                    "isRunning",
+                    "priorityBlending",
+                    "callerIdOverride",
+                    "scriptId",
+                    "scriptName",
+                    "emailFromAddress",
+                    "emailFromEditable",
+                    "emailBccAddress",
+                    "emailParking",
+                    "interruptible",
+                    "callSuppressionScriptId",
+                    "reskillHours",
+                    "reskillHoursName",
+                    "countReskillHours",
+                    "minWFIAgents",
+                    "useScreenPops",
+                    "screenPopTriggerEvent",
+                    "useCustomScreenPops",
+                    "screenPopDetail",
+                    "minWorkingTime",
+                    "agentless",
+                    "agentlessPorts",
+                    "initialPriority",
+                    "acceleration",
+                    "maxPriority",
+                    "serviceLevelThreshold",
+                    "serviceLevelGoal",
+                    "enableShortAbandon",
+                    "shortAbandonThreshold",
+                    "countShortAbandons",
+                    "countOtherAbandons"
+                  ],
+                  "properties": {
+                    "skillId": {
+                      "type": "integer",
+                      "description": "Skill Id"
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "Skill Name"
+                    },
+                    "mediaTypeId": {
+                      "type": "integer",
+                      "description": "Skill Media Type Id (phone, chat, etc.)"
+                    },
+                    "mediaTypeName": {
+                      "type": "string",
+                      "description": "Skill Media Type Name"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Indicates if Skill is active"
+                    },
+                    "campaignId": {
+                      "type": "integer",
+                      "description": "Skill Campaign Id"
+                    },
+                    "campaignName": {
+                      "type": "string",
+                      "description": "Skill Campaign Name"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Skill Notes"
+                    },
+                    "acwTypeId": {
+                      "type": "integer",
+                      "description": "ACW Type Id. 1 for \"None\", 2 for \"Disposition\", 3 for \"Automatic Wrap-up\""
+                    },
+                    "stateIdACW": {
+                      "type": "integer",
+                      "description": "Skill ACW State Id"
+                    },
+                    "stateNameACW": {
+                      "type": "string",
+                      "description": "Skill ACW State Name"
+                    },
+                    "maxSecondsACW": {
+                      "type": "integer",
+                      "description": "Maximum number of seconds in ACW state"
+                    },
+                    "requireDisposition": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill requires a disposition"
+                    },
+                    "allowSecondaryDisposition": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill uses a secondary disposition"
+                    },
+                    "scriptDisposition": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill disposition can be set in a script"
+                    },
+                    "agentRestTime": {
+                      "type": "integer",
+                      "description": "Time in seconds forced between PC calls"
+                    },
+                    "makeTranscriptAvailable": {
+                      "type": "boolean",
+                      "description": "Indicates if the Chat Skill saves a transcript"
+                    },
+                    "transcriptFromAddress": {
+                      "type": "string",
+                      "description": "Transcript From Address"
+                    },
+                    "displayThankyou": {
+                      "type": "boolean",
+                      "description": "Indicates if a Thank You is used on the Skill"
+                    },
+                    "thankYouLink": {
+                      "type": "string",
+                      "description": "URL for Thank You used on the Skill"
+                    },
+                    "popThankYou": {
+                      "type": "boolean",
+                      "description": "Indicates if a Thank You is popped on the Skill"
+                    },
+                    "popThankYouURL": {
+                      "type": "string",
+                      "description": "URL for Thank You that is popped on the Skill"
+                    },
+                    "isOutbound": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill is outbound"
+                    },
+                    "outboundStrategy": {
+                      "type": "string",
+                      "description": "Skill Outbound Strategy"
+                    },
+                    "isRunning": {
+                      "type": "boolean",
+                      "description": "Indicates if the Personal Connection Skill is running"
+                    },
+                    "priorityBlending": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill uses priority blending"
+                    },
+                    "callerIdOverride": {
+                      "type": "string",
+                      "description": " If set then the Override Caller ID setting is enabled and this value is used for Caller ID"
+                    },
+                    "scriptId": {
+                      "type": "integer",
+                      "description": "Skill Script Id"
+                    },
+                    "scriptName": {
+                      "type": "string",
+                      "description": "Skill Script Name"
+                    },
+                    "emailFromAddress": {
+                      "type": "string",
+                      "description": "Skill Agent Email Address"
+                    },
+                    "emailFromEditable": {
+                      "type": "boolean",
+                      "description": "Indicates if the from email address can be changed on the Skill"
+                    },
+                    "emailBccAddress": {
+                      "type": "string",
+                      "description": "Email Bcc address for the Skill"
+                    },
+                    "emailParking": {
+                      "type": "boolean",
+                      "description": "Indicates if Email Parking is enabled"
+                    },
+                    "chatWarningThreshold": {
+                      "type": "integer",
+                      "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> Time in seconds before a warning is sent about a stale Chat.  Number between 1 and 999",
+                      "required": true
+                    },
+                    "agentTypingIndicator": {
+                      "type": "boolean",
+                      "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> Indicates if the Patron can see an indicator showing the Agent is typing",
+                      "required": true
+                    },
+                    "patronTypingPreview": {
+                      "type": "boolean",
+                      "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> Indicates if the Agent is allowed to see what characters the Patron is typing before they hit send",
+                      "required": true
+                    },
+                    "interruptible": {
+                      "type": "boolean",
+                      "description": "Indicates if Skill is interruptible"
+                    },
+                    "callSuppressionScriptId": {
+                      "type": "integer",
+                      "description": "Suppression Script Id"
+                    },
+                    "reskillHours": {
+                      "type": "integer",
+                      "description": "Hours of Operation Profile Id"
+                    },
+                    "reskillHoursName": {
+                      "type": "string",
+                      "description": "Hours of Operation Profile Name"
+                    },
+                    "countReskillHours": {
+                      "type": "boolean",
+                      "description": "Indicates if reskill hours are counted"
+                    },
+                    "minWFIAgents": {
+                      "type": "integer",
+                      "description": "Minimum number of Agents for WFI"
+                    },
+                    "useScreenPops": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill uses screen pops"
+                    },
+                    "screenPopTriggerEvent": {
+                      "type": "string",
+                      "description": "Determines when the screen pop for the Skill occurs"
+                    },
+                    "useCustomScreenPops": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill uses custom screen pops"
+                    },
+                    "screenPopDetail": {
+                      "type": "string",
+                      "description": "If set then the Custom Screen Pop type is set to \"Application\" and the value is used as the screenpop"
+                    },
+                    "minWorkingTime": {
+                      "type": "integer",
+                      "description": "Minimum time spent on Email contact in seconds"
+                    },
+                    "agentless": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill is agentless"
+                    },
+                    "agentlessPorts": {
+                      "type": "boolean",
+                      "description": "Indicates number of ports used for agentless"
+                    },
+                    "initialPriority": {
+                      "type": "integer",
+                      "description": "Initial priority setting for the Skill"
+                    },
+                    "acceleration": {
+                      "type": "integer",
+                      "description": "Acceleration rate for the Skill"
+                    },
+                    "maxPriority": {
+                      "type": "integer",
+                      "description": "Maximum priority value for the Skill"
+                    },
+                    "serviceLevelThreshold": {
+                      "type": "integer",
+                      "description": "SLA threshold in percentage"
+                    },
+                    "serviceLevelGoal": {
+                      "type": "integer",
+                      "description": "SLA goal in percentage"
+                    },
+                    "enableShortAbandon": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill uses short abandons"
+                    },
+                    "shortAbandonThreshold": {
+                      "type": "integer",
+                      "description": "Short abandon threshold in seconds"
+                    },
+                    "countShortAbandons": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill counts short abandons"
+                    },
+                    "countOtherAbandons": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill counts other abandons"
+                    },
+                    "messageTempateId": {
+                      "type": "integer",
+                      "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> ID of the Message Template assigned to the Skill",
+                      "required": true
+                    },
+                    "smsTransportCodeID": {
+                      "type": "integer",
+                      "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> ID of the SMS transport code",
+                      "required": true
+                    },
+                    "smsTransportCode": {
+                      "type": "string",
+                      "description": "<b><i><span style='color:red'>(New in v8.0)</span></i></b> SMS transport code",
+                      "required": true
+                    },
+                    "dispositions": {
+                      "type": "array",
+                      "description": "Collection of Dispositions",
+                      "items": {
+                        "title": "Disposition",
+                        "description": "Disposition",
+                        "required": [ "dispositionId", "dispositionName", "priority" ],
+                        "properties": {
+                          "dispositionId": {
+                            "type": "integer",
+                            "description": "Disposition Id"
+                          },
+                          "dispositionName": {
+                            "type": "string",
+                            "description": "Disposition Name"
+                          },
+                          "priority": {
+                            "type": "integer",
+                            "description": "Defines the order of display for the Agent"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postSkillsRequest": {
+      "title": " ",
+      "type": "object",
+      "description": "Content Body",
+      "required": [ "skills" ],
+      "properties": {
+        "skills": {
+          "type": "array",
+          "description": "Collection of Skills",
+          "items": {
+            "title": "Skill",
+            "description": "Skill",
+            "required": [
+              "skillName",
+              "mediaTypeId",
+              "isActive",
+              "campaignId",
+              "notes",
+              "acwTypeId",
+              "stateIdACW",
+              "maxSecondsACW",
+              "requireDisposition",
+              "allowSecondaryDisposition",
+              "scriptDisposition",
+              "agentRestTime",
+              "makeTranscriptAvailable",
+              "transcriptFromAddress",
+              "displayThankyou",
+              "thankYouLink",
+              "popThankYou",
+              "popThankYouURL",
+              "isOutbound",
+              "outboundStrategy",
+              "priorityBlending",
+              "callerIdOverride",
+              "scriptId",
+              "emailFromAddress",
+              "emailFromEditable",
+              "emailBccAddress",
+              "interruptible",
+              "callSuppressionScriptId",
+              "reskillHours",
+              "minWFIAgents",
+              "useScreenPops",
+              "screenPopTriggerEvent",
+              "useCustomScreenPops",
+              "screenPopType",
+              "screenPopDetails",
+              "minWorkingTime",
+              "agentless",
+              "agentlessPorts",
+              "initialPriority",
+              "acceleration",
+              "maxPriority",
+              "serviceLevelThreshold",
+              "serviceLevelGoal",
+              "enableShortAbandon",
+              "shortAbandonThreshold",
+              "countShortAbandons",
+              "countOtherAbandons",
+              "chatWarningThreshold",
+              "agentTypingIndicator",
+              "patronTypingPreview",
+              "smsTransportCodeId",
+              "messageTemplateId"
+            ],
+            "properties": {
+              "skillName": {
+                "type": "string",
+                "description": "Skill Name"
+              },
+              "mediaTypeId": {
+                "type": "integer",
+                "description": "Skill Media Type Id (phone, chat, etc.)"
+              },
+              "isActive": {
+                "type": "boolean",
+                "description": "Indicates if Skill is active"
+              },
+              "campaignId": {
+                "type": "integer",
+                "description": "Skill Campaign Id"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Skill Notes"
+              },
+              "acwTypeId": {
+                "type": "integer",
+                "description": "ACW Type Id. 1 for \"None\", 2 for \"Disposition\", 3 for \"Automatic Wrap-up\""
+              },
+              "stateIdACW": {
+                "type": "integer",
+                "description": "Skill ACW State Id"
+              },
+              "maxSecondsACW": {
+                "type": "integer",
+                "description": "Maximum number of seconds in ACW state"
+              },
+              "requireDisposition": {
+                "type": "boolean",
+                "description": "Indicates if the Skill requires a disposition"
+              },
+              "allowSecondaryDisposition": {
+                "type": "boolean",
+                "description": "Indicates if the Skill uses a secondary disposition"
+              },
+              "scriptDisposition": {
+                "type": "boolean",
+                "description": "Indicates if the Skill disposition can be set in a script"
+              },
+              "agentRestTime": {
+                "type": "integer",
+                "description": "Time in seconds forced between PC calls"
+              },
+              "makeTranscriptAvailable": {
+                "type": "boolean",
+                "description": "Indicates if the Chat Skill saves a transcript"
+              },
+              "transcriptFromAddress": {
+                "type": "string",
+                "description": "Transcript From Address"
+              },
+              "displayThankyou": {
+                "type": "boolean",
+                "description": "Indicates if a Thank You is used on the Skill"
+              },
+              "thankYouLink": {
+                "type": "string",
+                "description": "URL for Thank You used on the Skill"
+              },
+              "popThankYou": {
+                "type": "boolean",
+                "description": "Indicates if a Thank You is popped on the Skill"
+              },
+              "popThankYouURL": {
+                "type": "string",
+                "description": "URL for Thank You that is popped on the Skill"
+              },
+              "isOutbound": {
+                "type": "boolean",
+                "description": "Indicates if the Skill is outbound"
+              },
+              "outboundStrategy": {
+                "type": "string",
+                "description": "Skill Outbound Strategy"
+              },
+              "priorityBlending": {
+                "type": "boolean",
+                "description": "Indicates if the Skill uses priority blending"
+              },
+              "callerIdOverride": {
+                "type": "string",
+                "description": " If set then the Override Caller ID setting is enabled and this value is used for Caller ID"
+              },
+              "scriptId": {
+                "type": "integer",
+                "description": "Skill Script Id"
+              },
+              "emailFromAddress": {
+                "type": "string",
+                "description": "Skill Agent Email Address"
+              },
+              "emailFromEditable": {
+                "type": "boolean",
+                "description": "Indicates if the from email address can be changed on the Skill"
+              },
+              "emailBccAddress": {
+                "type": "string",
+                "description": "Email Bcc address for the Skill"
+              },
+              "interruptible": {
+                "type": "boolean",
+                "description": "Indicates if Skill is interruptible"
+              },
+              "callSuppressionScriptId": {
+                "type": "integer",
+                "description": "Suppression Script Id"
+              },
+              "reskillHours": {
+                "type": "integer",
+                "description": "Hours of Operation Profile Id"
+              },
+              "reskillHoursName": {
+                "type": "string",
+                "description": "Hours of Operation Profile Name"
+              },
+              "minWFIAgents": {
+                "type": "integer",
+                "description": "Minimum number of Agents for WFI"
+              },
+              "useScreenPops": {
+                "type": "boolean",
+                "description": "Indicates if the Skill uses screen pops"
+              },
+              "screenPopTriggerEvent": {
+                "type": "string",
+                "description": "Determines when the screen pop for the Skill occurs"
+              },
+              "useCustomScreenPops": {
+                "type": "boolean",
+                "description": "Indicates if the Skill uses custom screen pops"
+              },
+              "screenPopType": {
+                "type": "string",
+                "description": "Screen Pop Type"
+              },
+              "screenPopDetails": {
+                "type": "string",
+                "description": "If set then the Custom Screen Pop type is set to \"Application\" and the value is used as the screenpop"
+              },
+              "minWorkingTime": {
+                "type": "integer",
+                "description": "Minimum time spent on Email contact in seconds"
+              },
+              "agentless": {
+                "type": "boolean",
+                "description": "Indicates if the Skill is agentless"
+              },
+              "agentlessPorts": {
+                "type": "boolean",
+                "description": "Indicates number of ports used for agentless"
+              },
+              "initialPriority": {
+                "type": "integer",
+                "description": "Initial priority setting for the Skill"
+              },
+              "acceleration": {
+                "type": "integer",
+                "description": "Acceleration rate for the Skill"
+              },
+              "maxPriority": {
+                "type": "integer",
+                "description": "Maximum priority value for the Skill"
+              },
+              "serviceLevelThreshold": {
+                "type": "integer",
+                "description": "SLA threshold in percentage"
+              },
+              "serviceLevelGoal": {
+                "type": "integer",
+                "description": "SLA goal in percentage"
+              },
+              "enableShortAbandon": {
+                "type": "boolean",
+                "description": "Indicates if the Skill uses short abandons"
+              },
+              "shortAbandonThreshold": {
+                "type": "integer",
+                "description": "Short abandon threshold in seconds"
+              },
+              "countShortAbandons": {
+                "type": "boolean",
+                "description": "Indicates if the Skill counts short abandons"
+              },
+              "countOtherAbandons": {
+                "type": "boolean",
+                "description": "Indicates if the Skill counts other abandons"
+              },
+              "chatWarningThreshold": {
+                "type": "integer",
+                "description": "Chat Warning Threshold"
+              },
+              "agentTypingIndicator": {
+                "type": "boolean",
+                "description": "Agent Typing Indicator"
+              },
+              "patronTypingPreview": {
+                "type": "boolean",
+                "description": "Patron Typing Preview"
+              },
+              "smsTransportCodeId": {
+                "type": "integer",
+                "description": "SMS Transport Code Id"
+              },
+              "messageTemplateId": {
+                "type": "integer",
+                "description": "Message Template Id"
+              },
+              "dispositions": {
+                "type": "array",
+                "description": "Collection of Dispositions",
+                "items": {
+                  "title": "Disposition",
+                  "description": "Disposition",
+                  "required": [ "dispositionId", "priority" ],
+                  "properties": {
+                    "dispositionId": {
+                      "type": "integer",
+                      "description": "Disposition Id"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Defines the order of display for the Agent"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postSkillsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "resultSet",
+            "description": "Result Set",
+            "required": [ "errorCount", "skillsResults" ],
+            "properties": {
+              "errorCount": {
+                "type": "integer",
+                "description": "Number of Skills creations that had errors"
+              },
+              "skillsResults": {
+                "type": "array",
+                "description": "Collection of Skill Results",
+                "items": {
+                  "title": "SkillResult",
+                  "description": "Skill Result",
+                  "required": [ "success" ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the Skill creation was successful"
+                    },
+                    "skillId": {
+                      "type": "integer",
+                      "description": "ID of the Skill created.  Only returned if creation was successful"
+                    },
+                    "error": {
+                      "type": "boolean",
+                      "description": "Describes error in the Skill creation.  Only returned if creation was unsuccessful"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "putSkillRequest": {
+      "title": " ",
+      "type": "object",
+      "description": "Content Body",
+      "required": [ "skill" ],
+      "properties": {
+        "skill": {
+          "title": "Skill",
+          "description": "Skill",
+          "required": [
+            "skillName",
+            "mediaTypeId",
+            "isActive",
+            "campaignId",
+            "notes",
+            "acwTypeId",
+            "stateIdACW",
+            "maxSecondsACW",
+            "requireDisposition",
+            "allowSecondaryDisposition",
+            "scriptDisposition",
+            "agentRestTime",
+            "makeTranscriptAvailable",
+            "transcriptFromAddress",
+            "displayThankyou",
+            "thankYouLink",
+            "popThankYou",
+            "popThankYouURL",
+            "isOutbound",
+            "outboundStrategy",
+            "priorityBlending",
+            "callerIdOverride",
+            "scriptId",
+            "emailFromAddress",
+            "emailFromEditable",
+            "emailBccAddress",
+            "interruptible",
+            "callSuppressionScriptId",
+            "reskillHours",
+            "minWFIAgents",
+            "useScreenPops",
+            "screenPopTriggerEvent",
+            "useCustomScreenPops",
+            "screenPopType",
+            "screenPopDetails",
+            "minWorkingTime",
+            "agentless",
+            "agentlessPorts",
+            "initialPriority",
+            "acceleration",
+            "maxPriority",
+            "serviceLevelThreshold",
+            "serviceLevelGoal",
+            "enableShortAbandon",
+            "shortAbandonThreshold",
+            "countShortAbandons",
+            "countOtherAbandons",
+            "chatWarningThreshold",
+            "agentTypingIndicator",
+            "patronTypingPreview",
+            "smsTransportCodeId",
+            "messageTemplateId"
+          ],
+          "properties": {
+            "skillName": {
+              "type": "string",
+              "description": "Skill Name"
+            },
+            "mediaTypeId": {
+              "type": "integer",
+              "description": "Skill Media Type Id (phone, chat, etc.)"
+            },
+            "isActive": {
+              "type": "boolean",
+              "description": "Indicates if Skill is active"
+            },
+            "campaignId": {
+              "type": "integer",
+              "description": "Skill Campaign Id"
+            },
+            "notes": {
+              "type": "string",
+              "description": "Skill Notes"
+            },
+            "acwTypeId": {
+              "type": "integer",
+              "description": "ACW Type Id. 1 for \"None\", 2 for \"Disposition\", 3 for \"Automatic Wrap-up\""
+            },
+            "stateIdACW": {
+              "type": "integer",
+              "description": "Skill ACW State Id"
+            },
+            "maxSecondsACW": {
+              "type": "integer",
+              "description": "Maximum number of seconds in ACW state"
+            },
+            "requireDisposition": {
+              "type": "boolean",
+              "description": "Indicates if the Skill requires a disposition"
+            },
+            "allowSecondaryDisposition": {
+              "type": "boolean",
+              "description": "Indicates if the Skill uses a secondary disposition"
+            },
+            "scriptDisposition": {
+              "type": "boolean",
+              "description": "Indicates if the Skill disposition can be set in a script"
+            },
+            "agentRestTime": {
+              "type": "integer",
+              "description": "Time in seconds forced between PC calls"
+            },
+            "makeTranscriptAvailable": {
+              "type": "boolean",
+              "description": "Indicates if the Chat Skill saves a transcript"
+            },
+            "transcriptFromAddress": {
+              "type": "string",
+              "description": "Transcript From Address"
+            },
+            "displayThankyou": {
+              "type": "boolean",
+              "description": "Indicates if a Thank You is used on the Skill"
+            },
+            "thankYouLink": {
+              "type": "string",
+              "description": "URL for Thank You used on the Skill"
+            },
+            "popThankYou": {
+              "type": "boolean",
+              "description": "Indicates if a Thank You is popped on the Skill"
+            },
+            "popThankYouURL": {
+              "type": "string",
+              "description": "URL for Thank You that is popped on the Skill"
+            },
+            "isOutbound": {
+              "type": "boolean",
+              "description": "Indicates if the Skill is outbound"
+            },
+            "outboundStrategy": {
+              "type": "string",
+              "description": "Skill Outbound Strategy"
+            },
+            "priorityBlending": {
+              "type": "boolean",
+              "description": "Indicates if the Skill uses priority blending"
+            },
+            "callerIdOverride": {
+              "type": "string",
+              "description": " If set then the Override Caller ID setting is enabled and this value is used for Caller ID"
+            },
+            "scriptId": {
+              "type": "integer",
+              "description": "Skill Script Id"
+            },
+            "emailFromAddress": {
+              "type": "string",
+              "description": "Skill Agent Email Address"
+            },
+            "emailFromEditable": {
+              "type": "boolean",
+              "description": "Indicates if the from email address can be changed on the Skill"
+            },
+            "emailBccAddress": {
+              "type": "string",
+              "description": "Email Bcc address for the Skill"
+            },
+            "interruptible": {
+              "type": "boolean",
+              "description": "Indicates if Skill is interruptible"
+            },
+            "callSuppressionScriptId": {
+              "type": "integer",
+              "description": "Suppression Script Id"
+            },
+            "reskillHours": {
+              "type": "integer",
+              "description": "Hours of Operation Profile Id"
+            },
+            "reskillHoursName": {
+              "type": "string",
+              "description": "Hours of Operation Profile Name"
+            },
+            "minWFIAgents": {
+              "type": "integer",
+              "description": "Minimum number of Agents for WFI"
+            },
+            "useScreenPops": {
+              "type": "boolean",
+              "description": "Indicates if the Skill uses screen pops"
+            },
+            "screenPopTriggerEvent": {
+              "type": "string",
+              "description": "Determines when the screen pop for the Skill occurs"
+            },
+            "useCustomScreenPops": {
+              "type": "boolean",
+              "description": "Indicates if the Skill uses custom screen pops"
+            },
+            "screenPopType": {
+              "type": "string",
+              "description": "Screen Pop Type"
+            },
+            "screenPopDetails": {
+              "type": "string",
+              "description": "If set then the Custom Screen Pop type is set to \"Application\" and the value is used as the screenpop"
+            },
+            "minWorkingTime": {
+              "type": "integer",
+              "description": "Minimum time spent on Email contact in seconds"
+            },
+            "agentless": {
+              "type": "boolean",
+              "description": "Indicates if the Skill is agentless"
+            },
+            "agentlessPorts": {
+              "type": "boolean",
+              "description": "Indicates number of ports used for agentless"
+            },
+            "initialPriority": {
+              "type": "integer",
+              "description": "Initial priority setting for the Skill"
+            },
+            "acceleration": {
+              "type": "integer",
+              "description": "Acceleration rate for the Skill"
+            },
+            "maxPriority": {
+              "type": "integer",
+              "description": "Maximum priority value for the Skill"
+            },
+            "serviceLevelThreshold": {
+              "type": "integer",
+              "description": "SLA threshold in percentage"
+            },
+            "serviceLevelGoal": {
+              "type": "integer",
+              "description": "SLA goal in percentage"
+            },
+            "enableShortAbandon": {
+              "type": "boolean",
+              "description": "Indicates if the Skill uses short abandons"
+            },
+            "shortAbandonThreshold": {
+              "type": "integer",
+              "description": "Short abandon threshold in seconds"
+            },
+            "countShortAbandons": {
+              "type": "boolean",
+              "description": "Indicates if the Skill counts short abandons"
+            },
+            "countOtherAbandons": {
+              "type": "boolean",
+              "description": "Indicates if the Skill counts other abandons"
+            },
+            "chatWarningThreshold": {
+              "type": "integer",
+              "description": "Chat Warning Threshold"
+            },
+            "agentTypingIndicator": {
+              "type": "boolean",
+              "description": "Agent Typing Indicator"
+            },
+            "patronTypingPreview": {
+              "type": "boolean",
+              "description": "Patron Typing Preview"
+            },
+            "smsTransportCodeId": {
+              "type": "integer",
+              "description": "SMS Transport Code Id"
+            },
+            "messageTemplateId": {
+              "type": "integer",
+              "description": "Message Template Id"
+            },
+            "dispositions": {
+              "type": "array",
+              "description": "Collection of Dispositions",
+              "items": {
+                "title": "Disposition",
+                "description": "Disposition",
+                "required": [ "dispositionId", "priority" ],
+                "properties": {
+                  "dispositionId": {
+                    "type": "integer",
+                    "description": "Disposition Id"
+                  },
+                  "priority": {
+                    "type": "integer",
+                    "description": "Defines the order of display for the Agent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillsAgentsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "businessUnitId", "lastPollTime" ],
+            "properties": {
+              "lastPollTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO 8601 timestamp of last database poll.  Value should be passed in \"updatedSince\" parameter on next call"
+              },
+              "businessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "agentSkillAssignments": {
+                "type": "array",
+                "description": "Collection of Agent Skill Assignments",
+                "items": {
+                  "title": "AgentSkillAssignment",
+                  "description": "Agent Skill Assignment",
+                  "required": [ "agentId", "agentName", "agentProficiencyValue", "agentProficiencyName", "campaignId", "campaignName", "emailFromAddress", "internalId", "isActive", "isSkillActive", "isNaturalCalling", "isNaturalCallingRunning", "isOutbound", "lastUpdateTime", "mediaType", "mediaTypeName", "notes", "outboundStrategy", "priorityBlending", "requireDisposition", "scriptDisposition", "skillId", "skillName", "useACW", "useDisposition", "useSecondaryDispositions", "screenPopTriggerEvent" ],
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "Agent Id"
+                    },
+                    "agentName": {
+                      "type": "string",
+                      "description": "Agent Name"
+                    },
+                    "agentProficiencyValue": {
+                      "type": "integer",
+                      "description": "Agent Proficiency Value"
+                    },
+                    "agentProficiencyName": {
+                      "type": "string",
+                      "description": "Agent Proficiency Name"
+                    },
+                    "campaignId": {
+                      "type": "integer",
+                      "description": "Campaign Id"
+                    },
+                    "campaignName": {
+                      "type": "string",
+                      "description": "Campaign Name"
+                    },
+                    "emailFromAddress": {
+                      "type": "string",
+                      "description": "Email From Address"
+                    },
+                    "internalId": {
+                      "type": "string",
+                      "description": "Custom Id"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Agent Active State"
+                    },
+                    "isSkillActive": {
+                      "type": "boolean",
+                      "description": "Skill Active State"
+                    },
+                    "isNaturalCalling": {
+                      "type": "boolean",
+                      "description": "Natural Calling State"
+                    },
+                    "isNaturalCallingRunning": {
+                      "type": "boolean",
+                      "description": "Natural Calling Running State"
+                    },
+                    "isOutbound": {
+                      "type": "boolean",
+                      "description": "Skill Outbound State"
+                    },
+                    "lastUpdateTime": {
+                      "type": "date-time",
+                      "description": "Last Update Time (ISO 8601 format)"
+                    },
+                    "mediaType": {
+                      "type": "integer",
+                      "description": "Media Type Id"
+                    },
+                    "mediaTypeName": {
+                      "type": "string",
+                      "description": "Media Type Name"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Assignment Notes"
+                    },
+                    "outboundStrategy": {
+                      "type": "string",
+                      "description": "Outbound Strategy"
+                    },
+                    "priorityBlending": {
+                      "type": "boolean",
+                      "description": "Priority Blending State"
+                    },
+                    "requireDisposition": {
+                      "type": "boolean",
+                      "description": "Require Disposition State"
+                    },
+                    "scriptDisposition": {
+                      "type": "boolean",
+                      "description": "Script Disposition State"
+                    },
+                    "skillId": {
+                      "type": "integer",
+                      "description": "Skill Id"
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "Skill Name"
+                    },
+                    "useACW": {
+                      "type": "boolean",
+                      "description": "Use ACW State"
+                    },
+                    "useDisposition": {
+                      "type": "boolean",
+                      "description": "Use Disposition State"
+                    },
+                    "useSecondaryDispositions": {
+                      "type": "boolean",
+                      "description": "Use Secondary Dispositions State"
+                    },
+                    "screenPopTriggerEvent": {
+                      "type": "string",
+                      "description": "Screen Pop Trigger Event"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillAgentsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "businessUnitId", "totalRecords", "lastPollTime" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "lastPollTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO 8601 timestamp of last database poll.  Value should be passed in \"updatedSince\" parameter on next call"
+              },
+              "businessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total Records in Result Set"
+              },
+              "agentSkillAssignments": {
+                "type": "array",
+                "description": "Collection of Agent Skill Assignments",
+                "items": {
+                  "title": "AgentSkillAssignment",
+                  "description": "Agent Skill Assignment",
+                  "required": [ "agentId", "firstName", "middleName", "lastName", "agentProficiencyValue", "agentProficiencyName", "campaignId", "campaignName", "emailFromAddress", "internalId", "isActive", "isSkillActive", "isDialer", "isNaturalCalling", "isNaturalCallingRunning", "isOutbound", "lastUpdateTime", "mediaTypeId", "mediaTypeName", "notes", "outboundStrategy", "priorityBlending", "requireDisposition", "scriptDisposition", "skillId", "skillName", "teamId", "teamName", "useACW", "useDisposition", "useSecondaryDispositions", "screenPopTriggerEvent" ],
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "Agent Id"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "Agent First Name"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "description": "Agent Middle Name"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Agent Last Name"
+                    },
+                    "agentProficiencyValue": {
+                      "type": "integer",
+                      "description": "Agent Proficiency Value"
+                    },
+                    "agentProficiencyName": {
+                      "type": "string",
+                      "description": "Agent Proficiency Name"
+                    },
+                    "campaignId": {
+                      "type": "integer",
+                      "description": "Campaign Id"
+                    },
+                    "campaignName": {
+                      "type": "string",
+                      "description": "Campaign Name"
+                    },
+                    "emailFromAddress": {
+                      "type": "string",
+                      "description": "Email From Address"
+                    },
+                    "internalId": {
+                      "type": "string",
+                      "description": "Custom Id"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Agent Active State"
+                    },
+                    "isSkillActive": {
+                      "type": "boolean",
+                      "description": "Skill Active State"
+                    },
+                    "isDialer": {
+                      "type": "boolean",
+                      "description": "Dialer State"
+                    },
+                    "isNaturalCalling": {
+                      "type": "boolean",
+                      "description": "Natural Calling State"
+                    },
+                    "isNaturalCallingRunning": {
+                      "type": "boolean",
+                      "description": "Natural Calling Running State"
+                    },
+                    "isOutbound": {
+                      "type": "boolean",
+                      "description": "Skill Outbound State"
+                    },
+                    "lastUpdateTime": {
+                      "type": "date-time",
+                      "description": "Last Update Time (ISO 8601 format)"
+                    },
+                    "mediaTypeId": {
+                      "type": "integer",
+                      "description": "Media Type Id"
+                    },
+                    "mediaTypeName": {
+                      "type": "string",
+                      "description": "Media Type Name"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Assignment Notes"
+                    },
+                    "outboundStrategy": {
+                      "type": "string",
+                      "description": "Outbound Strategy"
+                    },
+                    "priorityBlending": {
+                      "type": "boolean",
+                      "description": "Priority Blending State"
+                    },
+                    "requireDisposition": {
+                      "type": "boolean",
+                      "description": "Require Disposition State"
+                    },
+                    "scriptDisposition": {
+                      "type": "boolean",
+                      "description": "Script Disposition State"
+                    },
+                    "skillId": {
+                      "type": "integer",
+                      "description": "Skill Id"
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "Skill Name"
+                    },
+                    "teamId": {
+                      "type": "integer",
+                      "description": "Team Id"
+                    },
+                    "teamName": {
+                      "type": "string",
+                      "description": "Team Name"
+                    },
+                    "useACW": {
+                      "type": "boolean",
+                      "description": "Use ACW State"
+                    },
+                    "useDisposition": {
+                      "type": "boolean",
+                      "description": "Use Disposition State"
+                    },
+                    "useSecondaryDispositions": {
+                      "type": "boolean",
+                      "description": "Use Secondary Dispositions State"
+                    },
+                    "screenPopTriggerEvent": {
+                      "type": "string",
+                      "description": "Screen Pop Trigger Event"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postSkillAgentsRequest": {
+      "title": " ",
+      "type": "object",
+      "required": [ "agents" ],
+      "properties": {
+        "agents": {
+          "type": "array",
+          "description": "Collection of Agent Assignments",
+          "items": {
+            "title": "Agent",
+            "description": "Agent",
+            "required": [ "agentId" ],
+            "properties": {
+              "agentId": {
+                "type": "integer",
+                "description": "Agent Id"
+              },
+              "isActive": {
+                "type": "boolean",
+                "description": "Indicates if the Agent should be in an active or inactive state.  Default is true"
+              },
+              "proficency": {
+                "type": "integer",
+                "description": "Agent Skill Proficiency Id",
+                "enum": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "postSkillAgentsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "resultSet",
+            "description": "Result Set",
+            "required": [ "errorCount", "agentResults" ],
+            "properties": {
+              "errorCount": {
+                "type": "integer",
+                "description": "Number of Agent Assignments that had errors"
+              },
+              "agentResults": {
+                "type": "array",
+                "description": "Collection of Agent Results",
+                "items": {
+                  "title": "AgentResult",
+                  "description": "Agent Result",
+                  "required": [ "success" ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the Agent assignment was successful"
+                    },
+                    "agentId": {
+                      "type": "integer",
+                      "description": "Agent Id assigned. Only returned if assignment was successful"
+                    },
+                    "error": {
+                      "type": "boolean",
+                      "description": "Describes error in the Agent assignment. Only returned if assignment was unsuccessful"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "deleteSkillAgentsRequest": {
+      "title": " ",
+      "type": "object",
+      "required": [ "agents" ],
+      "properties": {
+        "agents": {
+          "type": "array",
+          "description": "Collection of Agents to remove",
+          "items": {
+            "title": "Agent",
+            "description": "Agent",
+            "required": [ "agentId" ],
+            "properties": {
+              "agentId": {
+                "type": "integer",
+                "description": "Agent Id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "deleteSkillAgentsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "resultSet",
+            "description": "Result Set",
+            "required": [ "errorCount", "agentResults" ],
+            "properties": {
+              "errorCount": {
+                "type": "integer",
+                "description": "Number of Agent Removals that had errors"
+              },
+              "agentResults": {
+                "type": "array",
+                "description": "Collection of Agent Results",
+                "items": {
+                  "title": "AgentResult",
+                  "description": "Agent Result",
+                  "required": [ "success" ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the Agent removal was successful"
+                    },
+                    "agentId": {
+                      "type": "integer",
+                      "description": "Agent Id assigned. Only returned if removal was successful"
+                    },
+                    "error": {
+                      "type": "boolean",
+                      "description": "Describes error in the Agent removal. Only returned if removal was unsuccessful"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillAgentsUnassignedResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "totalRecords" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total Records in Result Set"
+              },
+              "agents": {
+                "type": "array",
+                "description": "Collection of Unassigned Agents",
+                "items": {
+                  "title": "Agent",
+                  "description": "Agent",
+                  "required": [ "agentId", "firstName", "middleName", "lastName", "isActive", "teamId", "teamName" ],
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "Agent Id"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "Agent First Name"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "description": "Agent Middle Name"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Agent Last Name"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Agent Active State"
+                    },
+                    "teamId": {
+                      "type": "integer",
+                      "description": "Team Id"
+                    },
+                    "teamName": {
+                      "type": "string",
+                      "description": "Team Name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillsCallDataResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "SkillCallData" ],
+      "properties": {
+        "SkillCallData": {
+          "schema": {
+            "title": "SkillCallData",
+            "description": "Skill Call Data",
+            "required": [
+              "SkillName",
+              "SkillId",
+              "BusinessUnitId",
+              "EnteredQueueContacts",
+              "OfferedContacts",
+              "AnsweredContacts",
+              "AnsweredServiceLevelContacts",
+              "AbandonedContacts",
+              "AbandonedTime",
+              "AverageAbandonedTime",
+              "AverageACDTime",
+              "AverageHandleTime",
+              "AverageSpeedAnswerTime"
+            ],
+            "properties": {
+              "SkillName": {
+                "type": "string",
+                "description": "Skill Name"
+              },
+              "SkillId": {
+                "type": "integer",
+                "description": "Skill Id"
+              },
+              "BusinessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "EnteredQueueContacts": {
+                "type": "integer",
+                "description": "Entered Queue Contacts"
+              },
+              "OfferedContacts": {
+                "type": "integer",
+                "description": "Offered Contacts"
+              },
+              "AnsweredContacts": {
+                "type": "integer",
+                "description": "Answered Contacts"
+              },
+              "AnsweredServiceLevelContacts": {
+                "type": "integer",
+                "description": "Answered Service Level Contacts"
+              },
+              "AbandonedContacts": {
+                "type": "integer",
+                "description": "Abandoned Contacts"
+              },
+              "AbandonedTime": {
+                "type": "number",
+                "format": "double",
+                "description": "Abandoned Time"
+              },
+              "AverageAbandonedTime": {
+                "type": "number",
+                "format": "double",
+                "description": "Average Abandoned Time"
+              },
+              "AverageACDTime": {
+                "type": "number",
+                "format": "double",
+                "description": "Average ACD Time"
+              },
+              "AverageHandleTime": {
+                "type": "number",
+                "format": "double",
+                "description": "Average Handle Time"
+              },
+              "AverageSpeedAnswerTime": {
+                "type": "number",
+                "format": "double",
+                "description": "Average Speed Answer Time"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillDispositionsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "resultSet",
+            "description": "Result Set",
+            "required": [ "skillId", "skillName", "totalRecords" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "skillId": {
+                "type": "integer",
+                "description": "Skill Id"
+              },
+              "skillName": {
+                "type": "string",
+                "description": "Skill Name"
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total number of records in the result set"
+              },
+              "dispositions": {
+                "type": "array",
+                "description": "Collection of Dispositions",
+                "items": {
+                  "title": "Disposition",
+                  "description": "Disposition",
+                  "required": [ "dispositionId", "dispositionName", "displayOrder", "classification", "reportingGroup", "systemOutcome", "requireCommitmentAmount", "requireRescheduleDate", "agentSpecific" ],
+                  "properties": {
+                    "dispositionId": {
+                      "type": "integer",
+                      "description": "Disposition Id"
+                    },
+                    "dispositionName": {
+                      "type": "string",
+                      "description": "Disposition Name"
+                    },
+                    "displayOrder": {
+                      "type": "integer",
+                      "description": "Disposition Display Order to Agent"
+                    },
+                    "classification": {
+                      "type": "string",
+                      "description": "Disposition Classification"
+                    },
+                    "reportingGroup": {
+                      "type": "string",
+                      "description": "Group that contacts can be reported against"
+                    },
+                    "systemOutcome": {
+                      "type": "string",
+                      "description": "Final outcome of the Contact"
+                    },
+                    "requireCommitmentAmount": {
+                      "type": "boolean",
+                      "description": "Indicates if commitment amount must be entered"
+                    },
+                    "requireRescheduleDate": {
+                      "type": "boolean",
+                      "description": "Indicates if reschedule date must be entered"
+                    },
+                    "agentSpecific": {
+                      "type": "boolean",
+                      "description": "Indicates if Disposition is unique to Agent"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillDispositionsUnassignedResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "resultSet",
+            "description": "Result Set",
+            "required": [ "totalRecords" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total number of records in the result set"
+              },
+              "dispositions": {
+                "type": "array",
+                "description": "Collection of Dispositions",
+                "items": {
+                  "title": "Disposition",
+                  "description": "Disposition",
+                  "required": [ "dispositionId", "dispositionName", "classification", "reportingGroup", "systemOutcome", "requireCommitmentAmount", "requireRescheduleDate", "agentSpecific" ],
+                  "properties": {
+                    "dispositionId": {
+                      "type": "integer",
+                      "description": "Disposition Id"
+                    },
+                    "dispositionName": {
+                      "type": "string",
+                      "description": "Disposition Name"
+                    },
+                    "classification": {
+                      "type": "string",
+                      "description": "Disposition Classification"
+                    },
+                    "reportingGroup": {
+                      "type": "string",
+                      "description": "Group that contacts can be reported against"
+                    },
+                    "systemOutcome": {
+                      "type": "string",
+                      "description": "Final outcome of the Contact"
+                    },
+                    "requireCommitmentAmount": {
+                      "type": "boolean",
+                      "description": "Indicates if commitment amount must be entered"
+                    },
+                    "requireRescheduleDate": {
+                      "type": "boolean",
+                      "description": "Indicates if reschedule date must be entered"
+                    },
+                    "agentSpecific": {
+                      "type": "boolean",
+                      "description": "Indicates if Disposition is unique to Agent"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillTagsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "skillId", "skillName", "tags" ],
+            "properties": {
+              "skillId": {
+                "type": "integer",
+                "description": "Skill Id"
+              },
+              "skillName": {
+                "type": "string",
+                "description": "Skill Name"
+              },
+              "tags": {
+                "type": "array",
+                "description": "Collection of Tags",
+                "items": {
+                  "title": "Tag",
+                  "description": "Tag",
+                  "required": [ "tagId", "tagName", "isActive", "notes" ],
+                  "properties": {
+                    "tagId": {
+                      "type": "integer",
+                      "description": "Tag Id"
+                    },
+                    "tagName": {
+                      "type": "string",
+                      "description": "Tag Name"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Indicates if the Tag is active"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Tag Notes"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postSkillTagsRequest": {
+      "title": " ",
+      "type": "object",
+      "required": [ "tags" ],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "description": "Collection of Tags to assign",
+          "items": {
+            "title": "Tag",
+            "required": [ "tagId" ],
+            "properties": {
+              "tagId": {
+                "type": "integer",
+                "description": "Tag Id to assign to the Skill"
+              }
+            }
+          }
+        }
+      }
+    },
+    "postSkillTagsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "errorCount", "tagResults" ],
+            "properties": {
+              "errorCount": {
+                "type": "integer",
+                "description": "Number of Tags assignments that had errors"
+              },
+              "tagResults": {
+                "type": "array",
+                "description": "Collection of Tag Results",
+                "items": {
+                  "title": "TagResult",
+                  "description": "TagResult",
+                  "required": [ "success" ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the Tag assignment was successful"
+                    },
+                    "tagId": {
+                      "type": "integer",
+                      "description": "Tag Id assigned. Only returned if assignment was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Tag Assignment Error. Only returned if assignment was unsuccessful"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "deleteSkillTagsRequest": {
+      "title": " ",
+      "type": "object",
+      "required": [ "tags" ],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "description": "Collection of Tags to remove",
+          "items": {
+            "title": "Tag",
+            "required": [ "tagId" ],
+            "properties": {
+              "tagId": {
+                "type": "integer",
+                "description": "Tag Id to remove from the Skill"
+              }
+            }
+          }
+        }
+      }
+    },
+    "deleteSkillTagsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "errorCount", "tagResults" ],
+            "properties": {
+              "errorCount": {
+                "type": "integer",
+                "description": "Number of Tags removals that had errors"
+              },
+              "tagResults": {
+                "type": "array",
+                "description": "Collection of Tag Results",
+                "items": {
+                  "title": "TagResult",
+                  "description": "TagResult",
+                  "required": [ "success" ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the Tag removal was successful"
+                    },
+                    "tagId": {
+                      "type": "integer",
+                      "description": "Tag Id assigned. Only returned if removal was successful"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Tag Assignment Error. Only returned if removal was unsuccessful"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

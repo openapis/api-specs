@@ -1,0 +1,1476 @@
+{
+  "address-books": {
+    "get": {
+      "tags": [ "AddressBook" ],
+      "summary": "Returns a list of Address Books",
+      "operationId": "getAddressBooks",
+      "description": "<p>This method returns a list of Address books for the Business Unit.  Address Books can be of two types, \"Standard\" which is the historical type of Address Book and \"Dynamic\" that contains Federated Presence information from external sources such as Lync.  Address Books can be assigned to Agents, Teams, Skills or Campaigns exclusively using the <a href='AdminAPI#!/AddressBook/Address_Book_Assignment_V4'>POST /address-books/{addressBookId}/assignment</a> API, which means the Address Book can only be assigned to one of these groups at a time.<div class='tabs_wrapper' data-path='admin_addressbooks_get.html'></div></p>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getAddressBooksResponse"
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security Privileges prevent access to data"
+        },
+        "500": {
+          "description": "Internal Error"
+        }
+      }
+    },
+    "post": {
+      "tags": [ "AddressBook" ],
+      "summary": "Create a new Address Book",
+      "operationId": "CreateAddressBookv4",
+      "description": "This method allows you to create an Address Book.  Address Books can be of two types, \"Standard\" which is the historical type of Address Book and \"Dynamic\" that contains Federated Presence information from external sources such as Lync.  Address Books can be assigned to Agents, Teams, Skills or Campaigns exclusively using the <a href='AdminAPI#!/AddressBook/Address_Book_Assignment_V4'>POST /address-books/{addressBookId}/assignment</a> API.<div class='tabs_wrapper' data-path='admin_addressbooks_post.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "addressBookName",
+          "description": "Address Book Name",
+          "type": "string",
+          "required": true,
+          "in": "query"
+        },
+        {
+          "name": "addressBookType",
+          "description": "Address Book Type",
+          "type": "string",
+          "in": "query",
+          "required": true,
+          "enum": [
+            "Standard",
+            "Dynamic"
+          ]
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postAddressBooksResponse"
+          }
+        },
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid or missing addressBookName</p><p>Invalid or missing addressBookType</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        }
+      }
+    }
+  },
+  "address-books_addressbooksid": {
+    "delete": {
+      "tags": [ "AddressBook" ],
+      "summary": "Delete an existing Address Book",
+      "operationId": "Delete AddressBook",
+      "description": "This method allows you to delete an existing Address Book specified by addressBookId.<div class='tabs_wrapper' data-path='admin_addressbooks_delete.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid AddressBook Id"
+        }
+      }
+    }
+  },
+  "address-books_addressbooksid_assignment": {
+    "post": {
+      "tags": [ "AddressBook" ],
+      "summary": "Assign Entities to an Address Book",
+      "operationId": "Address Book Assignment V4",
+      "description": "This method allows you to assign an Address Book specified by addressBookId to one set of entities such as Agents, Teams, Skills or Campaigns exclusively, which means the Address Book can only be assigned to one of these groups at a time.  Assigning an Address Book to a new entity type will remove all existing assignments.<div class='tabs_wrapper' data-path='admin_addressbooks_postAssignment.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        },
+        {
+          "name": "entityType",
+          "in": "query",
+          "description": "Type of Entity to assign",
+          "required": true,
+          "type": "string",
+          "enum": [
+            "Agent",
+            "Skill",
+            "Team",
+            "Campaign",
+            "Everyone"
+          ]
+        },
+        {
+          "in": "body",
+          "name": "Content Body",
+          "description": "The Collection of Entities to assign",
+          "required": true,
+          "allowMultiple": true,
+          "schema": {
+            "$ref": "#/definitions/postAddressBookAssignmentsRequest"
+          }
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "schema": {
+            "$ref": "#/definitions/postAddressBookAssignmentsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid Address Book Assignments</p><p>Invalid AddressBook Entity Type</p><p>Maximum Assignments Exceeded</p>"
+        },
+        "401": {
+          "description": "Invalid SecurityUser"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid AddressBook Id"
+        },
+        "500": {
+          "description": "Internal Error"
+        }
+      }
+    }
+  },
+  "address-books_addressbooksid_dynamic": {
+    "get": {
+      "tags": [ "AddressBook" ],
+      "summary": "Returns entries for a Dynamic Address Book",
+      "operationId": "Address book entries",
+      "description": "This method returns all of the entries in the Address Book identified by addressBookId.  This method utilizes a set of parameters that allow you to paginate the results of the call.  If you set the \"top\" parameter you will see the \"_links\" section set with the URL needed to access the previous, next and self elements in the pagination.<div class='tabs_wrapper' data-path='admin_addressbooks_getDABIdEntries.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        },
+        {
+          "in": "query",
+          "name": "fullLoad",
+          "description": "Indicates if all entries should be returned.  Either fullLoad or updatedSince is required",
+          "type": "boolean",
+          "required": true,
+          "default": true,
+          "enum": [ "true", "false" ]
+        },
+        {
+          "in": "query",
+          "name": "top",
+          "description": "Number of records to return",
+          "type": "integer",
+          "format": "int32"
+
+        },
+        {
+          "in": "query",
+          "name": "skip",
+          "description": "How many records to skip",
+          "type": "integer",
+          "format": "int32"
+        },
+        {
+          "in": "query",
+          "name": "orderBy",
+          "description": "List of fields to order results by.  Default is ascending but can be ordered in descending using the \"desc\" flag for example \"lastUpdatedTime asc, firstname desc\"",
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getAddressBookDynamicEntriesResponse"
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "<p>FullLoad or Updated Since must be specified</p><p>Invalid Updated Since</p><p>Invalid Skip Value</p><p>Invalid Top Value</p><p>Invalid OrderBy Arguments</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid address book id"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
+    "put": {
+      "tags": [ "AddressBook" ],
+      "summary": "Create or Update Dynamic Address Book Entries",
+      "operationId": "Create Or Update Dynamic AddressBook",
+      "description": "This method allows you to create or update entries in a Dynamic Address Book identified by addressBookId.  This method can only be called with and Address Book created as a \"Dynamic\" type.  Multiple entries can be created in a single call and any errors will be returned in an array maintaining the same cardinality as the input data.<br/><br/><b>NOTE:</b> Dynamic Address Book entries are not persistently stored in the inContact Cloud.  In the event of a system failover, all Dynamic Address Books in the Business Unit will be created empty.  If the next update you send after such an event is not a fullLoad, then you will get an error description asking for a fullLoad.  When creating your integration to populate a Dynamic Address Book you should take this into account and send a fullLoad when receibing this error description.<div class='tabs_wrapper' data-path='admin_addressbooks_putDABIdEntries.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        },
+        {
+          "name": "fullLoad",
+          "description": "Indicates if update is a full list of entries",
+          "required": true,
+          "type": "boolean",
+          "default": true,
+          "in": "query"
+        },
+        {
+          "name": "Content Body",
+          "description": "Collection of Address Book Dynamic Entries to add/update",
+          "required": true,
+          "allowMultiple": true,
+          "type": "object",
+          "in": "body",
+          "schema": {
+            "$ref": "#/definitions/putAddressBookDynamicEntriesRequest"
+          }
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "schema": {
+            "$ref": "#/definitions/putAddressBookDynamicEntriesResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid or missing fullLoad</p><p>Cannot insert delta changes. FullLoad is required.</p><p>Invalid Address Book Entries</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid AddressBook Id"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    }
+  },
+  "address-books_addressbooksid_dynamic_external": {
+    "delete": {
+      "tags": [ "AddressBook" ],
+      "summary": "Delete a Dynamic Address Book Entry",
+      "operationId": "Delete Dynamic Address Book Entry",
+      "description": "This method allows you to delete an entry identified by externalId in a Dynamic Address Book identified by addressBookId.  This method can only be called with and Address Book created as a \"Dynamic\" type.  All entries in a Dynamic Address Book can be removed simply by calling the <a href='AdminAPI#!/AddressBook/Create_Or_Update_Dynamic_AddressBook'>PUT /address-books/{addressBookId}/dynamic-entries</a> API with fullLoad set to \"True\" and no entries defined.<div class='tabs_wrapper' data-path='admin_addressbooks_delDABIdEntry.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        },
+        {
+          "name": "externalId",
+          "description": "Address Book Entry External Id",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "<p>Invalid AddressBook Id</p><p>Invalid External Id</p>"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    }
+  },
+  "address-books_addressbooksid_entries": {
+    "get": {
+      "tags": [ "AddressBook" ],
+      "summary": "Returns entries for a Standard Address Book",
+      "operationId": "Address book entries",
+      "description": "This method returns all of the entries in the Standard Address Book identified by addressBookId.<div class='tabs_wrapper' data-path='admin_addressbooks_getIdEntries.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getAddressBookEntriesResponse"
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid address book id"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
+    "post": {
+      "tags": [ "AddressBook" ],
+      "summary": "Create Standard Address Book Entries",
+      "operationId": "Create Address Book Entries",
+      "description": "This method allows you to create new address book entries and associate them with a single address book identified by addressBookId.  Multiple entries can be created in a single call and any errors will be returned in an array maintaining the same cardinality as the input data.  <br/><br/><b>NOTE:</b>  This page only allows you to pass a single entry.  You can pass an array of entries when calling this method from your program.<div class='tabs_wrapper' data-path='admin_addressbooks_postAddressBookEntries.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        },
+        {
+          "name": "Content Body",
+          "description": "A Collection of Address Book Standard Entries",
+          "in": "body",
+          "required": true,
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/postAddressBookEntriesRequest"
+          }
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "schema": {
+            "$ref": "#/definitions/postAddressBookEntriesResponse"
+          }
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        },
+        "409": {
+          "description": "Cannot create entries in a dynamic address book"
+        }
+      }
+    },
+    "put": {
+      "tags": [ "AddressBook" ],
+      "summary": "Update Standard Address Book Entries",
+      "operationId": "Update Address Book Entries",
+      "description": "This method allows you to update existing address book entries associated with a single address book identified by addressBookId.  Multiple entries can be updated in a single call and any errors will be returned in an array maintaining the same cardinality as the input data.  <br/><br/><b>NOTE:</b>  This page only allows you to pass a single entry.  You can pass an array of entries when calling this method from your program.<div class='tabs_wrapper' data-path='admin_addressbooks_putAddressBookEntries.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        },
+        {
+          "name": "Content Body",
+          "description": "A Collection of Address Book Standard Entries",
+          "required": true,
+          "type": "object",
+          "in": "body",
+          "schema": {
+            "$ref": "#/definitions/putAddressBookEntriesRequest"
+          }
+        }
+      ],
+      "responses": {
+
+        "202": {
+          "description": "Accepted",
+          "schema": {
+            "$ref": "#/definitions/postAddressBookEntriesResponse"
+          }
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "address-books_addressbooksid_entries_entryid": {
+    "delete": {
+      "tags": [ "AddressBook" ],
+      "summary": "Delete a Standard Address Book Entry",
+      "operationId": "Delete Address Book Entry",
+      "description": "This method allows you to delete a single address book entry from an address book using the addressBookId and addressBookEntryId.<div class='tabs_wrapper' data-path='admin_addressbooks_deleteAddressBookEntry.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/addressBookId"
+        },
+        {
+          "name": "addressBookEntryId",
+          "description": "Address Book Entry Id to Delete",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "agents_agentId_addressbooks": {
+    "get": {
+      "tags": [ "AddressBook" ],
+      "summary": "<b><i><span style='color:red'>(Updated in v8.0)</span></i></b> Returns Address Books for an Agent",
+      "operationId": "Address book list for an agent",
+      "description": "This method returns a list of Address Books currently assigned to the Agent identified by agentId.  Address Books are assigned to Agents, Teams, Skills or Campaigns exclusively (meaning it can only be assigned to one of these groups at a time).<br/><br/><b><i><span style='color:red'>v8.0 NOTE: </span></i></b>Removed the resultSet wrapper previously required<div class='tabs_wrapper' data-path='admin_addressbooks_getAgentId.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "agentId",
+          "description": "Agent Id",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "$ref": "#/definitions/parameters/includeEntries"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getAgentAddressBooksResponse"
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "<p>Invalid updatedSince</p><p>Invalid includeEntries</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security Privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid Agent Id"
+        },
+        "500": {
+          "description": "Internal Error"
+        }
+      }
+    }
+  },
+  "campaigns_campaignid_addressbooks": {
+    "get": {
+      "tags": [ "AddressBook" ],
+      "summary": "<b><i><span style='color:red'>(Updated in v8.0)</span></i></b> Returns Address Books for a Campaign",
+      "operationId": "Address Book for Campaign",
+      "description": "This method returns a list of Address Books currently assigned to the Campaign as identified by campaignId.  Address Books are assigned to Agents, Teams, Skills or Campaigns exclusively (meaning it can only be assigned to one of these groups at a time).<br/><br/><b><i><span style='color:red'>v8.0 NOTE: </span></i></b>Removed the resultSet wrapper previously required<div class='tabs_wrapper' data-path='admin_addressbooks_getCampaignId.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "campaignId",
+          "description": "Campaign Id",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "path"
+        },
+        {
+          "$ref": "#/definitions/parameters/includeEntries"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getCampaignAddressBooksResponse"
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "<p>Invalid updatedSince</p><p>Invalid includeEntries</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security Privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid Campaign Id"
+        },
+        "500": {
+          "description": "Internal Error"
+        }
+      }
+    }
+  },
+  "skills_skillid_addressbooks": {
+    "get": {
+      "tags": [ "AddressBook" ],
+      "summary": "<b><i><span style='color:red'>(Updated in v8.0)</span></i></b> Returns Address Books for a Skill",
+      "operationId": "Address Book for Skill",
+      "description": "This method returns a list of Address Books currently assigned to the Skill as identified by \"skillId\".  Address Books are assigned to Agents, Teams, Skills or Campaigns exclusively (meaning it can only be assigned to one of these groups at a time).<br/><br/><b><i><span style='color:red'>v8.0 NOTE: </span></i></b>Removed the resultSet wrapper previously required<div class='tabs_wrapper' data-path='admin_addressbooks_getCampaignId.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "skillId",
+          "description": "Skill Id",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "path"
+        },
+        {
+          "$ref": "#/definitions/parameters/includeEntries"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSkillAddressBooksResponse"
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "<p>Invalid updatedSince</p><p>Invalid includeEntries</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security Privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid Skill Id"
+        }
+      }
+    }
+  },
+  "teams_teamid_addressbooks": {
+    "get": {
+      "tags": [ "AddressBook" ],
+      "summary": "<b><i><span style='color:red'>(Updated in v8.0)</span></i></b> Returns Address Books for a Team",
+      "operationId": "AddressBooksTeam",
+      "description": "This method returns a list of Address Books currently assigned to the Team as identified by teamId.  Address books are assigned to Agents, Teams, Skills or Campaigns exclusively (meaning it can only be assigned to one of these groups at a time).<br/><br/><b><i><span style='color:red'>v8.0 NOTE: </span></i></b>Removed the resultSet wrapper previously required<div class='tabs_wrapper' data-path='admin_addressbooks_getTeamId.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "teamId",
+          "description": "Team Id",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "$ref": "#/definitions/parameters/includeEntries"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Accepted",
+          "schema": {
+            "$ref": "#/definitions/getTeamAddressBooksResponse"
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "<p>Invalid includesEntries</p><p>Invalid UpdatedSince</p>"
+        },
+        "401": {
+          "description": "<p>Invalid SecurityUser</p><p>Unauthorized</p>"
+        },
+        "403": {
+          "description": "Security Privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid Team Id"
+        },
+        "500": {
+          "description": "Internal Error"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "addressBookId": {
+        "name": "addressBookId",
+        "description": "Address Book Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "includeEntries": {
+        "name": "includeEntries",
+        "description": "Include Address Book Entries",
+        "type": "boolean",
+        "in": "query",
+        "enum": [ "true", "false" ],
+        "default": "false"
+      },
+      "updatedSince": {
+        "name": "updatedSince",
+        "description": "ISO 8601 timestamp which filters results for those updated since this time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      }
+    },
+    "getAddressBooksResponse": {
+      "title": "response",
+      "name": "Response",
+      "description": "Collection of Address Books",
+      "properties": {
+        "addressBooks": {
+          "type": "array",
+          "items": {
+            "title": "AddressBook",
+            "description": "",
+            "properties": {
+              "addressBookName": {
+                "type": "string",
+                "description": "Address Book Name"
+              },
+              "addressBookId": {
+                "type": "integer",
+                "description": "Address Book Id"
+              },
+              "addressBookType": {
+                "type": "string",
+                "description": "Address Book Type (Standard or Dynamic)"
+              },
+              "appId": {
+                "type": "string",
+                "description": "Name of API Application that created the Address Book"
+              },
+              "agents": {
+
+                "type": "array",
+                "description": "Collection of assigned Agents",
+                "items": {
+                  "title": "Agent",
+                  "description": "",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "Agent Id"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "description": "Agent User Name"
+                    }
+                  }
+                }
+              },
+              "teams": {
+                "type": "array",
+                "description": "Collection of assigned Teams",
+                "items": {
+                  "title": "Team",
+                  "description": "",
+                  "properties": {
+                    "teamId": {
+                      "type": "integer",
+                      "description": "Team Id"
+                    },
+                    "teamName": {
+                      "type": "string",
+                      "description": "Team Name"
+                    }
+                  }
+                }
+              },
+              "skills": {
+                "type": "array",
+                "description": "Collection of assigned Skills",
+                "items": {
+                  "title": "Skill",
+                  "description": "",
+                  "properties": {
+                    "skillId": {
+                      "type": "integer",
+                      "description": "Skill Id"
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "Skill Name"
+                    }
+                  }
+                }
+              },
+              "campaigns": {
+                "type": "array",
+                "description": "Collection of assigned Campaigns",
+                "items": {
+                  "title": "Campaign",
+                  "description": "",
+                  "properties": {
+                    "campaignId": {
+                      "type": "integer",
+                      "description": "Campaign Id"
+                    },
+                    "campaignName": {
+                      "type": "string",
+                      "description": "Campaign Name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postAddressBooksResponse": {
+      "title": "response",
+      "description": "response",
+      "properties": {
+        "resultSet": {
+          "title": "resultSet",
+          "description": "The result set containing the new Address Book information",
+          "properties": {
+            "addressBookId": {
+              "type": "integer",
+              "description": "Address Book Id"
+            },
+            "addressBookType": {
+              "type": "string",
+              "description": "Address Book Type (Standard or Dynamic)"
+            },
+            "addressBookName": {
+              "type": "string",
+              "description": "Address Book Name"
+            }
+          }
+        }
+      }
+    },
+    "postAddressBookAssignmentsRequest": {
+      "title": "request",
+      "description": "The array of Address Book Assignments",
+      "type": "object",
+      "properties": {
+        "addressBookAssignments": {
+          "type": "array",
+          "description": "Array of Entities to assign",
+          "required": true,
+          "items": {
+            "title": "Entity",
+            "description": "The Entity Id to assign",
+            "properties": {
+              "entityId": {
+                "type": "integer",
+                "required": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "postAddressBookAssignmentsResponse": {
+      "title": "response",
+      "description": "Results from Address Book assignment",
+      "allowMultiple": true,
+      "properties": {
+        "assignResults": {
+          "type": "array",
+          "items": {
+            "title": "assignResult",
+            "description": "The list of assignment results (one result per posted Entity Id)",
+            "properties": {
+              "success": {
+                "type": "boolean",
+                "description": "Assignment result"
+              },
+              "entityId": {
+                "type": "integer",
+                "description": "Entity Id of successful assignment"
+              },
+              "error": {
+                "type": "string",
+                "description": "Description of failed assignment"
+              },
+              "entityType": {
+                "type": "string",
+                "description": "Entity Type of failed assignment"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getAddressBookDynamicEntriesResponse": {
+      "title": "response",
+      "description": "Address Book",
+      "properties": {
+        "addressBook": {
+          "schema": {
+            "title": "addressBook",
+            "description": "an Address Book containing a list of Dynamic Entries",
+            "properties": {
+              "_links": {
+                "type": "links",
+                "description": "Link information to next page of Dynamic Entries"
+              },
+              "addressBookName": {
+                "type": "string",
+                "description": "Address Book Name"
+              },
+              "addressBookId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Address Book Id"
+              },
+              "addressBookType": {
+                "type": "string",
+                "description": "Address Book Type (\"Standard\" or \"Dynamic\")"
+              },
+              "fullLoad": {
+                "type": "boolean",
+                "description": "Indicates type of return"
+              },
+              "serverTime": {
+                "type": "date-time",
+                "description": "ISO 8601 Server timestamp"
+              },
+              "addressBookEntries": {
+                "type": "array",
+                "items": {
+                  "title": "addressBookDynamicEntry",
+                  "description": "",
+                  "properties": {
+                    "addressBookEntryId": {
+                      "type": "integer",
+                      "description": "ID of entry"
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "description": "An ID from presence source"
+                    },
+                    "stateId": {
+                      "type": "integer",
+                      "description": "ID of Agent state"
+                    },
+                    "externalState": {
+                      "type": "string",
+                      "description": "Name to be displayed in Address Book"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "Contact first name"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "description": "Contact middle name"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Contact last name"
+                    },
+                    "company": {
+                      "type": "string",
+                      "description": "Contact company"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "Contact phone number"
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "description": "Contact mobile number"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Contact email address"
+                    },
+                    "isDeleted": {
+                      "type": "boolean",
+                      "description": "Indicates if entry is deleted when using updatedSince"
+                    },
+                    "lastUpdateTime": {
+                      "type": "date-time",
+                      "description": "ISO 8601 timestamp of last update"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "putAddressBookDynamicEntriesRequest": {
+      "title": "request",
+      "description": "Dynamic Address Book Entry",
+      "type": "object",
+      "properties": {
+        "addressBookEntries": {
+          "type": "array",
+          "items": {
+            "title": "DynamicEntry",
+            "type": "object",
+            "properties": {
+              "externalId": {
+                "type": "string",
+                "description": "An ID from presence source",
+                "required": true
+              },
+              "stateId": {
+                "type": "integer",
+                "description": "Agent State Id",
+                "required": true
+              },
+              "externalState": {
+                "type": "string",
+                "description": "Dynamic Address Book Entry Name",
+                "required": true
+              },
+              "firstName": {
+                "type": "string",
+                "description": "Contact First Name",
+                "required": true
+              },
+              "middleName": {
+                "type": "string",
+                "description": "Contact Middle Name",
+                "required": true
+              },
+              "lastName": {
+                "type": "string",
+                "description": "Contact Last Name",
+                "required": true
+              },
+              "company": {
+                "type": "string",
+                "description": "Contact Company",
+                "required": true
+              },
+              "phone": {
+                "type": "string",
+                "description": "Contact Phone",
+                "required": true
+              },
+              "mobile": {
+                "type": "string",
+                "description": "Contact Mobile",
+                "required": true
+              },
+              "email": {
+                "type": "string",
+                "description": "Contact Email",
+                "required": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "putAddressBookDynamicEntriesResponse": {
+      "title": "response",
+      "description": "Dynamic Address Book Entry Creation/Update results",
+      "allowMultiple": true,
+      "properties": {
+        "entryResults": {
+          "type": "array",
+          "items": {
+            "title": "entryResults",
+            "description": "",
+            "properties": {
+              "success": {
+                "type": "boolean",
+                "description": "Result of entry creation/update"
+              },
+              "created": {
+                "type": "boolean",
+                "description": "Entry created (true) or updated (false)"
+              },
+              "addressBookEntryId": {
+                "type": "integer",
+                "description": "ID of entry"
+              },
+              "externalId": {
+                "type": "integer",
+                "description": "The ID from presence source"
+              },
+              "error": {
+                "type": "string",
+                "description": "Description of an unsuccessful entry creation/update"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getAddressBookEntriesResponse": {
+      "title": "response",
+      "description": "Address Book",
+      "properties": {
+        "addressBook": {
+          "schema": {
+            "title": "addressBook",
+            "description": "Collection of Address Book Entries",
+            "properties": {
+              "addressBookName": {
+                "type": "string",
+                "description": "Address Book Name",
+                "required": true
+              },
+              "addressBookId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Address Book Id",
+                "required": true
+              },
+              "addressBookType": {
+                "type": "string",
+                "description": "Address Book Type (\"Standard\" or \"Dynamic\")",
+                "required": true
+              },
+              "addressBookEntries": {
+                "type": "array",
+                "items": {
+                  "title": "addressBookStandardEntry",
+                  "description": "Standard Address Book Entry",
+                  "properties": {
+                    "addressBookEntryId": {
+                      "type": "integer",
+                      "description": "Address Book Entry Id"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "Contact First Name"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "description": "Contact Middle Name"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Contact Last Name"
+                    },
+                    "company": {
+                      "type": "string",
+                      "description": "Contact Company"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "Contact Phone"
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "description": "Contact Mobile"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Contact Email"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postAddressBookEntriesRequest": {
+      "title": "request",
+      "description": "Collection of Address Book Standard Entries",
+      "properties": {
+        "addressBookEntries": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "title": "StandardEntry",
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "description": "Contact First Name"
+              },
+              "middleName": {
+                "type": "string",
+                "description": "Contact Middle Name"
+              },
+              "lastName": {
+                "type": "string",
+                "description": "Contact Last Name"
+              },
+              "company": {
+                "type": "string",
+                "description": "Contact Company"
+              },
+              "phone": {
+                "type": "string",
+                "description": "Contact Phone"
+              },
+              "mobile": {
+                "type": "string",
+                "description": "Contact Mobile"
+              },
+              "email": {
+                "type": "string",
+                "description": "Contact Email"
+              }
+            }
+          }
+        }
+      }
+    },
+    "postAddressBookEntriesResponse": {
+      "title": "response",
+      "description": "Address Book Standard Entry Creation Results",
+      "allowMultiple": true,
+      "type": "object",
+      "properties": {
+        "entryResults": {
+          "type": "array",
+          "items": {
+            "title": "entryResult",
+            "description": "",
+            "properties": {
+              "success": {
+                "type": "boolean",
+                "description": "Entry Result"
+              },
+              "addressBookEntryId": {
+                "type": "integer",
+                "description": "Entry Id"
+              },
+              "error": {
+                "type": "string",
+                "description": "Description of error if result is unsuccessful"
+              }
+            }
+          }
+        }
+      }
+    },
+    "putAddressBookEntriesRequest": {
+      "title": "request",
+      "description": "Collection of Address Book Standard Entries",
+      "properties": {
+        "addressBookEntries": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "object",
+            "title": "addressBookEntry",
+            "description": "Address Book Entry",
+            "properties": {
+              "addressBookEntryId": {
+                "type": "integer",
+                "description": "Address Book Entry Id",
+                "required": true
+              },
+              "firstName": {
+                "type": "string",
+                "description": "Contact First Name",
+                "required": true
+              },
+              "middleName": {
+                "type": "string",
+                "description": "Contact Middle Name",
+                "required": true
+              },
+              "lastName": {
+                "type": "string",
+                "description": "Contact Last Name",
+                "required": true
+              },
+              "company": {
+                "type": "string",
+                "description": "Contact Company",
+                "required": true
+              },
+              "phone": {
+                "type": "string",
+                "description": "Contact Phone",
+                "required": true
+              },
+              "mobile": {
+                "type": "string",
+                "description": "Contact Mobile",
+                "required": true
+              },
+              "email": {
+                "type": "string",
+                "description": "Contact Email",
+                "required": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "getAgentAddressBooksResponse": {
+      "title": "response",
+      "description": "Collection of Agent Address Books",
+      "properties": {
+        "lastPollTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of last database poll. Value should be passed in \"updatedSince\" parameter on next call"
+        },
+        "addressBooks": {
+          "type": "array",
+          "description": "Collection of Address Books assigned to the Agent",
+          "items": {
+            "title": "AddressBook",
+            "description": "Address Book",
+            "properties": {
+              "addressBookName": {
+                "type": "string",
+                "description": "Address Book Name"
+              },
+              "addressBookId": {
+                "type": "integer",
+                "description": "Address Book Id"
+              },
+              "addressBookType": {
+                "type": "string",
+                "description": "Address Book Type (Standard or Dynamic)"
+              },
+              "appId": {
+                "type": "string",
+                "description": "Application API Id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getCampaignAddressBooksResponse": {
+      "title": "response",
+      "description": "Collection of Campaign Address Books",
+      "properties": {
+        "lastPollTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of last database poll. Value should be passed in \"updatedSince\" parameter on next call"
+        },
+        "addressBooks": {
+          "type": "array",
+          "description": "Collection of Address Books assigned to the Campaign",
+          "items": {
+            "title": "AddressBook",
+            "description": "Address Book",
+            "properties": {
+              "addressBookName": {
+                "type": "string",
+                "description": "Address Book Name"
+              },
+              "addressBookId": {
+                "type": "integer",
+                "description": "Address Book Id"
+              },
+              "addressBookType": {
+                "type": "string",
+                "description": "Address Book Type (Standard or Dynamic)"
+              },
+              "appId": {
+                "type": "string",
+                "description": "Application API Id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSkillAddressBooksResponse": {
+      "title": "response",
+      "description": "Collection of Skills Address Books",
+      "properties": {
+        "lastPollTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of last database poll. Value should be passed in \"updatedSince\" parameter on next call"
+        },
+        "addressBooks": {
+          "type": "array",
+          "description": "Collection of Address Books assigned to the Skill",
+          "items": {
+            "title": "AddressBook",
+            "description": "Address Book",
+            "properties": {
+              "addressBookName": {
+                "type": "string",
+                "description": "Address Book Name"
+              },
+              "addressBookId": {
+                "type": "integer",
+                "description": "Address Book Id"
+              },
+              "addressBookType": {
+                "type": "string",
+                "description": "Address Book Type (Standard or Dynamic)"
+              },
+              "appId": {
+                "type": "string",
+                "description": "Application API Id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getTeamAddressBooksResponse": {
+      "title": "response",
+      "description": "Collection of Team Address Books",
+      "properties": {
+        "lastPollTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of last database poll. Value should be passed in \"updatedSince\" parameter on next call"
+        },
+        "addressBooks": {
+          "type": "array",
+          "description": "Collection of Address Books assigned to the Team",
+          "items": {
+            "title": "AddressBook",
+            "description": "Address Book",
+            "properties": {
+              "addressBookName": {
+                "type": "string",
+                "description": "Address Book Name"
+              },
+              "addressBookId": {
+                "type": "integer",
+                "description": "Address Book Id"
+              },
+              "addressBookType": {
+                "type": "string",
+                "description": "Address Book Type (Standard or Dynamic)"
+              },
+              "appId": {
+                "type": "string",
+                "description": "Application API Id"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

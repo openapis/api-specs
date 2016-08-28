@@ -1,0 +1,93 @@
+{
+  "reset_password": {
+    "put": {
+      "tags": [ "Authenticate" ],
+      "summary": "Resets an agent's password",
+      "operationId": "passwordReset",
+      "description": "This method requires the agentId and will reset the password for this Agent to the string supplied in the requestedPassword parameter.  The same password complexity rules that are required in Central are necessary for this API as well.<br/><br/><b>NOTE:</b> If you have the \"Generate Random Passwords\" option enabled in this user's Security Profile, you will not be allowed to provide a requestedPassword.  In this case you should just call the method without this parameter and the platform will generate a new password and email it to the address associated with this user configuration.<div class='tabs_wrapper' data-path='admin_agents_putResetPassword.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "agentId",
+          "description": "ID of agent",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "path"
+        },
+        {
+          "name": "requestedPassword",
+          "description": "The string that will replace the current Agent password.",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "forceChangeOnLogon",
+          "description": "Requires the Agent to change the password on the next login.",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent id."
+        },
+        "400": {
+          "description": "<p>Password must be supplied.</p><p>Password must not be supplied.</p><p>Password must be changed on logon.</p><p>Password complexity rules not met.</p>"
+        },
+        "403": {
+          "description": "Insufficient permissions."
+        }
+      }
+    }
+  },
+  "change_password": {
+    "put": {
+      "tags": [ "Authenticate" ],
+      "summary": "Changes an Agent's Password",
+      "operationId": "PasswordChange",
+      "description": "This method will change the password of the Agent that retrieved the token being used to make this call.  It will not change the password of other Agents.  You can use the <a href='/API/AuthenticationAPI#!/Authenticate/passwordReset'>PUT /agents/{agentId}/reset-password</a> API to reset the password of an Agent that you have permission to manage.<div class='tabs_wrapper' data-path='admin_agents_putChangePassword.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "currentPassword",
+          "description": "Agent's current Password",
+          "type": "string",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "newPassword",
+          "description": "Agent's new password.  Must comply with complexity rules",
+          "type": "string",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>currentPassword is incorrect or missing.</p><p>newPassword is missing.</p><p>newPassword complexity rules not met.</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token."
+        },
+        "403": {
+          "description": "Forbidden. Check My Accounts permissions for user"
+        }
+      }
+    }
+  }
+}
