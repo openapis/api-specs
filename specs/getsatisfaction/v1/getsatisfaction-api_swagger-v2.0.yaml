@@ -69,7 +69,7 @@ paths:
             $ref: "#/definitions/TopicsData"
   /topics.json:
     get:
-      summary: "Get Company Topics"
+      summary: "Get Topics"
       description: "Getting the authenticated user’s details"
       tags:
         - topic
