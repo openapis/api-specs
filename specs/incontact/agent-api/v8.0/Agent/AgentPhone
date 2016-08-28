@@ -1,0 +1,121 @@
+{
+  "agent_phone_dial": {
+    "post": {
+      "tags": [ "AgentPhone" ],
+      "summary": "Dial agent phone",
+      "operationId": "dialAgentPhone",
+      "description": "The platform will automatically attempt to connect the agent phone or station if it is not connected, and a call is routed to the agent. You can, however, choose to manually connect the agent phone through this API call.<br/>When the agent session starts, the agent phone number or station ID is indicated at that time. The agent phone number or station ID is active until the session ends. This API call simply instructs the platform to dial the agent phone.<br/>No data is returned with the API call. However, agent phone events are generated when the agent phone is being dialed, when it is answered, and when it is disconnected. These will be retrieved through the <a href='/agent.html#!/sessions/getNextEvent_get_3'>get-next-event</a> API call.<div class='tabs_wrapper' data-path='agent_agentPhone_postSessionIDAgentPhoneDial.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "Invalid call status."
+        }
+      }
+    }
+  },
+  "agent_phone_mute": {
+    "post": {
+      "tags": [ "AgentPhone" ],
+      "summary": "Mute agent phone",
+      "operationId": "muteAgentPhone",
+      "description": "You can mute the agent phone so that other parties on the call cannot hear the agent. This allows you to place a control in your user interface that allows the agent to request that the agent phone be muted.<br/>When the agent phone is muted, you can request that the phone be unmuted with the \"unmute\" API call (below).<br/>No data is returned with the API call. However, agent phone events are generated when the agent phone is muted and unmuted. These will be retrieved through the <a href='/agent.html#!/sessions/getNextEvent_get_3'>get-next-event</a> API call.<div class='tabs_wrapper' data-path='agent_agentPhone_postSessionIDAgentPhoneMute.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session Id"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "agent_phone_unmute": {
+    "post": {
+      "tags": [ "AgentPhone" ],
+      "summary": "Unmute agent leg",
+      "operationId": "unmuteAgentLeg",
+      "description": "If the agent phone is muted, you can use this API call to unmute the agent phone. See \"Mute Agent Phone\" above.<br/>No data is returned with the API call. However, agent phone events are generated when the agent phone is muted and unmuted. These will be retrieved through the <a href='/agent.html#!/sessions/getNextEvent_get_3'>get-next-event</a> API call.<div class='tabs_wrapper' data-path='agent_agentPhone_postSessionIDAgentPhoneUnmute.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session Id"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "agent_phone_end": {
+    "post": {
+      "tags": [ "AgentPhone" ],
+      "summary": "Ends the agent's phone call",
+      "operationId": "disconnectAgentPhone",
+      "description": "The platform will automatically disconnect the agent phone after a configurable period of time of unused (see the inContact NG documentation for information on how to configure the timeout period). This configurable time period is to allow the agent to receive consecutive calls more rapidly, without having to take time to set up and tear down the agent phone connection.<br/>You can also use this API call to manually end the agent phone connection.<br/>No data is returned with the API call. However, agent phone events are generated when the agent phone is being dialed, when it is answered, and when it is disconnected. These will be retrieved through the <a href='/agent.html#!/sessions/getNextEvent_get_3'>get-next-event</a> API call.<div class='tabs_wrapper' data-path='agent_agentPhone_postSessionIDAgentPhoneEnd.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "Invalid call status."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "sessionId": {
+        "name": "sessionId",
+        "description": "Agent Session Id",
+        "required": true,
+        "type": "string",
+        "in": "path"
+      }
+    }
+  }
+}

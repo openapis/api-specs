@@ -1,0 +1,561 @@
+{
+  "agent_sessions": {
+    "post": {
+      "tags": [ "Sessions" ],
+      "summary": "Starts an agent session",
+      "operationId": "startSession",
+      "description": "<span><p>Most of the Agent API resources can only be accessed through an \"Agent Session\". An agent session is started by POST-ing a new session request to the \"agent-sessions\" collection resource. The context for the agent-sessions collection is specified in the API token that you receive from the platform when your application authenticates and requests a token. \"Agent-sessions\" applies to the user who's credentials were used to request the API token.</p><p>When you start an agent session by POST-ing to the agent-sessions collection resource, the session is started for the agent whose credentials were used to retrieve the API token that is used when calling the \"start session\" method.<br/><br/>If you wish to create an agent session using the Impersonate Agent capability that is enabled in your security profile in Central, you will need to pass the ID of that agent you wish to impersonate in the asAgentId parameter.  This will allow you to interact with that session as if you were that agent with their associated profile.  All reporting will indicate if any actions associated with the agent session are done by the agent themselves or by someone impersonating that agent.</p><p><b>NOTE:</b> You must have a Password or an Implicit API token to start an agent session. A Client Token will not be sufficient, since it doesn’t have an agent \"user context\" (i.e. it’s not associated with an agent.)<div class='tabs_wrapper' data-path='Agent_sessions_postAgentSessions.html'></div></p></span>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "stationId",
+          "description": "A Station Id, either this or stationPhoneNumber is required",
+          "required": false,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "stationPhoneNumber",
+          "description": "Agent phone number, either this or stationId is required.  If both are supplied this takes precedence.",
+          "required": false,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "default": 300,
+          "description": "Time allowed for idle session to remain active. Value between 30 and 300 seconds.  0 value will use default which is 300 seconds.  Session will be ended after this timeout if the agent is in an Unavailable state. If the agent is in an active contact when the timeout occurs, the next agent state is set to Unavailable and then when that contact ends, the session is also ended.",
+          "in": "query",
+          "maximum": 300,
+          "minimum": 30,
+          "name": "inactivityTimeout",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "default": false,
+          "description": "If true, the agent session will be ended after the timeout period of inactivity regardless of agent state. Default is false.",
+          "enum": [ "true", "false" ],
+          "in": "query",
+          "name": "inactivityForceLogout",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "asAgentId",
+          "description": "Allows session to be started as the agentId.  Token agent must have Impersonate Agent enabled in security profile.",
+          "required": false,
+          "type": "integer",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "schema": {
+            "$ref": "#/definitions/getSessionsResponse"
+         }
+        },
+        "400": {
+          "description": "<p>Phone number or station ID is in use.</p><p>Invalid Station or Phone Number</p><p>Concurrent agent limit or station limit exceeded.</p><p>Invalid session timeout value.  Timeout value must be 30 to 300, or 0 for default.</p><p>Invalid Agent Id.</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Insufficient permissions"
+        },
+        "409": {
+          "description": "Cannot start a session at this time.  Agent session already started."
+        }
+      }
+    }
+  },
+  "agent_sessions_join": {
+    "post": {
+      "tags": [ "Sessions" ],
+      "summary": "Joins an existing agent session",
+      "operationId": "joinSession",
+      "description": "Multiple devices or applications can log into the same agent session simultaneously. This makes it easy to handle things like UI synchronization of the agent UI across different browser tabs, or to build solutions that involve different processes logged in as the same user at the same time.<br><br>When you attempt to start a session for a user that already has an active session, the API will return an error code (409 Conflict) indicating that a session can’t be started because one already exists. You can then request to join the session. The agent phone number or station ID will remain as it was when the session was originally started. The new process will receive the same events as any existing processes that are already joined to the session.<br><br>If you wish to create an agent session using the Impersonate Agent capability that is enabled in your security profile in Central, you will need to pass the ID of that agent you wish to impersonate in the asAgentId parameter.  This will allow you to interact with that session as if you were that agent with their associated profile.  All reporting will indicate if any actions associated with the agent session are done by the agent themselves or by someone impersonating that agent.<div class='tabs_wrapper' data-path='Agent_sessions_postAgentSessionsJoin.html'></div></p></span>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "asAgentId",
+          "description": "Allows session to be joined as the agentId.  Token agent must have Impersonate Agent enabled in security profile.",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "schema": {
+            "$ref": "#/definitions/getSessionsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid Agent Id."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Insufficient permissions"
+        },
+        "409": {
+          "description": "Invalid Session"
+        }
+      }
+    }
+  },
+  "agent_sessions_sessionId": {
+    "delete": {
+      "tags": [ "Sessions" ],
+      "summary": "Ending an agent session",
+      "operationId": "endSession",
+      "description": "<span><p>Ending an agent session is similar to \"logging off\". Note that the Password Token is still valid and can be used in other API requests. The \"end session\" API request simply ends the agent’s session.</p><p><b>NOTE:</b>If there are processes that are joined to the agent session when it is ended, all of the processes will receive an event indicating that the session has ended. Ending the session from any one process that is joined to the session will end the session for all joined processes.<div class='tabs_wrapper' data-path='Agent_sessions_deleteAgentSessionsID.html'></div></p></span>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "forceLogoff",
+          "description": "Indicates that the agent session should be forced to end regardless of state considerations that would normally prevent a session end, for instance, if the agent has an active contact.",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "endContacts",
+          "description": "Indicates that any existing contacts (active or holding) should be immediately ended",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "ignorePersonalQueue",
+          "description": "Including this parameter forces the agent session to end regardless of items in the personal queue. Items in the agent’s personal queue will remain in the personal queue until another agent session is started, and the personal queue items can be delivered to the agent",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "<p>Agent must handle all contacts before ending the session.</p><p>Personal queue must be empty before ending the session.</p>"
+        }
+      }
+    }
+  },
+  "agent_sessions_sessionId_get_next_event": {
+    "get": {
+      "tags": [ "Sessions" ],
+      "summary": "Gets the next agent event description",
+      "operationId": "getNextEvent",
+      "description": "<span><p>When an agent session is started, events related to the session will occur on the platform. For instance, if the ACD routes a phone call to the agent, an \"incoming call\" event will occur on the platform. If the agent hangs up their agent station phone, an \"agent leg disconnected\" event occurs on the platform. There are many different events that can occur on the platform.</p><p>Event information is stored in an event queue for the agent session on the platform. Agent applications should regularly request event information from the platform in order to react to events that occur. A well-designed agent application will update its user interface in reaction to these events.</p><p>For instance, if the agent station phone hangs up, and the platform generates an \"agent leg disconnected\" event, your agent application should update the UI to indicate that the agent station is disconnected (assuming your agent application displays the agent station phone status.)</p><p>The inContact platform currently does not support a traditional \"publish-subscribe\" design pattern for receiving events. It is the responsibility of the agent client software to regularly poll for events on the inContact platform.</p><p>The inContact platform supports the \"comet\" design pattern (also known as \"Ajax Push\", \"Reverse Ajax\", \"Two-way-web\", \"HTTP Streaming\", and \"HTTP Server Push\".) This design pattern allows the agent client application to request events from the inContact platform, and the HTTP request will not return until an event occurs on the platform. This can prevent the agent application from being very \"chatty\", and will greatly reduce the number of event polling requests needed. Because the event request is a \"blocking\" request (i.e. the API request doesn’t return until there is an event to retrieve), you should make these requests in a background thread.</p><p>When you request events from the platform, you must specify a \"timeout\" value (in seconds) after which the request will return, even if there are no events. Note that if an event occurs before the timeout period, the request will return the event immediately. Your application should dispatch a handler to handle the event, and immediately request new events again.</p><p>The timeout value must be between 0 and 60 seconds. A value of \"0\" causes the request to return immediately, whether there are events or not. Any value over 60, or any non-integer value, will result in an error response from the API.</p><p>Each request for events from the inContact platform will return two things:</p><p style=\"margin-left: 40px;\">1) A new session ID, which should be used in the subsequent event poll request<br/>2) A collection of events that have occurred since the previous event poll request, if any</p><p>The session ID that is returned with each event poll request contains information about the most recently-returned event sequence number. This is why it is important that you request new event data using the new session ID that is returned with the previous event poll request. If you ever use an older session ID, the platform assumes that your agent client is \"out of sync\", and will send a collection of the most recent events for the agent state (available, unavailable, inbound contact, etc.), any contacts that are active for the agent session (including the state of each contact: holding, active, conferenced, etc.), and the agent station state (whether it is active or not). Along with this \"refresh collection\" of events, you will also get a new session ID that you should use for future event poll requests. This will ensure that you only get most recent events as they occur, rather than getting the refresh event collection with each request.</p><p>If you ever need to get a full refresh event set, you should make the event request on an older session ID. Agent applications typically should use the original session ID that is returned when the agent session is first started to get a refresh event collection.</p><p>A typical well-designed agent application running against the inContact platform will have a background thread that polls for events, and dispatches a handler to handle any events that are returned, so that it can immediately request additional events. The comet pattern used by the inContact platform will prevent this background thread from \"thrashing\", or running so frequently that it impacts performance. The event polling thread will receive events as soon as they occur.<div class='tabs_wrapper' data-path='Agent_sessions_getNextEvent.html'></div></p></span>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "timeout",
+          "description": "must be between 0 and 60 seconds",
+          "required": true,
+          "allowMultiple": false,
+          "type": "integer",
+          "format": "int32",
+          "in": "query",
+          "minimum": 0,
+          "maximum": 60
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getNextEventResponse"
+          }
+        },
+        "304": {
+          "description": "No Events"
+        },
+        "400": {
+          "description": "Invalid Timeout. Value must be between 0-60."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Session Id"
+        },
+        "409": {
+          "description": "Session Ended"
+        }
+      }
+    }
+  },
+  "agent_sessions_sessionId_continue_reskill": {
+    "post": {
+      "tags": [ "Sessions" ],
+      "summary": "Continue or cancel a reskill call during closed hours",
+      "operationId": "Continue Reskill",
+      "description": "This method allows an application to decide how to handle a call received outside of the normal operating hours of an agent.  By passing \"true\" with this method you allow the call to be reskilled and continue.  By passing \"false\" the contact is ended.<div class='tabs_wrapper' data-path='Agent_sessions_postContinueReskill.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "continueReskill",
+          "description": "Continue or cancel reskill.",
+          "type": "boolean",
+          "in": "body"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        }
+      }
+    }
+  },
+  "agent_sessions_sessionId_interactions_contactId_disposition": {
+    "post": {
+      "tags": [ "Sessions" ],
+      "summary": "Dispositions a Contact",
+      "operationId": "DispositionContact",
+      "description": "<span><p>This method sets the primary and secondary dispositions on a contact after that contact has been disconnected.  <br/><br/>This API call allows you to select the Disposition, provide any notes as part of the dispositioning of the contact, and to provide a commitment amount, or a callback time and phone number.  <br/><br/><b><span>NOTE:</span></b>  Personal Connection contacts do not currently support secondary dispositions and will return an error if it is sent.  <br/><br/>When a Personal Connection contact ends, if the skill is configured to allow or require a Disposition for the call, the Agent can be prompted to select a Disposition for the call.  Using a skillId, you can retrieve a list of Disposition codes for the Skill using the Admin API call: <a href='/admin.html#!/skills/Disposition_List'>GET /skills/{skillId}/dispositions</a>. <br/><br/>The Disposition codes are returned with a set of flags that indicate whether or not a \"commitment amount\" (a number) is required as part of the Disposition, or whether or not the agent should be given an option with the Disposition to reschedule the callback. In either case, if the Agent chooses a Disposition that requires a commitment amount, you must send an amount back with the Disposition API call. Likewise, if the Disposition code selected requires a reschedule date, you must send the reschedule date with the Disposition call.<br/><br/><b><i><span style='color:red'>NOTE:</span></i></b> This API also replaces the <a>PUT /agent-sessions/{sessionId}/interactions/{contactId}/disposition-dialer</a> API that was previously used for Personal Connection contacts.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDDisposition.html'></div></p></span>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact Id to disposition",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "primaryDispositionId",
+          "description": "Primary Disposition Id",
+          "type": "integer",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "primaryDispositionNotes",
+          "description": "Primary Disposition Notes",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "primaryCommitmentAmount",
+          "description": "Commitment Dollar Amount",
+          "type": "number",
+          "format": "double",
+          "in": "query"
+        },
+        {
+          "name": "primaryCallbackTime",
+          "description": "This is an ISO 8601 formatted date/time",
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "primaryCallbackNumber",
+          "description": "Callback Number",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "secondaryDispositionId",
+          "description": "Secondary Disposition Id",
+          "type": "integer",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Invalid primaryDispositionId</p><p>Invalid secondaryDispositionId</p><p>Invalid primaryCommitmentAmount</p><p>Invalid primaryCallbackTime</p><p>Invalid primaryCallbackNumber</p><p>Cannot be rescheduled</p><p>Contact type does not allow Personal Connection parameters</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "<p>Invalid sessionId</p><p>Invalid contactId</p>"
+        },
+        "409": {
+          "description": "<p>Contact must be disconnected before dispositioning</p><p>Skill does not allow additional disposition</p>"
+        }
+      }
+    }
+  },
+  "agent_sessions_sessionId_state": {
+    "post": {
+      "tags": [ "Sessions" ],
+      "summary": "Set agent status",
+      "operationId": "setAgentStatus",
+      "description": "<span><p>This method will set the state of the Agent who owns the session specified by sessionId.</p><p>An Agent can only be set to either \"Available\" or \"Unavailable\"  state.  The other Agent States are controlled by the platform as it route contacts or as the Agent logs in and out of the platform. There is only one \"Available\" state, but there are multiple reasons an Agent can be in the \"Unavailable\" state as described below:</p><p style=\"margin-left: 40px;\">1) The Agent can be in the default \"Unavailable\" state with no reason code. This is the state when an agent session is started.<br/>2) The Agent can be assigned a reason code for being \"Unavailable\" from a collection of reasons known as \"unavailable codes\". These unavailable codes are created by the customer. For example, they may have an \"On Break\" unavailable code, a \"Lunch\" unavailable code, or a \"Training\" unavailable code, etc.  These unavailable codes can be retrieved from the <b><i><a href='AdminAPI#!/General/getTeamUnavailableCodes'>GET /admin/teams/{teamId}/unavailable-codes</a></i></b> method.<br/>3) The Agent can be in an \"After Contact Work\" (ACW) state. These are special unavailable states that are created by the customer on the inContact platform, and are unavailable codes with the \"ACW\" flag. These unavailable codes can only be used as \"reason\" if the Agent is handling an active contact, otherwise the API will return a 409 error</p><p>Unavailable codes that are \"ACW\" states will have the \"isAcw\" flag set to \"true\". Note that ACW unavailable codes can also have an auto-timeout, which is used by the platform to automatically end the ACW unavailable code and move the Agent to their \"next\" state. You can use this to display a countdown timer to the Agent when the ACW unavailable code begins, enabling the Agent to see how much time they have before the ACW unavailable code ends.</p><p>Setting the Agent’s session to an ACW unavailable code causes the Agent to go into an \"Unavailable\" state during which the time is counted against the active interaction time, even though the interaction with the Patron has ended. While in this state, the Agent will not be delivered other interactions (because they are \"Unavailable\"), but the time is recorded as \"work\" time for the interaction that just ended.<div class='tabs_wrapper' data-path='Agent_sessions_postState.html'></div></p></span>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "state",
+          "description": "Agent State",
+          "required": true,
+          "enum": [ "Available", "Unavailable" ],
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "reason",
+          "description": "Unavailable code, if the requested state is Unavailable",
+          "required": false,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid state request.  Use \"Available\" or \"Unavailable\".</p><p>Invalid unavailable code.</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session Id."
+        },
+        "409": {
+          "description": "Invalid State."
+        }
+      }
+    }
+  },
+  "agent_sessions_sessionId_submit_feedback": {
+    "post": {
+      "tags": [ "Sessions" ],
+      "summary": "Post a Feedback",
+      "operationId": "Send Feedback",
+      "description": "This method allows agents to enter \"feedback\" from an agent application. This feedback can be viewed by Managers, as well as by inContact personnel, so that patterns of issues can be identified (i.e. if all of the agents are experiencing voice quality issues, dropped calls, etc.).<br/><br/>The feedback is submitted with a category, a priority, and some comments.  The category and priority options can be retrieved from the <a href='/API/AdminAPI#!/General/Categories_and_Priorities'>GET /feedback-categories-and-priorities</a> method in the AdminAPI scope.<div class='tabs_wrapper' data-path='Agent_sessions_postFeedback.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "categoryId",
+          "description": "Id from 0-15 of feedback category",
+          "required": true,
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "priority",
+          "description": "One of (Information, Average, High, Critical)",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "comment",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "customData",
+          "description": "Custom data to be used by scripts",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Bad Request</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "agent_sessions_sessionId_interactions_contactId_custom_data": {
+    "post": {
+      "tags": [ "Sessions" ],
+      "summary": "Post custom data to a Contact",
+      "operationId": "Post Custom Data",
+      "description": "This method enables you to create call-attached data for an existing contact identified by contactId.  The method will send the script associated with the contactId into the OnData branch.  You can send up to 20 parameters, value pairs no larger than 32k in total size.<div class='tabs_wrapper' data-path='agent_sessions_postCustomData.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the customer.",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "indicatorName",
+          "description": "Name of the indicator.",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "data",
+          "description": "Data to be sent. Must be in a | delimited string (e.g. firstName=John|lastName=Doe)",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid parameter length. Limited to 20 parameters and less than 32k"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "sessionId": {
+        "name": "sessionId",
+        "description": "Agent Session Id",
+        "required": true,
+        "type": "string",
+        "in": "path"
+      }
+    },
+    "getSessionsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": ["sessionId"],
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "description": "The Session Id"
+        }
+      }
+    },
+    "getNextEventResponse": {
+      "title": " ",
+      "type": "object",
+      "required": ["sessionId", "events"],
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "description": "Agent Session Id"
+        },
+        "events": {
+          "type": "array",
+          "description": "Collection of Events",
+          "items": {
+            "title": "Event",
+            "description": "Event",
+            "required": [ "IISHost", "VCHost", "Type" ],
+            "properties": {
+              "IISHost": {
+                "type": "string",
+                "description": "IIS Host"
+              },
+              "VCHost": {
+                "type": "string",
+                "description": "VC Host"
+              },
+              "Type": {
+                "type": "string",
+                "description": "Event Type"
+              },
+              "eventProperty_1": {
+                "type": "object",
+                "description": "Event property that is returned depending on event type. The property names are dependent on the event type"
+              },
+              "eventProperty_2": {
+                "type": "string",
+                "description": "String, Number, Date, Boolean"
+              },
+              "eventProperty_3": {
+                "type": "array",
+                "description": "Collection of objects"
+              },
+              "eventProperty_...": {
+                "type": "object"
+              },
+              "eventProperty_n": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
