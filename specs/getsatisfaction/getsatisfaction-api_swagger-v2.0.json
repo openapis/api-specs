@@ -268,7 +268,7 @@
                         "type": "string",
                         "description": "The topic status. Values are null, pending, active, complete, rejected",
                         "enum": [
-                          null,
+                          "null",
                           "pending",
                           "active",
                           "complete",
@@ -558,7 +558,7 @@
                         "type": "string",
                         "description": "The topic status. Values are null, pending, active, complete, rejected",
                         "enum": [
-                          null,
+                          "null",
                           "pending",
                           "active",
                           "complete",
@@ -874,7 +874,7 @@
           "type": "string",
           "description": "The topic status. Values are null, pending, active, complete, rejected",
           "enum": [
-            null,
+            "null",
             "pending",
             "active",
             "complete",
@@ -1099,7 +1099,7 @@
                 "type": "string",
                 "description": "The topic status. Values are null, pending, active, complete, rejected",
                 "enum": [
-                  null,
+                  "null",
                   "pending",
                   "active",
                   "complete",
