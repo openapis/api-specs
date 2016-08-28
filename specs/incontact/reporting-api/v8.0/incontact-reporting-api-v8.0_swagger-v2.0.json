@@ -1,0 +1,98 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Reporting commands",
+    "version": "8.0",
+    "title": "ReportingAPI"
+  },
+  "tags": [
+    {
+      "name": "Reporting",
+      "description": "<b><i><span style=color:red>(Updated in v8.0)</span></i></b> Historical Reporting"
+    }
+  ],
+  "schemes": [ "https" ],
+  "paths": {
+    "/agents/{agentId}/interaction-history": {
+      "$ref": "Reporting/Reporting#/interaction_history"
+    },
+    "/agents/{agentId}/interaction-recent": {
+      "$ref": "Reporting/Reporting#/interaction_recent"
+    },
+    "/agents/{agentId}/login-history": {
+      "$ref": "Reporting/Reporting#/agents-agentId-login-history"
+    },
+    "/agents/{agentId}/statehistory": {
+      "$ref": "Reporting/Reporting#/statehistory"
+    },
+    "/agents/performance": {
+      "$ref": "Reporting/Reporting#/performance"
+    },
+    "/agents/{agentId}/performance": {
+      "$ref": "Reporting/Reporting#/agentId_performance"
+    },
+    "/contacts/{contactId}": {
+      "$ref": "Reporting/Reporting#/contacts_contactId"
+    },
+    "/contacts/completed": {
+      "$ref": "Reporting/Reporting#/contacts_completed"
+    },  
+    "/contacts/{contactId}/call-quality": {
+      "$ref": "Reporting/Reporting#/contacts_contactId_callQuality"
+    },  
+    "/contacts/{contactId}/statehistory": {
+      "$ref": "Reporting/Reporting#/contacts_statehistory"
+    },
+    "/contacts/{contactId}/custom-data": {
+      "$ref": "Reporting/Reporting#/custom_data"
+    },
+    "/skills/summary": {
+      "$ref": "Reporting/Reporting#/summary"
+    },
+    "/skills/{skillId}/summary": {
+      "$ref": "Reporting/Reporting#/skillId_summary"
+    },
+    "/skills/sla-summary": {
+      "$ref": "Reporting/Reporting#/sla_summary"
+    },
+    "/skills/{skillId}/sla-summary": {
+      "$ref": "Reporting/Reporting#/skillId_sla_summary"
+    },
+    "/teams/performance-total": {
+      "$ref": "Reporting/Reporting#/performance_total"
+    },
+    "/teams/{teamId}/performance-total": {
+      "$ref": "Reporting/Reporting#/teamId_performance_total"
+    },
+    "/reports": {
+      "$ref": "Reporting/Reporting#/reports"
+    },
+    "/report-jobs": {
+      "$ref": "Reporting/Reporting#/report_jobs"
+    },
+    "/report-jobs/{jobId}": {
+      "$ref": "Reporting/Reporting#/report_jobs_jobId"
+    },
+    "/report-jobs/{reportId}": {
+      "$ref": "Reporting/Reporting#/report_jobs_reportId"
+    },    
+    "/wfo-data/ascm": {
+      "$ref": "Reporting/Reporting#/wfo-data-ascm"
+    },    
+    "/wfo-data/asi": {
+      "$ref": "Reporting/Reporting#/wfo-data-asi"
+    },    
+    "/wfo-data/csi": {
+      "$ref": "Reporting/Reporting#/wfo-data-csi"
+    },    
+    "/wfo-data/ftci": {
+      "$ref": "Reporting/Reporting#/wfo-data-ftci"
+    },    
+    "/wfo-data/osi": {
+      "$ref": "Reporting/Reporting#/wfo-data-osi"
+    },    
+    "/wfo-data/qm": {
+      "$ref": "Reporting/Reporting#/wfo-data-qm"
+    }
+  }
+}
