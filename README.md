@@ -2,9 +2,10 @@
 
 A collection of API specifications.
 
-## Specifications
+Reasons for building a set of API specifications include:
 
-| API Service | Source | Reference |
-|-------------|--------|-----------|
-| [Get Satisfaction](specs/getsatisfaction) | Manual creation | [API Documentation](https://education.getsatisfaction.com/reference-guide/api/api-resources/) |
-| [Medium](specs/medium) | Manual creation | [API Documentation](https://github.com/Medium/medium-api-docs) |
+1. Easily use API tools like Postman and MuleSoft
+1. Auto-generate SDKs
+1. Create API Explorers when permitted
+
+Some specifications are provided by API providers and others are built manually from documentation.
