@@ -667,7 +667,7 @@
           "type": "boolean",
           "description": "Whether the user is a champion. Returns “true” or “false”"
         },
-        "employee\"": {
+        "employee": {
           "type": "boolean",
           "description": "Whether the user is an employee. Returns “true” or “false”"
         },
