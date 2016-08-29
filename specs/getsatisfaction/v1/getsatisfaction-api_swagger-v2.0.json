@@ -138,7 +138,7 @@
                             "type": "boolean",
                             "description": "Whether the user is a champion. Returns “true” or “false”"
                           },
-                          "employee\"": {
+                          "employee": {
                             "type": "boolean",
                             "description": "Whether the user is an employee. Returns “true” or “false”"
                           },
@@ -197,7 +197,7 @@
                             "type": "string",
                             "description": "The text associated with the emoticon face."
                           },
-                          "intensity\"": {
+                          "intensity": {
                             "type": "integer",
                             "description": "The intensity of the emoticon on a scale of 0 to 4. 0 – hides the emoticon, 1 – shows the emoticon, 2 – shows the emoticon with one exclamation mark, 3 – shows the emoticon with two exclamation marks, 4 – shows the emoticon with two exclamation marks",
                             "enum": [
@@ -443,7 +443,7 @@
                             "type": "boolean",
                             "description": "Whether the user is a champion. Returns “true” or “false”"
                           },
-                          "employee\"": {
+                          "employee": {
                             "type": "boolean",
                             "description": "Whether the user is an employee. Returns “true” or “false”"
                           },
@@ -502,7 +502,7 @@
                             "type": "string",
                             "description": "The text associated with the emoticon face."
                           },
-                          "intensity\"": {
+                          "intensity": {
                             "type": "integer",
                             "description": "The intensity of the emoticon on a scale of 0 to 4. 0 – hides the emoticon, 1 – shows the emoticon, 2 – shows the emoticon with one exclamation mark, 3 – shows the emoticon with two exclamation marks, 4 – shows the emoticon with two exclamation marks",
                             "enum": [
@@ -705,7 +705,7 @@
           "type": "string",
           "description": "The text associated with the emoticon face."
         },
-        "intensity\"": {
+        "intensity": {
           "type": "integer",
           "description": "The intensity of the emoticon on a scale of 0 to 4. 0 – hides the emoticon, 1 – shows the emoticon, 2 – shows the emoticon with one exclamation mark, 3 – shows the emoticon with two exclamation marks, 4 – shows the emoticon with two exclamation marks",
           "enum": [
@@ -763,7 +763,7 @@
               "type": "boolean",
               "description": "Whether the user is a champion. Returns “true” or “false”"
             },
-            "employee\"": {
+            "employee": {
               "type": "boolean",
               "description": "Whether the user is an employee. Returns “true” or “false”"
             },
@@ -822,7 +822,7 @@
               "type": "string",
               "description": "The text associated with the emoticon face."
             },
-            "intensity\"": {
+            "intensity": {
               "type": "integer",
               "description": "The intensity of the emoticon on a scale of 0 to 4. 0 – hides the emoticon, 1 – shows the emoticon, 2 – shows the emoticon with one exclamation mark, 3 – shows the emoticon with two exclamation marks, 4 – shows the emoticon with two exclamation marks",
               "enum": [
@@ -988,7 +988,7 @@
                     "type": "boolean",
                     "description": "Whether the user is a champion. Returns “true” or “false”"
                   },
-                  "employee\"": {
+                  "employee": {
                     "type": "boolean",
                     "description": "Whether the user is an employee. Returns “true” or “false”"
                   },
@@ -1047,7 +1047,7 @@
                     "type": "string",
                     "description": "The text associated with the emoticon face."
                   },
-                  "intensity\"": {
+                  "intensity": {
                     "type": "integer",
                     "description": "The intensity of the emoticon on a scale of 0 to 4. 0 – hides the emoticon, 1 – shows the emoticon, 2 – shows the emoticon with one exclamation mark, 3 – shows the emoticon with two exclamation marks, 4 – shows the emoticon with two exclamation marks",
                     "enum": [

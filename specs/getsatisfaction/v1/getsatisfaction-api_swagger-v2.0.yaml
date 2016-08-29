@@ -184,7 +184,7 @@ definitions:
       feeling:
         type: string
         description: The text associated with the emoticon face.
-      intensity":
+      intensity:
         type: integer
         description: The intensity of the emoticon on a scale of 0 to 4. 0 – hides the emoticon, 1 – shows the emoticon, 2 – shows the emoticon with one exclamation mark, 3 – shows the emoticon with two exclamation marks, 4 – shows the emoticon with two exclamation marks
         enum:
