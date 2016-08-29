@@ -31,6 +31,41 @@ schemas:
         default: 1
         required: false
         displayName: page
+      active_since:
+        description: Filter by the time of the last activity in the community. Time is set in seconds since epoch.
+        type: integer
+        default: 0
+        required: false
+        displayName: active_since
+      company:
+        description: Filter by company ID
+        type: string
+        default: 
+        required: false
+        displayName: company
+      include_archived:
+        description: Filter by Archived Topics
+        type: boolean
+        required: true
+        displayName: include_archived
+      product:
+        description: Filter by product name in API queries where the company is specified (for example, /companies/[company name or company ID]/topics)
+        type: string
+        default: 
+        required: false
+        displayName: product
+      q:
+        description: Search for a particular string
+        type: string
+        default: 
+        required: false
+        displayName: q
+      query:
+        description: Search for a particular string
+        type: string
+        default: 
+        required: false
+        displayName: query
       sort:
         description: Sort topics by value
         default: 
@@ -64,6 +99,24 @@ schemas:
         - problem
         - question
         - update
+      tag:
+        description: Filter by tag
+        type: string
+        default: 
+        required: false
+        displayName: tag
+      user:
+        description: Filter by user ID
+        type: string
+        default: 
+        required: false
+        displayName: user
+      user_defined_code:
+        description: Filter by Private Tags
+        type: string
+        default: 
+        required: false
+        displayName: user_defined_code
 /topics.json:
   get:
     displayName: TopicsJson
@@ -81,6 +134,35 @@ schemas:
         default: 1
         required: false
         displayName: page
+      active_since:
+        description: Filter by the time of the last activity in the community. Time is set in seconds since epoch.
+        type: integer
+        default: 0
+        required: false
+        displayName: active_since
+      company:
+        description: Filter by company ID
+        type: string
+        default: 
+        required: false
+        displayName: company
+      include_archived:
+        description: Filter by Archived Topics
+        type: boolean
+        required: true
+        displayName: include_archived
+      q:
+        description: Search for a particular string
+        type: string
+        default: 
+        required: false
+        displayName: q
+      query:
+        description: Search for a particular string
+        type: string
+        default: 
+        required: false
+        displayName: query
       sort:
         description: Sort topics by value
         default: 
@@ -114,3 +196,21 @@ schemas:
         - problem
         - question
         - update
+      tag:
+        description: Filter by tag
+        type: string
+        default: 
+        required: false
+        displayName: tag
+      user:
+        description: Filter by user ID
+        type: string
+        default: 
+        required: false
+        displayName: user
+      user_defined_code:
+        description: Filter by Private Tags
+        type: string
+        default: 
+        required: false
+        displayName: user_defined_code

@@ -38,6 +38,52 @@
             "default": 1
           },
           {
+            "name": "active_since",
+            "in": "query",
+            "description": "Filter by the time of the last activity in the community. Time is set in seconds since epoch.",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "company",
+            "in": "query",
+            "description": "Filter by company ID",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "include_archived",
+            "in": "query",
+            "description": "Filter by Archived Topics",
+            "type": "boolean"
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "description": "Filter by product name in API queries where the company is specified (for example, /companies/[company name or company ID]/topics)",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search for a particular string",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Search for a particular string",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
             "name": "sort",
             "in": "query",
             "description": "Sort topics by value",
@@ -80,6 +126,30 @@
               "idea",
               "update"
             ],
+            "default": ""
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "description": "Filter by tag",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Filter by user ID",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "user_defined_code",
+            "in": "query",
+            "description": "Filter by Private Tags",
+            "required": false,
+            "type": "string",
             "default": ""
           }
         ],
@@ -343,6 +413,44 @@
             "default": 1
           },
           {
+            "name": "active_since",
+            "in": "query",
+            "description": "Filter by the time of the last activity in the community. Time is set in seconds since epoch.",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "company",
+            "in": "query",
+            "description": "Filter by company ID",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "include_archived",
+            "in": "query",
+            "description": "Filter by Archived Topics",
+            "type": "boolean"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search for a particular string",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Search for a particular string",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
             "name": "sort",
             "in": "query",
             "description": "Sort topics by value",
@@ -385,6 +493,30 @@
               "idea",
               "update"
             ],
+            "default": ""
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "description": "Filter by tag",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Filter by user ID",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "user_defined_code",
+            "in": "query",
+            "description": "Filter by Private Tags",
+            "required": false,
+            "type": "string",
             "default": ""
           }
         ],
