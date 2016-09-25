@@ -224,6 +224,9 @@
                             "type": "string",
                             "description": "The nickname of the user (not the “canonical name”)"
                           },
+                          "title": {
+                            "type": "string"
+                          },
                           "url": {
                             "type": "string",
                             "description": "The API path to the user’s information"
@@ -401,7 +404,7 @@
         "summary": "Get Topics",
         "description": "Getting the authenticated user’s details",
         "tags": [
-          "User"
+          "topic"
         ],
         "parameters": [
           {
@@ -591,6 +594,9 @@
                             "type": "string",
                             "description": "The nickname of the user (not the “canonical name”)"
                           },
+                          "title": {
+                            "type": "string"
+                          },
                           "url": {
                             "type": "string",
                             "description": "The API path to the user’s information"
@@ -762,6 +768,348 @@
           }
         }
       }
+    },
+    "/topics/{topicIdOrSlug}/replies.json": {
+      "get": {
+        "summary": "Get Topics Replies",
+        "description": "Get Topic Replies",
+        "tags": [
+          "topic"
+        ],
+        "parameters": [
+          {
+            "name": "topicIdOrSlug",
+            "in": "path",
+            "description": "The topicId or topic slug for the topic being queried",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter topic replies",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "best",
+              "star_promoted",
+              "company_promoted"
+            ],
+            "default": ""
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Return all company and star promoted replies",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "flat_promoted"
+            ],
+            "default": ""
+          },
+          {
+            "name": "include_comments",
+            "in": "query",
+            "description": "Exclude comments from the returned replies",
+            "required": false,
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of topic reply objects within a data envelope.",
+            "schema": {
+              "properties": {
+                "total": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "authenticated_user": {
+                        "properties": {
+                          "starred": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "url": {
+                        "type": "string"
+                      },
+                      "author": {
+                        "properties": {
+                          "at_sfn": {
+                            "type": "string",
+                            "description": "The URL path to the user’s profile page"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "The URL path to the full size image the user uploaded for their avatar"
+                          },
+                          "avatar_url_large": {
+                            "type": "string",
+                            "description": "The URL path to large sized avatar image"
+                          },
+                          "avatar_url_medium": {
+                            "type": "string",
+                            "description": "The URL path to medium sized avatar image"
+                          },
+                          "avatar_url_mini": {
+                            "type": "string",
+                            "description": "The URL path to a mini sized avatar image"
+                          },
+                          "avatar_url_small": {
+                            "type": "string",
+                            "description": "The URL path to small sized avatar image"
+                          },
+                          "canonical_name": {
+                            "type": "string",
+                            "description": "The slug for the user’s Get Satisfaction profile (/profile/[canonical name])"
+                          },
+                          "champion": {
+                            "type": "boolean",
+                            "description": "Whether the user is a champion. Returns “true” or “false”"
+                          },
+                          "employee": {
+                            "type": "boolean",
+                            "description": "Whether the user is an employee. Returns “true” or “false”"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "description": "The ID for the user"
+                          },
+                          "member_since": {
+                            "type": "string",
+                            "description": "The date and time when the user joined"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The nickname of the user (not the “canonical name”)"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "The API path to the user’s information"
+                          }
+                        }
+                      },
+                      "comments_url": {
+                        "type": "string"
+                      },
+                      "company_promoted": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "star_promoted": {
+                        "type": "boolean"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "topic_id": {
+                        "type": "integer"
+                      },
+                      "star_count": {
+                        "type": "integer"
+                      },
+                      "id": {
+                        "type": "integer"
+                      },
+                      "comment_count": {
+                        "type": "integer"
+                      },
+                      "employee": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/people/{userId}/replies": {
+      "get": {
+        "summary": "Get User Replies",
+        "description": "Get User Replies",
+        "tags": [
+          "topic"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The userId being queried for replies",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter topic replies",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "best",
+              "star_promoted",
+              "company_promoted"
+            ],
+            "default": ""
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Return all company and star promoted replies",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "flat_promoted"
+            ],
+            "default": ""
+          },
+          {
+            "name": "include_comments",
+            "in": "query",
+            "description": "Exclude comments from the returned replies",
+            "required": false,
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of topic reply objects within a data envelope.",
+            "schema": {
+              "properties": {
+                "total": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "authenticated_user": {
+                        "properties": {
+                          "starred": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "url": {
+                        "type": "string"
+                      },
+                      "author": {
+                        "properties": {
+                          "at_sfn": {
+                            "type": "string",
+                            "description": "The URL path to the user’s profile page"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "The URL path to the full size image the user uploaded for their avatar"
+                          },
+                          "avatar_url_large": {
+                            "type": "string",
+                            "description": "The URL path to large sized avatar image"
+                          },
+                          "avatar_url_medium": {
+                            "type": "string",
+                            "description": "The URL path to medium sized avatar image"
+                          },
+                          "avatar_url_mini": {
+                            "type": "string",
+                            "description": "The URL path to a mini sized avatar image"
+                          },
+                          "avatar_url_small": {
+                            "type": "string",
+                            "description": "The URL path to small sized avatar image"
+                          },
+                          "canonical_name": {
+                            "type": "string",
+                            "description": "The slug for the user’s Get Satisfaction profile (/profile/[canonical name])"
+                          },
+                          "champion": {
+                            "type": "boolean",
+                            "description": "Whether the user is a champion. Returns “true” or “false”"
+                          },
+                          "employee": {
+                            "type": "boolean",
+                            "description": "Whether the user is an employee. Returns “true” or “false”"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "description": "The ID for the user"
+                          },
+                          "member_since": {
+                            "type": "string",
+                            "description": "The date and time when the user joined"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The nickname of the user (not the “canonical name”)"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "The API path to the user’s information"
+                          }
+                        }
+                      },
+                      "comments_url": {
+                        "type": "string"
+                      },
+                      "company_promoted": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "star_promoted": {
+                        "type": "boolean"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "topic_id": {
+                        "type": "integer"
+                      },
+                      "star_count": {
+                        "type": "integer"
+                      },
+                      "id": {
+                        "type": "integer"
+                      },
+                      "comment_count": {
+                        "type": "integer"
+                      },
+                      "employee": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -814,6 +1162,9 @@
         "name": {
           "type": "string",
           "description": "The nickname of the user (not the “canonical name”)"
+        },
+        "title": {
+          "type": "string"
         },
         "url": {
           "type": "string",
@@ -910,6 +1261,9 @@
             "name": {
               "type": "string",
               "description": "The nickname of the user (not the “canonical name”)"
+            },
+            "title": {
+              "type": "string"
             },
             "url": {
               "type": "string",
@@ -1071,7 +1425,7 @@
         }
       }
     },
-    "TopicsData": {
+    "TopicsResponse": {
       "properties": {
         "data": {
           "type": "array",
@@ -1135,6 +1489,9 @@
                   "name": {
                     "type": "string",
                     "description": "The nickname of the user (not the “canonical name”)"
+                  },
+                  "title": {
+                    "type": "string"
                   },
                   "url": {
                     "type": "string",
@@ -1301,6 +1658,229 @@
         "total": {
           "type": "integer",
           "description": "number of results"
+        }
+      }
+    },
+    "Reply": {
+      "properties": {
+        "authenticated_user": {
+          "properties": {
+            "starred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "author": {
+          "properties": {
+            "at_sfn": {
+              "type": "string",
+              "description": "The URL path to the user’s profile page"
+            },
+            "avatar": {
+              "type": "string",
+              "description": "The URL path to the full size image the user uploaded for their avatar"
+            },
+            "avatar_url_large": {
+              "type": "string",
+              "description": "The URL path to large sized avatar image"
+            },
+            "avatar_url_medium": {
+              "type": "string",
+              "description": "The URL path to medium sized avatar image"
+            },
+            "avatar_url_mini": {
+              "type": "string",
+              "description": "The URL path to a mini sized avatar image"
+            },
+            "avatar_url_small": {
+              "type": "string",
+              "description": "The URL path to small sized avatar image"
+            },
+            "canonical_name": {
+              "type": "string",
+              "description": "The slug for the user’s Get Satisfaction profile (/profile/[canonical name])"
+            },
+            "champion": {
+              "type": "boolean",
+              "description": "Whether the user is a champion. Returns “true” or “false”"
+            },
+            "employee": {
+              "type": "boolean",
+              "description": "Whether the user is an employee. Returns “true” or “false”"
+            },
+            "id": {
+              "type": "integer",
+              "description": "The ID for the user"
+            },
+            "member_since": {
+              "type": "string",
+              "description": "The date and time when the user joined"
+            },
+            "name": {
+              "type": "string",
+              "description": "The nickname of the user (not the “canonical name”)"
+            },
+            "title": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "description": "The API path to the user’s information"
+            }
+          }
+        },
+        "comments_url": {
+          "type": "string"
+        },
+        "company_promoted": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "star_promoted": {
+          "type": "boolean"
+        },
+        "content": {
+          "type": "string"
+        },
+        "topic_id": {
+          "type": "integer"
+        },
+        "star_count": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "comment_count": {
+          "type": "integer"
+        },
+        "employee": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AuthenticatedUser": {
+      "properties": {
+        "starred": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RepliesResponse": {
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "authenticated_user": {
+                "properties": {
+                  "starred": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "url": {
+                "type": "string"
+              },
+              "author": {
+                "properties": {
+                  "at_sfn": {
+                    "type": "string",
+                    "description": "The URL path to the user’s profile page"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "description": "The URL path to the full size image the user uploaded for their avatar"
+                  },
+                  "avatar_url_large": {
+                    "type": "string",
+                    "description": "The URL path to large sized avatar image"
+                  },
+                  "avatar_url_medium": {
+                    "type": "string",
+                    "description": "The URL path to medium sized avatar image"
+                  },
+                  "avatar_url_mini": {
+                    "type": "string",
+                    "description": "The URL path to a mini sized avatar image"
+                  },
+                  "avatar_url_small": {
+                    "type": "string",
+                    "description": "The URL path to small sized avatar image"
+                  },
+                  "canonical_name": {
+                    "type": "string",
+                    "description": "The slug for the user’s Get Satisfaction profile (/profile/[canonical name])"
+                  },
+                  "champion": {
+                    "type": "boolean",
+                    "description": "Whether the user is a champion. Returns “true” or “false”"
+                  },
+                  "employee": {
+                    "type": "boolean",
+                    "description": "Whether the user is an employee. Returns “true” or “false”"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "description": "The ID for the user"
+                  },
+                  "member_since": {
+                    "type": "string",
+                    "description": "The date and time when the user joined"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The nickname of the user (not the “canonical name”)"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "The API path to the user’s information"
+                  }
+                }
+              },
+              "comments_url": {
+                "type": "string"
+              },
+              "company_promoted": {
+                "type": "boolean"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "star_promoted": {
+                "type": "boolean"
+              },
+              "content": {
+                "type": "string"
+              },
+              "topic_id": {
+                "type": "integer"
+              },
+              "star_count": {
+                "type": "integer"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "comment_count": {
+                "type": "integer"
+              },
+              "employee": {
+                "type": "boolean"
+              }
+            }
+          }
         }
       }
     }

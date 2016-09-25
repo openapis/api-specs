@@ -117,12 +117,12 @@ paths:
           type: "string"
           default: ""
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: "a list of topic objects within a data envelope."
           schema: 
-            $ref: "#/definitions/TopicsData"
+            $ref: "#/definitions/TopicsResponse"
   /topics.json:
     get:
       summary: "Get Topics"
@@ -219,14 +219,98 @@ paths:
           type: "string"
           default: ""
       produces:
-      - application/json
-      tags:
-        - User
+        - application/json
       responses:
         "200":
           description: "a list of topic objects within a data envelope."
           schema: 
-            $ref: "#/definitions/TopicsData"
+            $ref: "#/definitions/TopicsResponse"
+  /topics/{topicIdOrSlug}/replies.json:
+    get:
+      summary: "Get Topics Replies"
+      description: "Get Topic Replies"
+      tags:
+        - topic
+      parameters:
+        - name: "topicIdOrSlug"
+          in: "path"
+          description: "The topicId or topic slug for the topic being queried"
+          required: true
+          type: "string"
+        - name: "filter"
+          in: "query"
+          description: "Filter topic replies"
+          required: false
+          type: "string"
+          enum:
+            - best
+            - star_promoted
+            - company_promoted
+          default: ""
+        - name: "type"
+          in: "query"
+          description: "Return all company and star promoted replies"
+          required: false
+          type: "string"
+          enum:
+            - flat_promoted
+          default: ""
+        - name: "include_comments"
+          in: "query"
+          description: "Exclude comments from the returned replies"
+          required: false
+          type: "boolean"
+          default: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "List of topic reply objects within a data envelope."
+          schema: 
+            $ref: "#/definitions/RepliesResponse"
+  /people/{userId}/replies:
+    get:
+      summary: "Get User Replies"
+      description: "Get User Replies"
+      tags:
+        - topic
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "The userId being queried for replies"
+          required: true
+          type: "string"
+        - name: "filter"
+          in: "query"
+          description: "Filter topic replies"
+          required: false
+          type: "string"
+          enum:
+            - best
+            - star_promoted
+            - company_promoted
+          default: ""
+        - name: "type"
+          in: "query"
+          description: "Return all company and star promoted replies"
+          required: false
+          type: "string"
+          enum:
+            - flat_promoted
+          default: ""
+        - name: "include_comments"
+          in: "query"
+          description: "Exclude comments from the returned replies"
+          required: false
+          type: "boolean"
+          default: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "List of topic reply objects within a data envelope."
+          schema: 
+            $ref: "#/definitions/RepliesResponse"
 definitions:
   User:
     properties:
@@ -266,6 +350,8 @@ definitions:
       name:
         type: string
         description: The nickname of the user (not the “canonical name”)
+      title:
+        type: string
       url:
         type: string
         description: The API path to the user’s information
@@ -398,7 +484,7 @@ definitions:
         description: The private tag if there is one. If there isn’t one, it returns “false”
         items:
           type: string
-  TopicsData:
+  TopicsResponse:
     properties:
       data:
         type: array
@@ -408,3 +494,43 @@ definitions:
       total:
         type: integer
         description: number of results
+  Reply:
+    properties:
+      authenticated_user:
+        $ref: "#/definitions/AuthenticatedUser"
+      url:
+        type: string
+      author:
+        $ref: "#/definitions/User"
+      comments_url:
+        type: string
+      company_promoted:
+        type: boolean
+      created_at:
+        type: string
+      star_promoted:
+        type: boolean
+      content:
+        type: string
+      topic_id:
+        type: integer
+      star_count:
+        type: integer
+      id:
+        type: integer
+      comment_count:
+        type: integer
+      employee:
+        type: boolean
+  AuthenticatedUser:
+    properties:
+      starred:
+        type: boolean
+  RepliesResponse:
+    properties:
+      total:
+        type: integer
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/Reply"
