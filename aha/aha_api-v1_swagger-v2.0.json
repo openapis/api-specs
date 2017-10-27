@@ -1,59 +1,141 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Aha.io API",
-    "description": "Articles that matter on social publishing platform",
-    "version": "1.0.0"
+  "swagger":"2.0",
+  "info":{
+    "title":"Aha.io API",
+    "description":"Articles that matter on social publishing platform",
+    "version":"1.0.0"
   },
-  "host": "ringcentral.aha.io",
-  "schemes": [
+  "host":"ringcentral.aha.io",
+  "schemes":[
     "https"
   ],
-  "basePath": "/api/v1",
-  "produces": [
+  "basePath":"/api/v1",
+  "produces":[
     "application/json"
   ],
-  "paths": {
-    "/products/{productId}/releases": {
-      "get": {
-        "summary": "Releases API",
-        "description": "Create a release",
-        "tags": [
-          "Releases"
+  "paths":{
+    "/features":{
+      "get":{
+        "summary":"Get all features",
+        "description":"Get all features",
+        "tags":[
+          "Features"
         ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "productId",
-            "in": "path",
-            "description": "The id of the company being queried",
-            "required": true,
-            "type": "string"
+            "name":"q",
+            "in":"query",
+            "description":"Sub-string to match against feature name or ID",
+            "required":false,
+            "type":"string"
           }
         ],
-        "produces": [
+        "produces":[
           "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "a list of topic objects within a data envelope.",
-            "schema": {
+        "responses":{
+          "200":{
+            "description":"A list of features",
+            "schema":{
+              "$ref":"#/definitions/Features"
+            }
+          }
+        }
+      }
+    },
+    "/products/{productId}/releases":{
+      "get":{
+        "summary":"Releases API",
+        "description":"Create a release",
+        "tags":[
+          "Releases"
+        ],
+        "parameters":[
+          {
+            "name":"productId",
+            "in":"path",
+            "description":"The id of the company being queried",
+            "required":true,
+            "type":"string"
+          }
+        ],
+        "produces":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"A list of topic objects within a data envelope.",
+            "schema":{
               "$ref":"#/definitions/Releases"
+            }
+          }
+        }
+      }
+    },
+    "/releases/{id}":{
+      "get":{
+        "summary":"",
+        "description":"Get a specific release",
+        "tags":[
+          "Releases"
+        ],
+        "parameters":[
+          {
+            "name":"id",
+            "in":"path",
+            "description":"Numeric ID, or key of the release to be retrieved",
+            "required":true,
+            "type":"string"
+          }
+        ],
+        "produces":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"Information for a specific release",
+            "schema":{
+              "$ref":"#/definitions/Release"
             }
           }
         }
       }
     }
   },
-  "definitions": {
-    "Releases": {
-      "type":"array",
-      "items": {
-        "$ref": "#/definitions/Release"
+  "definitions":{
+    "Features":{
+      "type":"object",
+      "properties":{
+        "features":{
+          "type":"array",
+          "items":{
+            "$ref":"#/definitions/Feature"
+          }
+        },
+        "pagination":{
+          "type":"object",
+          "$ref":"#/definitions/Pagination"
+        }
       }
     },
-    "Pagination": {
+    "Releases":{
       "type":"object",
-      "properties": {
+      "properties":{
+        "releases":{
+          "type":"array",
+          "items":{
+            "$ref":"#/definitions/Release"
+          }
+        },
+        "pagination":{
+          "type":"object",
+          "$ref":"#/definitions/Pagination"
+        }
+      }
+    },
+    "Pagination":{
+      "type":"object",
+      "properties":{
         "total_records":{
           "type":"integer",
           "format":"int64"
@@ -62,42 +144,74 @@
           "type":"integer",
           "format":"int64"
         },
-        "current_page": {
+        "current_page":{
           "type":"integer",
           "format":"int64"
         }
       }
     },
-    "Release": {
+    "Feature":{
       "type":"object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "A unique identifier for the release."
+      "properties":{
+        "id":{
+          "type":"string"
         },
-        "reference_num": {
-          "type": "string",
-          "description": "Release referenence number."
+        "reference_num":{
+          "type":"string"
         },
-        "name": {
-          "type": "string",
-          "description": "Release name."
+        "name":{
+          "type":"string"
         },
-        "start_date": {
-          "type": "string",
-          "description": "Start date in YYYY-MM-DD format."
+        "created_at":{
+          "type":"string",
+          "format":"date-time"
         },
-        "release_date": {
-          "type": "string",
-          "description": "Release date in YYYY-MM-DD format."
+        "url":{
+          "type":"string"
         },
-        "url": {
-          "type": "string",
-          "description": "Web URL for release."
+        "resource":{
+          "type":"string"
+        }
+      }
+    },
+    "Release":{
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string",
+          "description":"A unique identifier for the release."
         },
-        "resource": {
-          "type": "string",
-          "description": "API URL for release."
+        "reference_num":{
+          "type":"string",
+          "description":"Release referenence number."
+        },
+        "name":{
+          "type":"string",
+          "description":"Release name."
+        },
+        "start_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Start date in YYYY-MM-DD format."
+        },
+        "release_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Release date in YYYY-MM-DD format."
+        },
+        "released":{
+          "type":"boolean"
+        },
+        "parking_lot":{
+          "type":"boolean"
+        },
+        "url":{
+          "type":"string",
+          "description":"Web URL for release."
+        },
+        "resource":{
+          "type":"string",
+          "description":"API URL for release."
         }
       }
     }
