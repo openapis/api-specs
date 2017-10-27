@@ -1,0 +1,105 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Aha.io API",
+    "description": "Articles that matter on social publishing platform",
+    "version": "1.0.0"
+  },
+  "host": "ringcentral.aha.io",
+  "schemes": [
+    "https"
+  ],
+  "basePath": "/api/v1",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/products/{productId}/releases": {
+      "get": {
+        "summary": "Releases API",
+        "description": "Create a release",
+        "tags": [
+          "Releases"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "The id of the company being queried",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of topic objects within a data envelope.",
+            "schema": {
+              "$ref":"#/definitions/Releases"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Releases": {
+      "type":"array",
+      "items": {
+        "$ref": "#/definitions/Release"
+      }
+    },
+    "Pagination": {
+      "type":"object",
+      "properties": {
+        "total_records":{
+          "type":"integer",
+          "format":"int64"
+        },
+        "total_pages":{
+          "type":"integer",
+          "format":"int64"
+        },
+        "current_page": {
+          "type":"integer",
+          "format":"int64"
+        }
+      }
+    },
+    "Release": {
+      "type":"object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A unique identifier for the release."
+        },
+        "reference_num": {
+          "type": "string",
+          "description": "Release referenence number."
+        },
+        "name": {
+          "type": "string",
+          "description": "Release name."
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Start date in YYYY-MM-DD format."
+        },
+        "release_date": {
+          "type": "string",
+          "description": "Release date in YYYY-MM-DD format."
+        },
+        "url": {
+          "type": "string",
+          "description": "Web URL for release."
+        },
+        "resource": {
+          "type": "string",
+          "description": "API URL for release."
+        }
+      }
+    }
+  }
+}
