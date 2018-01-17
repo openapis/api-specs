@@ -1,0 +1,373 @@
+{
+  "interactions_add_chat": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Add a Chat Contact",
+      "operationId": "addChatContact",
+      "description": "If an agent is routed an incoming chat, and accepts it (i.e. the agent has an active chat), the agent is able to request additional chats be routed, allowing them to handle multiple chats at one time. This API call allows the application to request an additional chat. Making the call when there are no additional chats that can be routed to the agent will result in a 202 Accepted result, but no additional chat will be routed to the agent. You can request up to 12 chats for an agent.<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsAddChat.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Chat limit reached.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_accept": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Accept a chat contact",
+      "operationId": "acceptChatContact",
+      "description": "This API method allows an agent to indicate that they are willing to accept the chat. With the Phone channel, the agent indicates their ability and willingness to handle an incoming voice contact by answering the agent telephone when it rings. Failure to answer causes the system to requeue the phone contact for delivery to another agent. <br/>The Chat channel doesn't use a phone, so there is no physical way for the agent to indicate that they are present and willing/able to handle the chat. Your application should prompt the agent to accept the incoming chat when an incoming chat event arrives. When the agent manually accepts the chat, you should send this API call to indicate that the agent has accepted it. Note that if the Accept a Chat request is not placed within 45 seconds, the chat is automatically \"rejected\", and placed back into queue, and the agent state is set to \"Unavailable/Refused\".<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDAccept.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session id.</p><p>Invalid contact id</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_reject": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Reject a chat contact",
+      "operationId": "rejectChatContact",
+      "description": "This API method allows an agent to indicate that they are unwilling to accept the chat. With the Phone channel, the agent indicates they are unable to handle an incoming voice contact by not answering the agent telephone when it rings. This causes the system to requeue the phone contact for delivery to another agent. <br/>The Chat channel doesn't use a phone, so there is no physical way for the agent to indicate that they are unable to handle the chat. Your application should prompt the agent to accept or reject the chat when an incoming chat event arrives. When the agent manually rejects the chat, you should send this API call to indicate that the agent has rejected it. Note that if the Reject a Chat request is not placed within 45 seconds, the chat is automatically \"rejected\", and placed back into queue, and the agent state is set to \"Unavailable/Refused\".<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDReject.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_end": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "End a chat contact",
+      "operationId": "endChatContact",
+      "description": "<p>This method will end the chat contact. This is similar to ending a phone call or work item. If the agent has only one active chat, ending the chat will move the agent to their \"next\" state. If there are multiple active chats routed to the agent, ending one of them simply results in the chat being ended.<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDEnd.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot end the contact at this time."
+        }
+      }
+    }
+  },
+  "interactions_contactId_activate_chat": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Restore a chat to an active state",
+      "operationId": "activateChatContact",
+      "description": "The most recently routed chat becomes \"active\" for the agent. Only one chat can be considered \"active\" at any given time. The total aggregate time that a chat is \"active\" becomes a metric that can be reported on.<br/> You can have your application choose to \"activate\" any of the current chat contacts for the agent. A typical design pattern is to \"activate\" a chat based on some interaction from the agent (the agent selects a particular chat window, for example). Once a chat is activated, all other chats (including the current active chat) become \"inactive\", and the newly activated chat becomes \"active\".<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDActivateChat.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_send_chat_text": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Send chat text to the patron",
+      "operationId": "sendChatText",
+      "description": "Use this API method to send text to a patron in a chat contact.<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDSendChatText.html'></div>",
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "ID of the Contact",
+          "required": true,
+          "allowMultiple": false,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "name": "chatText",
+          "description": "Text to be sent to Patron in a chat session",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_transfer_chat_to_agent": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Transfer to Agent.",
+      "operationId": "Transfer Chat to Agent",
+      "description": "<p>You can transfer a chat into an agent's personal queue, allowing the chat to be routed to a specific agent.<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDTransferChatToAgent.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the customer",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "targetAgentId",
+          "description": "Agent Id to transfer the chat to",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid target Agent Id."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "<p>Invalid state.</p><p>Invalid target state.</p>"
+        }
+      }
+    }
+  },
+  "interactions_contactId_transfer_chat_to_skill": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Transfer to Skill",
+      "operationId": "Transfer Chat to Skill",
+      "description": "<p>You can transfer a chat into a skill queue, allowing the chat to be routed to another available agent with that skill.<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDTransferChatToSkill.html'></div>",
+
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the customer.",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "targetSkillId",
+          "description": "Skill Id to transfer the chat to.",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid target Skill Id."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_typing": {
+    "post": {
+        "tags": [ "ChatRequests" ],
+        "summary": "Notify Patron Agent is Typing",
+        "operationId": "AgentTyping",
+        "description": "Use this API method to indicate to a Patron in a chat session that the Agent is typing a response or has entered the response in the session.<div class='tabs_wrapper' data-path='agent_chatRequests_postSessionIDInteractionsContactIDTyping.html'></div>",
+        "parameters": [
+            {
+                "name": "sessionId",
+                "description": "An Agent Session Id",
+                "required": true,
+                "allowMultiple": false,
+                "type": "string",
+                "in": "path"
+            },
+            {
+                "name": "contactId",
+                "description": "ID of the Contact",
+                "required": true,
+                "allowMultiple": false,
+                "type": "integer",
+                "in": "path"
+            },
+            {
+                "name": "isTyping",
+                "description": "Indicates the Agent has started typing",
+                "type": "boolean",
+                "in": "query"
+            },
+            {
+                "name": "isTextEntered",
+                "description": "Indicates the Agent has entered a response",
+                "type": "boolean",
+                "in": "query"
+            }
+        ],
+        "responses": {
+            "202": {
+                "description": "Accepted"
+            },
+            "401": {
+                "description": "Unauthorized"
+            },
+            "404": {
+                "description": "<p>Invalid agent session Id.</p><p>Invalid Contact Id.</p>"
+            },
+            "409": {
+                "description": "<p>'Show Agent Typing Indicator' is disabled for the skill.</p><p>Invalid state.</p>"
+            }
+        }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "sessionId": {
+        "name": "sessionId",
+        "description": "Agent Session Id",
+        "required": true,
+        "type": "string",
+        "in": "path"
+      },
+      "contactId": {
+        "name": "contactId",
+        "description": "Contact Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
+    }
+  }
+}

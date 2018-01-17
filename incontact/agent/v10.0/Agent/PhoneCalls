@@ -1,0 +1,658 @@
+{
+  "dial_agent": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Dials an agent's personal queue",
+      "operationId": "agentTransfer",
+      "description": "Used to initiate a transfer of a call to another agent.<br/><br/>The sending agent must have a single holding call in order to dial another agent, or the API will respond with a 409 status code. (409 means that the state of things will not allow the API call to be made.)<br/><br/>If the business unit has \"multi-party conferencing\" enabled, and the sending agent's security profile allows multi-party conferencing, this API call will succeed if there are multiple active calls that are conferenced. If multi-party conferencing is disabled for the business unit, or for the sending agent's security profile, attempting to dial another agent while two calls are conferenced will generate a 403 status code (insufficient privileges).<br/><br/>The target agent user name is required (e.g. \"user@example.com\").  In future releases this will be changed to use agentId.<br/><br/>If the target agent is \"Unavailable\", or is handling an inbound or outbound phone call, or is logged into an outbound dialer campaign, the dial-agent request is queued to the target agent's \"personal queue\", and will be delivered to the target agent when the target agent becomes available. If the target agent is already available when the dial-agent request is made, the call will immediately be routed to the target agent.<br/><br/>Attempting to dial an agent that is not logged in will result in a 409 (invalid state) HTTP status result.<br/><br/>You can retrieve a list of agent states to provide logic that guides the agent to know whether or not a target agent is logged in, and whether or not a dial request will be delivered immediately or queued to the target agent's personal queue (see documentation on the Admin API). It is a good practice to regularly request the states of other agents so you can make them available to your application, and for display to the sending agent.<br/> <br/><div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDDialAgent.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "targetAgentId",
+          "description": "Agent to dial.",
+          "required": true,
+          "type": "integer"
+
+        },
+        {
+          "name": "parentContactId",
+          "description": "ParentContactId that the new ContactId will be elevated from",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "<p>Accepted</p>"
+        },
+        "400": {
+          "description": "<p><p>Invalid TargetAgentId </p> <p>Invalid targetAgentId .</p></p>"
+        },
+        "403": {
+          "description": "<p>Multi-Conference not enabled for user.</p>"
+        },
+        "404": {
+          "description": "<p><p>InvalidAgentSession </p> InvalidParentContactId </p></p>"
+        },
+        "409": {
+          "description": "<p><p>Invalid state. </p> <p>Invalid Target State.</p> <p>Multi-Conference max limit reached.</p></p>"
+        }
+      }
+    }
+  },
+  "dial_phone": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Dials an outbound call",
+      "operationId": "dialPhone",
+      "description": "This method is used to place an outbound phone call. You must include an outbound skill name to place a phone call.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDDialPhone.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "phoneNumber",
+          "description": "Phone Number to be dialed.",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "skillId",
+          "description": "Id of an outbound skill to dial.",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "parentContactId",
+          "description": "ParentContactId that the new ContactId will be elevated from",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p><p> Phone Number is not valid.</p> <p> Invalid skillId </p> <p>parentContactId</p></p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Multi-Conference not enabled for user."
+        },
+        "404": {
+          "description": "Invalid sessionId"
+        },
+        "409": {
+          "description": "<p><p>Invalid state </p><p> Multi-Conference max limit reached.</p></p>"
+        }
+      }
+    }
+  },
+  "dial_skill": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Dials a skill",
+      "operationId": "dialSkill",
+      "description": "Used to create an outbound phone call and place it into the named skill’s queue. The skillName parameter is required.<br/><br/><div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDDialSkill.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "skillId",
+          "description": "Id of an outbound skill to dial.",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "parentContactId",
+          "description": "ParentContactId that the new ContactId will be elevated from",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid skillId <p/>"
+        },
+        "403": {
+          "description": "Multi-Conference not enabled for user."
+        },
+        "404": {
+          "description": "<p>Invalid sessionId </br> Invalid parentContactId </p>"
+        },
+        "409": {
+          "description": "<p>Invalid state.</p><p>Multi-Conference max limit reached.</p>"
+        }
+      }
+    }
+  },
+  "send_dtmf": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Send DTMF tones",
+      "operationId": "Send DTMF Tone",
+      "description": "This method is used to send specific DTMF tones to non-agent parties in the active session.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDSenddtmf.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "dtmfSequence",
+          "description": "Set of numbers to be sent",
+          "type": "string",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "toneDurationMS",
+          "description": "How long each tone lasts. Valid range is 61 - 15000",
+          "type": "integer",
+          "format": "int32",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "toneSpacingMS",
+          "description": "Time between dtmf tones. Valid range is 61 - 15000",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted."
+        },
+        "400": {
+          "description": "Bad Parameter."
+        },
+        "401": {
+          "description": "Unauthorized."
+        },
+        "404": {
+          "description": "Not Found."
+        }
+      }
+    }
+  },
+  "consult_agent": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Dial agent consult",
+      "operationId": "dialAgentConsult",
+      "description": "Used to call another agent as a \"consultation\". Dialing an agent as a consultation differs from dialing the target agent’s \"personal queue\" in that consultations are tracked and reported.<br/><br/>The agent user name is required (e.g. \"user@example.com\").<br/><br/>Note that you may not request a consult with an agent that is logged out, or that is handling an inbound or outbound call, or that is logged into an outbound dialer campaign. It is a good practice to prevent the user from attempting to consult an agent that is in any of these states. Attempting to consult another agent who is handling a call or logged into an outbound dialer campaign results in a 409 error response from the API.<br/><br/>You retrieve a list of agent states to provide logic that guides the agent to know whether or not a consultation with another agent is possible (see documentation on the Admin API). It is a good practice to regularly request the states of other agents so you can make them available to your application, and for display to the agent.<br/><br/>Request current agent states this way:<br/><br/><a href='https://developer.incontact.com/API/RealTimeDataAPI#!/RealTime/getAgentStates'>GET /agents/state</a><br/><br/>See the Admin API documentation for details.<br/><br/><div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDConsultAgent.html'></div> ",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "targetAgentId",
+          "description": "Agent to dial.",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "parentContactId",
+          "description": "ParentContactId that the new ContactId will be elevated from",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid targetAgentId"
+        },
+        "403": {
+          "description": "Multi-Conference not enabled for user."
+        },
+        "404": {
+          "description": "<p>Invalid sessionId </p>"
+        },
+        "409": {
+          "description": "<p><p>Invalid State </p> <p>Invalid Target State.</p> <p> Multi-Conference max limit reached.</p></p>"
+        }
+      }
+    }
+  },
+  "interactions_transfer_calls": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Transfer call",
+      "operationId": "transferCall",
+      "description": "In order to transfer a call, you must have two calls active or holding.<br/><br/>When the transfer API method is called, the contact states are set to \"Disconnected\" for the agent, and the agent is moved into their \"next state\" by the platform. The two calls will be connected, and the agent will be disconnected from both calls.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsTransferCalls.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session id."
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_conference_calls": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Conference calls together",
+      "operationId": "conferenceCall",
+      "description": "In order to conference two calls, you simply make the Conference Call API Request. You must have two calls in the Active or Holding state in order to conference them.<br/><br/>By simply making the Conference Call API request, both calls will be conferenced. You do not need to identify either of the calls using their contact ID.<br/><br/>When two calls are conferenced, the agent remains a party to the conference, and the contact is NOT disconnected.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsConferenceCalls.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session Id."
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_accept_consult": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Accept consult request",
+      "operationId": "acceptConsultRequest",
+      "description": "When one agent attempts to \"consult\" with another (by dialling an agent consult), the target agent receives an event indicating that a consult request is pending.<br/><br/>The target agent must either let the consult request time out (effectively \"rejecting\" the request), or indicate that the consult request is accepted by calling this API call.<br/><br/>Note that there is not an API call to explicitly and immediately \"reject\" a consult request.<br/><br/>The Agent API currently does not provide a way to actively reject a consult request. The target agent simply must ignore the consult request until it times out. The requesting agent will be notified that the consult request was rejected.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDAcceptConsult.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid Agent Session Id.</p><p>Invalid Contact ID.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_hold": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Places a contact on hold",
+      "operationId": "holdCall",
+      "description": "Use this API to place an active call on hold. You must have the \"contact ID\" of the active call. <br/><br/>The \"contact ID\" is delivered when the call is first active, in a \"CallContactEvent\". You will want to keep track of this ID so you can use it in API requests like \"hold call\".<br/><br/>When the call is successfully put on hold by the platform, a \"CallContactEvent\" will be delivered, indicating that the call’s status is \"Holding\". Keep the contact ID for use in the \"Resume Call\" API request.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDHold.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot put the contact on hold at this time."
+        }
+      }
+    }
+  },
+  "interactions_contactId_resume": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Resume call",
+      "operationId": "resumeCall",
+      "description": "Use this API request to \"resume\" a holding call. You must use the contact ID of a holding call. When a call is placed on hold, a \"CallContactEvent\" is generated. This event will contain the \"contact ID\" of the call.<br/><br/>Use this contact ID in the Resume Call API request. When the platform \"resumes\" the call (i.e. takes it off hold), another CallContactEvent will be generated indicating that the contact’s state is now \"Active\".<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDResume.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot resume the contact at this time."
+        }
+      }
+    }
+  },
+  "interactions_contactId_end": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "End call",
+      "operationId": "endCall",
+      "description": "Use this API request to end a phone call. When a phone call becomes \"active\", a \"CallContactEvent\" is generated that indicates the call’s status is \"Active\". This event contains the call’s \"contact ID\".<br/><br/>Use this contact ID in the End Call API request to end the call.<br/><br/>Note that you cannot end a call that is \"Holding\". It must be \"Active\". Attempting to end a \"holding\" call will result in an error response from the API.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDEnd.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot end the contact at this time."
+        }
+      }
+    }
+  },
+  "interactions_contactId_amd_override": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Override AMD on a call",
+      "operationId": "AMD Override",
+      "description": "This method allows you to pre-empt the platform AMD process and label the contact as either an answering machine or a fax machine and moves the contact to it's next state.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDAMDOveride.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        },
+        {
+          "name": "type",
+          "description": "One of either faxMachine or answeringMachine",
+          "required": true,
+          "type": "string",
+          "enum": [
+            "faxMachine",
+            "answeringMachine"
+          ],
+          "default": "answeringMachine",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid type."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_record": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Record a call",
+      "operationId": "recordACall",
+      "description": "Calls can be recorded on the inContact platform through three different methods:<br/><br/>An administrator can begin recording a call from an administrative application, such as the inContact Central web site.<br/><br/>An IVR script can execute the \"LOGCALL\" action at any time, which will begin recording the call.<br/><br/>An agent can request that the call be recorded by clicking on the \"record\" icon in an agent application.<br/><br/>The Agent API \"record a call\" method facilitates the ability for an agent to request that a call be recorded.<br/><br/>When call recording is requested by an agent, an event will be generated and delivered by the platform to indicate that the call is being recorded. This event will be sent to all agent applications that are connected to the agent session.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDRecord.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_mask": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Masks a recording with white noise",
+      "operationId": "maskACallRecording",
+      "description": "Whether a call is being recorded through an agent-initiated request, through an admin-initiated request, or through the LOGCALL action in an IVR script, the agent may need to \"mask\" the recording in order to protect patron privacy, or ensure compliance with regulations (such as PCI).<br/><br/>This API method allows the agent to introduce white noise while the call is being recorded. The API call can be requested whether the call is actually being recorded or not. Agents may be trained to \"mask\" a call during the gathering of sensitive data or for other reasons, regardless of whether it appears to them that the call is actually being recorded. This is because any given call may be recorded (through an Admin-initiated request, or the use of the LOGCALL action in an IVR script) without the agent's knowledge.<br/><br/>You should pair a \"mask\" request with an \"unmask\" request.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDMask.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_unmask": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Stop masking a call recording",
+      "operationId": "stopMaskingACallRecording",
+      "description": "This API call will end the masking of a call recording.  See \"Mask a Call Recording\" for details on masking.<div class='tabs_wrapper' data-path='agent_phoneCalls_postSessionIDInteractionsContactIDUnmask.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id</p><p>Invalid Contact Id.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "interactions_contactId_independent_dial": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Dial an Independent call",
+      "operationId": "IndependentDialed",
+      "description": "This method is used for outbound phone contacts that will be made on an independent telephony system.  This call updates the contact state and allows subsequent calls to update the outcome status of the contact.  The contact should have been routed to the Agent in a dialing state.<div class='tabs_wrapper' data-path='agent_phoneCalls_postIndependentDial.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Contact not able to be dialed"
+        }
+      }
+    }
+  },
+  "interactions_contactId_independent_dial_outcome": {
+    "post": {
+      "tags": [ "PhoneCalls" ],
+      "summary": "Disposition an Independent call",
+      "operationId": "IndependentDialOutcome",
+      "description": "This method will update the outcome value of an independent call contact after the call is placed in a separate telephony system.  This should only be called a single time on a contact to indicate the final outcome for the call. <div class='tabs_wrapper' data-path='agent_phoneCalls_postIndependentDialOutcome.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        },
+        {
+          "name": "outcome",
+          "description": "The Outcome description",
+          "type": "string",
+          "enum": [
+            "Answered",
+            "Busy",
+            "Fax",
+            "Intercept",
+            "No Answer"
+          ],
+          "default": "Answered",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid outcome."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid Contact ID.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "sessionId": {
+        "name": "sessionId",
+        "description": "Agent Session Id",
+        "required": true,
+        "type": "string",
+        "in": "path"
+      },
+      "contactId": {
+        "name": "contactId",
+        "description": "Contact Id",
+        "required": true,
+        "type": "integer",
+        "format": "int64",
+        "in": "path"
+      }
+    }
+  }
+}

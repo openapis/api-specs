@@ -1,0 +1,596 @@
+{
+  "contacts_chats": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Starts a Chat Session",
+      "operationId": "StartChat",
+      "description": "This method should be used to request a chat session on behalf of a Patron. A contact will be created and queued to the Skill associated with the Point Of Contact identified by Point Of Contact. <br/><br/> <b></b><br/><br/> <b><i><span style='color:red'></span></i></b><div class='tabs_wrapper' data-path='patron_chatRequests_postContactsChats.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "pointOfContact",
+          "description": "A chat point of context usually in the form of a GUID",
+          "type": "string"
+        },
+        {
+          "name": "fromAddress",
+          "description": "A string indicating the party that initiated the chat",
+          "type": "string"
+        },
+        {
+          "name": "chatRoomId",
+          "description": "Optional chat room ID of an existing chat session to join",
+          "type": "integer"
+        },
+        {
+          "name": "parameters",
+          "description": "An optional list of parameter values to be passed to the POC script",
+          "type": "Array",
+          "items": [
+            "string"
+          ]
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "chatSessionId": {
+                "type": "string"
+              },
+              "contactId": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid Point of Contact Invalid Chat Room"
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "contacts_chats_chatSession": {
+    "get": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Gets any inbound chat text from an active chat session",
+      "operationId": "getChatText",
+      "description": "Returns the chat messages associated with an active chat session as well as returns the new \"chatSession\" value that should be passed into subsequent calls.  If the original \"chatSession\" value is used, the method will return all chat messages, not just the ones since the last request.<div class='tabs_wrapper' data-path='patron_chatRequests_getChatSession.html'></div></p></span>",
+      "parameters": [
+        {
+          "name": "chatSession",
+          "description": "A reference to a chat session previously generated from StartChat",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "<p>New Messages</p><p>Message Missed</p>",
+          "schema": {
+            "title": "ChatMessages",
+            "description": "",
+            "properties": {
+              "chatSession": {
+                "type": "string",
+                "description": "",
+                "required": true
+              },
+              "messages": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "title": "singleReturnMessage",
+                  "description": "",
+                  "properties": {
+                    "Label": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "PartyTypeId": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "PartyTypeValue": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "Text": {
+                      "type": "string",
+                      "description": "Content of the message text",
+                      "required": true
+                    },
+                    "Timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Time that message text was sent",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "304": {
+          "description": "No Messages"
+        },
+        "400": {
+          "description": "Invalid Timeout. Value must be between 0-60."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Session Ended</p><p>Invalid Chat Session</p>"
+        }
+      }
+    },
+    "delete": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Ends an active Chat Session",
+      "operationId": "endChat",
+      "description": "Ends the chat identified by {chatSession}.<div class='tabs_wrapper' data-path='patron_chatRequests_deleteChatSession.html'></div>",
+      "parameters": [
+        {
+          "name": "chatSession",
+          "description": "Session ID that should be used in calls to the SendText, GetText, and EndChat methods",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "endChatObject",
+            "description": "",
+            "properties": {
+              "errorDescription": {
+                "type": "string",
+                "description": "If there is an error, the response body will contain a detailed description"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Chat Session"
+        }
+      }
+    }
+  },
+  "contacts_chats_chatSession_send_text": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Sends text to members of the chat session",
+      "operationId": "sendChatText",
+      "description": "Posts the string provided in \"message\" to the chat session identified by \"chatSession\". The \"label\" parameter can be used to assign a name or identifier to the message, for example if you collect the name of the customer and want to send that name as the label for all messages in the chat session.<br/><br/><b><i><span style='color:red'></span></i></b><div class='tabs_wrapper' data-path='patron_chatRequests_postChatSessionSendText.html'></div>",
+      "parameters": [
+        {
+          "name": "chatSession",
+          "description": "A chat session ID previously obtained from StartChat",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "label",
+          "description": "Text used to label the message when viewed by the recipient",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "message",
+          "description": "The literal text to send to the recipient(s)",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid Chat Room</p><p>No Message Provided</p>"
+        },
+        "404": {
+          "description": "<p>Invalid Chat Session</p><p>Session Ended</p>"
+        }
+      }
+    }
+  },
+  "contacts_typing": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Notify Agent Patron is Typing",
+      "operationId": "PatronTyping",
+      "description": "Use this API method to indicate to an Agent in a chat session that the Patron is typing a response or has entered the response in the session.<div class='tabs_wrapper' data-path='patron_chatRequests_postPatronTyping.html'></div>",
+      "parameters": [
+        {
+          "name": "chatSession",
+          "description": "A chat session ID obtained when chat is started",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "isTyping",
+          "description": "Indicates the Patron has started typing",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "isTextEntered",
+          "description": "Indicates the Patron has entered a response",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "label",
+          "description": "Label that is associated with the customer.  Should be the same as the label used in the send-text method",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "404": {
+          "description": "Invalid chatSession Id."
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "contacts_typing_preview": {
+    "post": {
+      "tags": [ "ChatRequests" ],
+      "summary": "Sends Agent a Chat Preview",
+      "operationId": "PatronTypingPreview",
+      "description": "This method sends the text typed into the chat interface as the Patron is typing it and before they have hit the enter key.  This functionality must be enabled on the Chat Skill as defined in Central.<div class='tabs_wrapper' data-path='patron_chatRequests_postPatronTypingPreview.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "chatSession",
+          "description": "A chat session ID obtained when chat is started",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "previewText",
+          "description": "Text that has been entered by the Patron in the chat interface",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "label",
+          "description": "Label that is associated with the preview.  Should be the same as the label used in the send-text method",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "No Party Listening"
+        },
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid Chat Room"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "<p>Invalid Chat Session</p><p>Session Ended</p>"
+        },
+        "409": {
+          "description": "'Show Patron Typing Preview' is disabled for the skill"
+        }
+      }
+    }
+  },
+  "points-of-contact_pointofcontactid_chat-profile": {
+    "get": {
+      "tags": [ "ChatRequests" ],
+      "summary": "<b><i><span style='color:red'>New in v11.0</span></i></b> Returns Chat Profile config",
+      "operationId": "getPointChatProfile",
+      "description": "This method returns the configuration for a chat profile. “pointOfContactId” accepts Point of Contact address from the Point of Contact list page in Central or the “contactAddress” using the GET v1.0/points-of-contact API.  It also only returns chat profiles with interfaceType “V2(HTML5)”.  Chat profiles with “V1 (ASPX)” value will return an invalid profile.<div class='tabs_wrapper' data-path='patron_chatRequests_getPointChatProfile.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "pointOfContactId",
+          "description": "A chat point of contact usually in the form of a GUID",
+          "type": "string",
+          "required": "true"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "chatProfile": {
+                "type": "object",
+                "properties": {
+                  "chatProfileId": {
+                    "type": "integer"
+                  },
+                  "chatProfileName": {
+                    "type": "string"
+                  },
+                  "chatInterfaceTypeId": {
+                    "type": "integer"
+                  },
+                  "chatAppearance": {
+                    "type": "object",
+                    "properties": {
+                      "primaryColor": {
+                        "type": "string"
+                      },
+                      "primaryTextColor": {
+                        "type": "string"
+                      },
+                      "agentColor": {
+                        "type": "string"
+                      },
+                      "agentInitialColor": {
+                        "type": "string"
+                      },
+                      "font": {
+                        "type": "string"
+                      },
+                      "chatButtonPosition": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "preChatFormEnabled": {
+                    "type": "boolean"
+                  },
+                  "preChatWelcomeMessage": {
+                    "type": "string"
+                  },
+                  "preChatFields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "fieldLabel": {
+                          "type": "string"
+                        },
+                        "fieldIsRequired": {
+                          "type": "boolean"
+                        },
+                        "fieldOptions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "label": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "waitingEnabled": {
+                    "type": "boolean"
+                  },
+                  "waitingMessage": {
+                    "type": "string"
+                  },
+                  "waitingBackgroundColor": {
+                    "type": "string"
+                  },
+                  "waitingTextColor": {
+                    "type": "string"
+                  },
+                  "waitingLogo": {
+                    "type": "string"
+                  },
+                  "heroImage": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid pointOfContactId"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid Chat Session</p><p>Session Ended</p>"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Chat": {
+      "title": "Chat",
+      "description": "",
+      "properties": {
+        "chatSession": {
+          "type": "string",
+          "description": "Session ID that should be used in calls to the SendText, GetText, and EndChat methods",
+          "required": true
+        }
+      }
+    },
+    "endChatObject": {
+      "title": "endChatObject",
+      "description": "",
+      "properties": {
+        "errorDescription": {
+          "type": "string",
+          "description": "If there is an error, the response body will contain a detailed description"
+        }
+      }
+    },
+    "singleInputMessage": {
+      "title": "singleInputMessage",
+      "description": "",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "description": "",
+          "required": true
+        }
+      }
+    },
+    "Messages": {
+      "title": "Messages",
+      "description": "",
+      "properties": {
+        "Messages": {
+          "type": "array",
+          "description": "",
+          "items": {
+            "title": "singleInputMessage",
+            "description": "",
+            "properties": {
+              "description": {
+                "type": "string",
+                "description": "",
+                "required": true
+              },
+              "label": {
+                "type": "string",
+                "description": "",
+                "required": true
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "singleReturnMessage": {
+      "title": "singleReturnMessage",
+      "description": "",
+      "properties": {
+        "Label": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
+        "PartyTypeId": {
+          "type": "integer",
+          "description": "",
+          "required": true
+        },
+        "PartyTypeValue": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
+        "Text": {
+          "type": "string",
+          "description": "Content of the message text",
+          "required": true
+        },
+        "Timestamp": {
+          "type": "date",
+          "description": "Time that message text was sent",
+          "required": true
+        }
+      }
+    },
+    "ChatMessages": {
+      "title": "ChatMessages",
+      "description": "",
+      "properties": {
+        "chatSession": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
+        "messages": {
+          "type": "array",
+          "description": "",
+          "items": {
+            "title": "singleReturnMessage",
+            "description": "",
+            "properties": {
+              "Label": {
+                "type": "string",
+                "description": "",
+                "required": true
+              },
+              "PartyTypeId": {
+                "type": "integer",
+                "description": "",
+                "required": true
+              },
+              "PartyTypeValue": {
+                "type": "string",
+                "description": "",
+                "required": true
+              },
+              "Text": {
+                "type": "string",
+                "description": "Content of the message text",
+                "required": true
+              },
+              "Timestamp": {
+                "type": "date",
+                "description": "Time that message text was sent",
+                "required": true
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Agent commands",
+    "version": "10.0",
+    "title": "AgentAPI"
+  },
+  "tags": [
+    {
+      "name": "AgentPhone",
+      "description": "Agent Phone Management"
+    },
+    {
+      "name": "ChatRequests",
+      "description": "Chat Contact Management "
+    },
+    {
+      "name": "Emails",
+      "description": "Email Contact Management"
+    },
+    {
+      "name": "PersonalCon",
+      "description": "Personal Connection Management"
+    },
+    {
+      "name": "PhoneCalls",
+      "description": "Phone Call Management"
+    },
+    {
+      "name": "ScheduledCallbacks",
+      "description": "Scheduled Callbacks Management"
+    },
+    {
+      "name": "Sessions",
+      "description": "Agent Session Management"
+    },
+    {
+      "name": "Supervisor",
+      "description": "Supervisor Management"
+    },
+    {
+      "name": "Voicemails",
+      "description": "Voicemail Contact Management"
+    },
+    {
+      "name": "WorkItems",
+      "description": "Work Items Contact Management"
+    }
+  ],
+  "schemes": [ "https" ],
+  "paths": {
+    "/agent-sessions/{sessionId}/agent-phone/dial": {
+      "$ref": "Agent/AgentPhone#/agent_phone_dial"
+    },
+    "/agent-sessions/{sessionId}/agent-phone/mute": {
+      "$ref": "Agent/AgentPhone#/agent_phone_mute"
+    },
+    "/agent-sessions/{sessionId}/agent-phone/unmute": {
+      "$ref": "Agent/AgentPhone#/agent_phone_unmute"
+    },
+    "/agent-sessions/{sessionId}/agent-phone/end": {
+      "$ref": "Agent/AgentPhone#/agent_phone_end"
+    },
+    "/agent-sessions/{sessionId}/interactions/add-chat": {
+      "$ref": "Agent/ChatRequests#/interactions_add_chat"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/accept": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_accept"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/reject": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_reject"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/end": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_end"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/activate-chat": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_activate_chat"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/send-chat-text": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_send_chat_text"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/transfer-chat-to-agent": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_transfer_chat_to_agent"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/transfer-chat-to-skill": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_transfer_chat_to_skill"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/typing": {
+      "$ref": "Agent/ChatRequests#/interactions_contactId_typing"
+    },            
+    "/agent-sessions/{sessionId}/interactions/add-email": {
+      "$ref": "Agent/Emails#/interactions_add_email"
+    },
+    "/agent-sessions/{sessionId}/interactions/email-outbound": {
+      "$ref": "Agent/Emails#/interactions_email_outbound"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/email-forward": {
+      "$ref": "Agent/Emails#/interactions_contactId_email_forward"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/email-reply": {
+      "$ref": "Agent/Emails#/interactions_contactId_email_reply"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/email-send": {
+      "$ref": "Agent/Emails#/interactions_contactId_email_send"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/end": {
+      "$ref": "Agent/Emails#/interactions_contactId_end"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/transfer-email-to-agent": {
+      "$ref": "Agent/Emails#/interactions_contactId_transfer_email_to_agent"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/transfer-email-to-skill": {
+      "$ref": "Agent/Emails#/interactions_contactId_transfer_email_to_skill"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/email-park": {
+      "$ref": "Agent/Emails#/agent-sessions_sessionid_interactions_contactid_email-park"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/email-unpark": {
+      "$ref": "Agent/Emails#/agent-sessions_sessionid_interactions_contactid_email-unpark"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/email-preview": {
+      "$ref": "Agent/Emails#/agent-sessions_sessionid_interactions_contactid_email-preview"
+    },
+     "/agent-sessions/{sessionId}/interactions/{contactId}/email-restore": {
+      "$ref": "Agent/Emails#/agent-sessions_sessionid_interactions_contactid_email-restore"
+    },
+    "/agent-sessions/{sessionid}/dialer-login": {
+      "$ref": "Agent/PersonalCon#/dialer_login"
+    },
+    "/agent-sessions/{sessionid}/dialer-logout": {
+      "$ref": "Agent/PersonalCon#/dialer_logout"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/snooze": {
+      "$ref": "Agent/PersonalCon#/agent-sessions_sessionid_interactions_contactid_snooze"
+    },
+    "/agent-sessions/{sessionid}/dial-agent": {
+      "$ref": "Agent/PhoneCalls#/dial_agent"
+    },
+    "/agent-sessions/{sessionId}/dial-phone": {
+      "$ref": "Agent/PhoneCalls#/dial_phone"
+    },
+    "/agent-sessions/{sessionId}/dial-skill": {
+      "$ref": "Agent/PhoneCalls#/dial_skill"
+    },
+    "/agent-sessions/{sessionId}/send-dtmf": {
+      "$ref": "Agent/PhoneCalls#/send_dtmf"
+    },
+    "/agent-sessions/{sessionid}/consult-agent": {
+      "$ref": "Agent/PhoneCalls#/consult_agent"
+    },
+    "/agent-sessions/{sessionid}/interactions/transfer-calls": {
+      "$ref": "Agent/PhoneCalls#/interactions_transfer_calls"
+    },
+    "/agent-sessions/{sessionid}/interactions/conference-calls": {
+      "$ref": "Agent/PhoneCalls#/interactions_conference_calls"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/accept-consult": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_accept_consult"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/hold": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_hold"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/resume": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_resume"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/end": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_end"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/amd-override": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_amd_override"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/record": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_record"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/mask": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_mask"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/unmask": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_unmask"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/independent-dial": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_independent_dial"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/independent-dial-outcome": {
+      "$ref": "Agent/PhoneCalls#/interactions_contactId_independent_dial_outcome"
+    },
+    "/agent-sessions/{sessionId}/interactions/{callbackId}/dial": {
+      "$ref": "Agent/ScheduledCallbacks#/interactions_callbackId_dial"
+    },
+    "/agent-sessions/{sessionId}/interactions/{callbackId}/reschedule": {
+      "$ref": "Agent/ScheduledCallbacks#/interactions_callbackId_reschedule"
+    },
+    "/agent-sessions/{sessionid}/interactions/{callbackid}/cancel": {
+      "$ref": "Agent/ScheduledCallbacks#/agent-sessions_sessionid_interactions_callbackid_cancel"
+    },
+    "/agent-sessions": {
+      "$ref": "Agent/Sessions#/agent_sessions"
+    },
+    "/agent-sessions/join": {
+      "$ref": "Agent/Sessions#/agent_sessions_join"
+    },
+    "/agent-sessions/{sessionId}": {
+      "$ref": "Agent/Sessions#/agent_sessions_sessionId"
+    },
+    "/agent-sessions/{sessionId}/get-next-event": {
+      "$ref": "Agent/Sessions#/agent_sessions_sessionId_get_next_event"
+    },
+    "/agent-sessions/{sessionId}/continue-reskill": {
+      "$ref": "Agent/Sessions#/agent_sessions_sessionId_continue_reskill"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/disposition": {
+      "$ref": "Agent/Sessions#/agent_sessions_sessionId_interactions_contactId_disposition"
+    },
+    "/agent-sessions/{sessionId}/state": {
+      "$ref": "Agent/Sessions#/agent_sessions_sessionId_state"
+    },
+    "/agent-sessions/{sessionId}/submit-feedback": {
+      "$ref": "Agent/Sessions#/agent_sessions_sessionId_submit_feedback"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/custom-data": {
+      "$ref": "Agent/Sessions#/agent_sessions_sessionId_interactions_contactId_custom_data"
+    },
+    "/agent-sessions/{sessionId}/add-contact": {
+      "$ref": "Agent/Sessions#/agent-sessions_sessionid_add-contact"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/activate": {
+      "$ref": "Agent/Sessions#/agent-sessions_sessionid_interactions_contactid_activate"
+    },
+    "/agent-sessions/{sessionid}/monitor": {
+      "$ref": "Agent/Supervisor#/monitor"
+    },
+    "/agent-sessions/{sessionid}/coach": {
+      "$ref": "Agent/Supervisor#/coach"
+    },
+    "/agent-sessions/{sessionid}/barge": {
+      "$ref": "Agent/Supervisor#/barge"
+    },
+    "/agent-sessions/{sessionid}/take-over": {
+      "$ref": "Agent/Supervisor#/take_over"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/play-voicemail": {
+      "$ref": "Agent/VoicEmails#/play_voicemail"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/pause-voicemail": {
+      "$ref": "Agent/VoicEmails#/pause_voicemail"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/end": {
+      "$ref": "Agent/Voicemails#/end"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/transfer-voicemail-to-agent": {
+      "$ref": "Agent/VoicEmails#/transfer_voicemail_to_agent"
+    },
+    "/agent-sessions/{sessionId}/interactions/{contactId}/transfer-voicemail-to-skill": {
+      "$ref": "Agent/VoicEmails#/transfer_voicemail_to_skill"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/accept": {
+      "$ref": "Agent/WorkItems#/accept"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/reject": {
+      "$ref": "Agent/WorkItems#/reject"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/hold": {
+      "$ref": "Agent/WorkItems#/hold"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/resume": {
+      "$ref": "Agent/WorkItems#/resume"
+    },
+    "/agent-sessions/{sessionid}/interactions/{contactId}/end": {
+      "$ref": "Agent/WorkItems#/end"
+    }
+  }
+}

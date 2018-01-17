@@ -1,0 +1,52 @@
+{
+    "swagger": "2.0",
+  "info": {
+    "description": "Patron commands",
+    "version": "10.0",
+    "title": "PatronAPI"
+  },
+  "tags": [
+    {
+      "name": "Callback",
+      "description": "Callback API"
+    },
+    {
+      "name": "ChatRequests",
+      "description": "Chat Client API <b><i><span style=color:red>(Updated in v11.0)</span></i></b>"
+    },
+    {
+      "name": "WorkItem",
+      "description": "Work Item API"
+    }
+  ],
+  "schemes": [ "https" ],
+  "paths": {
+    "/queuecallback": {
+      "$ref": "Patron/CallBack#/queuecallback"
+    },
+    "/promise": {
+      "$ref": "Patron/CallBack#/promise"
+    },
+    "/contacts/chats": {
+      "$ref": "Patron/ChatRequests#/contacts_chats"
+    },
+    "/contacts/chats/{chatSession}": {
+      "$ref": "Patron/ChatRequests#/contacts_chats_chatSession"
+    },
+    "/contacts/chats/{chatSession}/send-text": {
+      "$ref": "Patron/ChatRequests#/contacts_chats_chatSession_send_text"
+    },        
+    "/contacts/chats/{chatSession}/typing": {
+      "$ref": "Patron/ChatRequests#/contacts_typing"
+    },
+    "/contacts/chats/{chatSession}/typing-preview": {
+      "$ref": "Patron/ChatRequests#/contacts_typing_preview"
+    },
+    "/points-of-contact/{pointsOfContactId}/chat-profile": {
+      "$ref": "Patron/ChatRequests#/points-of-contact_pointofcontactid_chat-profile"
+    },
+    "/interactions/work-items": {
+      "$ref": "Patron/WorkItem#/work_items"
+    }
+  }
+}

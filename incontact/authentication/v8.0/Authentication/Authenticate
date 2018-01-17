@@ -4,7 +4,7 @@
       "tags": [ "Authenticate" ],
       "summary": "Resets an agent's password",
       "operationId": "passwordReset",
-      "description": "This method requires the agentId and will reset the password for this Agent to the string supplied in the requestedPassword parameter.  The same password complexity rules that are required in Central are necessary for this API as well.<br/><br/><b>NOTE:</b> If you have the \"Generate Random Passwords\" option enabled in this user's Security Profile, you will not be allowed to provide a requestedPassword.  In this case you should just call the method without this parameter and the platform will generate a new password and email it to the address associated with this user configuration.<div class='tabs_wrapper' data-path='admin_agents_putResetPassword.html'></div>",
+      "description": "This method requires the agentId and will reset the password for this Agent to the string supplied in the requestedPassword parameter.  The same password complexity rules that are required in Central are necessary for this API as well.<div class='tabs_wrapper' data-path='admin_agents_putResetPassword.html'></div>",
       "produces": [
         "application/json"
       ],

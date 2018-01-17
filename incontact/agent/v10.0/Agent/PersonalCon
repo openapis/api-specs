@@ -1,0 +1,115 @@
+{
+  "agent-sessions_sessionid_interactions_contactid_snooze": {
+    "post": {
+      "tags": [
+        "PersonalCon"
+      ],
+      "summary": "Snooze a Preview contact.",
+      "operationId": "PersonalConSnoozes",
+      "description": "This method snoozes a preview personal connection contact.  The contact will be delivered to another agent. <div class='tabs_wrapper' data-path='agent_personalCon_postSnoozesIncommingContact.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the customer.",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "dialer_login": {
+    "post": {
+      "tags": [ "PersonalCon" ],
+      "summary": "Log into a dialer campaign",
+      "operationId": "dialerLogon",
+      "description": "This API call allows an agent to log into (or join) a running Personal Connection outbound skill. In future releases we will replace skillName with skillId.<div class='tabs_wrapper' data-path='agent_personalCon_postSessionIDDialerLogin.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "name": "skillName",
+          "description": "The name of the Personal Connection skill",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid skill name."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "<p>Invalid dialer status.</p><p>Invalid state.</p>"
+        }
+      }
+    }
+  },
+  "dialer_logout": {
+    "post": {
+      "tags": [ "PersonalCon" ],
+      "summary": "Log out of a dialer campaign",
+      "operationId": "dialerLogout",
+      "description": "Logs the agent out of a running outbound Personal Connection skill (if the agent is logged into an outbound skill).<div class='tabs_wrapper' data-path='agent_personalCon_postSessionIDDialerLogout.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid skill name."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "<p>Invalid dialer status.</p><p>Invalid state.</p>"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "sessionId": {
+        "name": "sessionId",
+        "description": "Agent Session Id",
+        "required": true,
+        "type": "string",
+        "in": "path"
+      }
+    }
+  }
+}
