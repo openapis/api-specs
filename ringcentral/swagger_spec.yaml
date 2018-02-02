@@ -84,7 +84,7 @@
       tokenUrl: "https://platform.devtest.ringcentral.com/restapi/oauth/token"
       scopes: {}
   security: 
-    - OAuth2: [read, write]
+    - OAuth2: []
   paths: 
     /restapi: 
       get: 
