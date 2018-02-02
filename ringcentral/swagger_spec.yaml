@@ -82,11 +82,10 @@
       flow: "accessCode"
       authorizationUrl: "https://platform.devtest.ringcentral.com/restapi/oauth/authorize"
       tokenUrl: "https://platform.devtest.ringcentral.com/restapi/oauth/token"
-      scopes: "default permissions"
+      scopes: {}
   security: 
     - 
-      oauth:
-      - default
+      oauth: []
   paths: 
     /restapi: 
       get: 
