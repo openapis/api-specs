@@ -77,15 +77,14 @@
   schemes: 
     - "https"
   securityDefinitions: 
-    oauth: 
+    OAuth2: 
       type: "oauth2"
       flow: "accessCode"
       authorizationUrl: "https://platform.devtest.ringcentral.com/restapi/oauth/authorize"
       tokenUrl: "https://platform.devtest.ringcentral.com/restapi/oauth/token"
       scopes: {}
   security: 
-    - 
-      oauth: []
+    - OAuth2: [read, write]
   paths: 
     /restapi: 
       get: 
