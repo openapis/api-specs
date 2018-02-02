@@ -1,55 +1,56 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Aha.io API",
-    "description": "Articles that matter on social publishing platform",
-    "version": "1.0.0"
+  "swagger":"2.0",
+  "info":{
+    "title":"Aha.io API",
+    "description":"Articles that matter on social publishing platform",
+    "version":"1.0.0"
   },
-  "host": "ringcentral.aha.io",
-  "schemes": [
+  "host":"secure.aha.io",
+  "schemes":[
     "https"
   ],
-  "basePath": "/api/v1",
-  "produces": [
+  "basePath":"/api/v1",
+  "produces":[
     "application/json"
   ],
-  "paths": {
-    "/features": {
-      "get": {
-        "summary": "Get all features",
-        "description": "Get all features",
-        "tags": [
+  "paths":{
+    "/features":{
+      "get":{
+        "operationId":"getFeatures",
+        "summary":"Get all features",
+        "description":"Get all features",
+        "tags":[
           "Features"
         ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "q",
-            "in": "query",
-            "description": "Sub-string to match against feature name or ID",
-            "required": false,
-            "type": "string"
+            "name":"q",
+            "in":"query",
+            "description":"Sub-string to match against feature name or ID",
+            "required":false,
+            "type":"string"
           },
           {
-            "name": "assigned_to_user",
-            "in": "query",
-            "description": "Search features by assignee",
-            "required": false,
-            "type": "string"
+            "name":"updated_since",
+            "in":"query",
+            "description":"UTC timestamp (in ISO8601 format) that the updated_at field must be larger than.",
+            "required":false,
+            "type":"string",
+            "format":"date-time"
           },
           {
-            "name": "tag",
-            "in": "query",
-            "description": "Search features by tag",
-            "required": false,
-            "type": "string"
-          },
+            "name":"tag",
+            "in":"query",
+            "description":"A string tag value.",
+            "required":false,
+            "type":"string"
+          },  
           {
-            "name": "updated_since",
-            "in": "query",
-            "description": "UTC timestamp (in ISO8601 format) that the updated_at field must be larger than.",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
+            "name":"assigned_to_user",
+            "in":"query",
+            "description":"The ID or email address of user to return assigned features for.",
+            "required":false,
+            "type":"string"
           },
           {
             "name": "page",
@@ -68,863 +69,709 @@
             "format": "int32"
           }
         ],
-        "produces": [
+        "produces":[
           "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "A list of features",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "reference_num": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "due_date": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "start_date": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "url": {
-                        "type": "string"
-                      },
-                      "resource": {
-                        "type": "string"
-                      },
-                      "initiative": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "url": {
-                            "type": "string"
-                          },
-                          "resource": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "pagination": {
-                  "type": "object",
-                  "properties": {
-                    "total_records": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "total_pages": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "current_page": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  }
-                }
-              }
+        "consumes":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"A list of features",
+            "schema":{
+              "$ref":"#/definitions/FeaturesResponse"
             }
           }
         }
       }
     },
-    "/features/{id}": {
-      "get": {
-        "summary": "Get a specific feature",
-        "description": "Get a specific feature",
-        "tags": [
+    "/features/{feature_id}":{
+      "get":{
+        "operationId":"getFeature",
+        "summary":"",
+        "description":"Get a specific feature",
+        "tags":[
           "Features"
         ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "id",
-            "in": "path",
-            "description": "Numeric ID, or key of the feature to be retrieved",
-            "required": true,
-            "type": "string"
+            "name":"feature_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the feature to be retrieved",
+            "required":true,
+            "type":"string"
           }
         ],
-        "produces": [
+        "produces":[
           "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "Information for a specific release",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "feature": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "reference_num": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "due_date": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "start_date": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "url": {
-                      "type": "string"
-                    },
-                    "resource": {
-                      "type": "string"
-                    },
-                    "initiative": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "type": "string"
-                        },
-                        "resource": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+        "consumes":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"Information for a specific release",
+            "schema":{
+              "$ref":"#/definitions/FeatureWrap"
             }
           }
         }
-      }
-    },
-    "/releases/{releaseId}/features": {
-      "post": {
-        "summary": "Create a feature",
-        "description": "Create a feature",
-        "tags": [
+      },
+      "put":{
+        "operationId":"updateFeature",
+        "summary":"Update a feature's custom fields with tag-like value",
+        "description":"Update a feature's custom fields with tag-like value",
+        "tags":[
           "Features"
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "releaseId",
-            "in": "path",
-            "description": "The id of the release being added to.",
-            "required": true,
-            "type": "string"
+            "name":"feature_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the feature to be retrieved",
+            "required":true,
+            "type":"string"
           },
           {
-            "in": "body",
-            "name": "feature",
-            "description": "Feature to create",
-            "schema": {
-              "type": "object",
-              "required": [
-                "release_id",
-                "name",
-                "workflow_kind",
-                "workflow_status"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "reference_num": {
-                  "type": "string"
-                },
-                "release_id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "workflow_kind": {
-                  "type": "string"
-                },
-                "workflow_status": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "assigned_to_user": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "tags": {
-                  "type": "string"
-                },
-                "original_estimate_text": {
-                  "type": "string"
-                },
-                "remaining_estimate_text": {
-                  "type": "string"
-                },
-                "original_estimate": {
-                  "type": "string"
-                },
-                "remaining_estimate": {
-                  "type": "string"
-                },
-                "start_date": {
-                  "type": "string",
-                  "format": "date"
-                },
-                "due_date": {
-                  "type": "string",
-                  "format": "date"
-                },
-                "release_phase": {
-                  "type": "string"
-                },
-                "initiative": {
-                  "type": "string"
-                },
-                "master_feature": {
-                  "type": "string"
-                }
-              }
+            "in":"body",
+            "name":"feature",
+            "description":"Feature properties to update",
+            "required":true,
+            "schema":{
+              "$ref":"#/definitions/FeatureUpdate"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "The feature that was created",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "feature": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "reference_num": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "due_date": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "start_date": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "url": {
-                      "type": "string"
-                    },
-                    "resource": {
-                      "type": "string"
-                    },
-                    "initiative": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "type": "string"
-                        },
-                        "resource": {
-                          "type": "string"
-                        },
-                        "created_at": {
-                          "type": "string",
-                          "format": "date-time"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+        "produces":[
+          "application/json"
+        ],
+        "consumes":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"Information for a specific release",
+            "schema":{
+              "$ref":"#/definitions/FeatureWrap"
             }
           }
         }
       }
     },
-    "/products/{productId}/releases": {
-      "get": {
-        "summary": "Releases API",
-        "description": "Create a release",
-        "tags": [
-          "Releases"
+    "/releases/{release_id}/features":{
+      "get":{
+        "operationId":"getReleaseFeatures",
+        "summary":"Get all features for a release",
+        "description":"Get all features for a release",
+        "tags":[
+          "Features"
         ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "productId",
-            "in": "path",
-            "description": "The id of the company being queried",
-            "required": true,
-            "type": "string"
+            "name":"release_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the release to retrieve features for",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A specific page of results.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
-        "produces": [
+        "produces":[
           "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "A list of topic objects within a data envelope.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "releases": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "A unique identifier for the release."
-                      },
-                      "reference_num": {
-                        "type": "string",
-                        "description": "Release referenence number."
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Release name."
-                      },
-                      "start_date": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "Start date in YYYY-MM-DD format."
-                      },
-                      "release_date": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "Release date in YYYY-MM-DD format."
-                      },
-                      "released": {
-                        "type": "boolean"
-                      },
-                      "parking_lot": {
-                        "type": "boolean"
-                      },
-                      "url": {
-                        "type": "string",
-                        "description": "Web URL for release."
-                      },
-                      "resource": {
-                        "type": "string",
-                        "description": "API URL for release."
-                      }
-                    }
-                  }
-                },
-                "pagination": {
-                  "type": "object",
-                  "properties": {
-                    "total_records": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "total_pages": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "current_page": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  }
-                }
-              }
+        "consumes":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"A list of features within a data envelope.",
+            "schema":{
+              "$ref":"#/definitions/FeaturesResponse"
             }
           }
         }
       }
     },
-    "/releases/{id}": {
-      "get": {
-        "summary": "",
-        "description": "Get a specific release",
-        "tags": [
-          "Releases"
+    "/products":{
+      "get":{
+        "operationId":"getProducts",
+        "summary":"Products API",
+        "description":"Get products list",
+        "tags":[
+          "Products"
         ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "id",
-            "in": "path",
-            "description": "Numeric ID, or key of the release to be retrieved",
-            "required": true,
-            "type": "string"
+            "name": "page",
+            "in": "query",
+            "description": "A specific page of results.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
-        "produces": [
+        "produces":[
           "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "Information for a specific release",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "A unique identifier for the release."
-                },
-                "reference_num": {
-                  "type": "string",
-                  "description": "Release referenence number."
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Release name."
-                },
-                "start_date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "Start date in YYYY-MM-DD format."
-                },
-                "release_date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "Release date in YYYY-MM-DD format."
-                },
-                "released": {
-                  "type": "boolean"
-                },
-                "parking_lot": {
-                  "type": "boolean"
-                },
-                "url": {
-                  "type": "string",
-                  "description": "Web URL for release."
-                },
-                "resource": {
-                  "type": "string",
-                  "description": "API URL for release."
-                }
-              }
+        "responses":{
+          "200":{
+            "description":"A list of products objects within a data envelope.",
+            "schema":{
+              "$ref":"#/definitions/ProductsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/products/{product_id}":{
+      "get":{
+        "operationId":"getProduct",
+        "summary":"Products API",
+        "description":"Get product info",
+        "tags":[
+          "Products"
+        ],
+        "parameters":[
+          {
+            "name":"product_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the feature to be retrieved",
+            "required":true,
+            "type":"string"
+          }
+        ],
+        "produces":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"A list of products objects within a data envelope.",
+            "schema":{
+              "$ref":"#/definitions/ProductResponse"
+            }
+          }
+        }
+      }
+    },
+    "/releases/{release_id}":{
+      "get":{
+        "operationId":"getRelease",
+        "summary":"",
+        "description":"Get a specific release",
+        "tags":[
+          "Releases"
+        ],
+        "parameters":[
+          {
+            "name":"release_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the release to be retrieved",
+            "required":true,
+            "type":"string"
+          }
+        ],
+        "produces":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"Information for a specific release",
+            "schema":{
+              "$ref":"#/definitions/ReleaseWrap"
+            }
+          }
+        }
+      }
+    },
+    "/products/{product_id}/releases":{
+      "get":{
+        "operationId":"getProductReleases",
+        "summary":"",
+        "description":"Get releases for a product release",
+        "tags":[
+          "Releases"
+        ],
+        "parameters":[
+          {
+            "name":"product_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the product to retrieve releases for.",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A specific page of results.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page.",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "produces":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"Information for a specific release",
+            "schema":{
+              "$ref":"#/definitions/ReleasesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/products/{product_id}/releases/{release_id}":{
+      "put":{
+        "operationId":"updateProductRelease",
+        "summary":"Update a release",
+        "description":"Update a release",
+        "tags":[
+          "Releases"
+        ],
+        "parameters":[
+          {
+            "name":"product_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the product to create the release in",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "name":"release_id",
+            "in":"path",
+            "description":"Numeric ID, or key of the release to be updated",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "in":"body",
+            "name":"release",
+            "description":"Release properties to update",
+            "required":true,
+            "schema":{
+              "$ref":"#/definitions/ReleaseUpdateWrap"
+            }
+          }
+        ],
+        "produces":[
+          "application/json"
+        ],
+        "consumes":[
+          "application/json"
+        ],
+        "responses":{
+          "200":{
+            "description":"Information for a specific release",
+            "schema":{
+              "$ref":"#/definitions/ReleaseWrap"
             }
           }
         }
       }
     }
   },
-  "definitions": {
-    "Features": {
-      "type": "object",
-      "properties": {
-        "features": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "reference_num": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "created_at": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "due_date": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "start_date": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "url": {
-                "type": "string"
-              },
-              "resource": {
-                "type": "string"
-              },
-              "initiative": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "url": {
-                    "type": "string"
-                  },
-                  "resource": {
-                    "type": "string"
-                  },
-                  "created_at": {
-                    "type": "string",
-                    "format": "date-time"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "pagination": {
-          "type": "object",
-          "properties": {
-            "total_records": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "total_pages": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "current_page": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
+  "definitions":{
+    "FeatureWrap":{
+      "type":"object",
+      "properties":{
+        "feature":{
+          "type":"object",
+          "$ref":"#/definitions/Feature"
         }
       }
     },
-    "FeatureResponse": {
-      "type": "object",
-      "properties": {
-        "feature": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            },
-            "reference_num": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "created_at": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "due_date": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "start_date": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "url": {
-              "type": "string"
-            },
-            "resource": {
-              "type": "string"
-            },
-            "initiative": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "resource": {
-                  "type": "string"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            }
+    "FeaturesResponse":{
+      "type":"object",
+      "properties":{
+        "features":{
+          "type":"array",
+          "items":{
+            "$ref":"#/definitions/FeatureMeta"
+          }
+        },
+        "pagination":{
+          "type":"object",
+          "$ref":"#/definitions/Pagination"
+        }
+      }
+    },
+    "ReleaseWrap":{
+      "type":"object",
+      "properties":{
+        "release":{
+          "type":"object",
+          "$ref":"#/definitions/Release"
+        }
+      }
+    },
+    "ReleasesResponse":{
+      "type":"object",
+      "properties":{
+        "releases":{
+          "type":"array",
+          "items":{
+            "$ref":"#/definitions/Release"
+          }
+        },
+        "pagination":{
+          "type":"object",
+          "$ref":"#/definitions/Pagination"
+        }
+      }
+    },
+    "Pagination":{
+      "type":"object",
+      "properties":{
+        "total_records":{
+          "type":"integer",
+          "format":"int64"
+        },
+        "total_pages":{
+          "type":"integer",
+          "format":"int64"
+        },
+        "current_page":{
+          "type":"integer",
+          "format":"int64"
+        }
+      }
+    },
+    "FeatureMeta":{
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string"
+        },
+        "reference_num":{
+          "type":"string"
+        },
+        "name":{
+          "type":"string"
+        },
+        "created_at":{
+          "type":"string",
+          "format":"date-time"
+        },
+        "url":{
+          "type":"string"
+        },
+        "resource":{
+          "type":"string"
+        }
+      }
+    },
+    "Feature":{
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string"
+        },
+        "reference_num":{
+          "type":"string"
+        },
+        "name":{
+          "type":"string"
+        },
+        "created_at":{
+          "type":"string",
+          "format":"date-time"
+        },
+        "start_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Start date in YYYY-MM-DD format."
+        },
+        "due_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Due date in YYYY-MM-DD format."
+        },
+        "url":{
+          "type":"string"
+        },
+        "resource":{
+          "type":"string"
+        },
+        "release": {
+          "type":"object",
+          "$ref":"#/definitions/Release"
+        },
+        "tags": {
+          "type":"array",
+          "items":{
+            "type":"string"
           }
         }
       }
     },
-    "Releases": {
-      "type": "object",
-      "properties": {
-        "releases": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "A unique identifier for the release."
-              },
-              "reference_num": {
-                "type": "string",
-                "description": "Release referenence number."
-              },
-              "name": {
-                "type": "string",
-                "description": "Release name."
-              },
-              "start_date": {
-                "type": "string",
-                "format": "date",
-                "description": "Start date in YYYY-MM-DD format."
-              },
-              "release_date": {
-                "type": "string",
-                "format": "date",
-                "description": "Release date in YYYY-MM-DD format."
-              },
-              "released": {
-                "type": "boolean"
-              },
-              "parking_lot": {
-                "type": "boolean"
-              },
-              "url": {
-                "type": "string",
-                "description": "Web URL for release."
-              },
-              "resource": {
-                "type": "string",
-                "description": "API URL for release."
-              }
-            }
+    "ProductResponse":{
+      "type":"object",
+      "properties":{
+        "product":{
+          "type":"object",
+          "$ref":"#/definitions/Product"
+        }
+      }
+    },
+    "ProductsResponse":{
+      "type":"object",
+      "properties":{
+        "products":{
+          "type":"array",
+          "items":{
+            "$ref":"#/definitions/ProductMeta"
           }
         },
-        "pagination": {
-          "type": "object",
-          "properties": {
-            "total_records": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "total_pages": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "current_page": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
+        "pagination":{
+          "type":"object",
+          "$ref":"#/definitions/Pagination"
         }
       }
     },
-    "Pagination": {
-      "type": "object",
-      "properties": {
-        "total_records": {
-          "type": "integer",
-          "format": "int64"
+    "ProductMeta": {
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string",
+          "description":"A unique identifier for the product."
         },
-        "total_pages": {
-          "type": "integer",
-          "format": "int64"
+        "reference_prefix":{
+          "type":"string",
+          "description":"The reference prefix slug for the product."
         },
-        "current_page": {
-          "type": "integer",
-          "format": "int64"
+        "name":{
+          "type":"string",
+          "description":"The name for the product."
+        },
+        "product_line":{
+          "type":"boolean",
+          "description":"Whether the product is a product line or not."
+        },
+        "created_at":{
+          "type":"string",
+          "format":"date-time",
+          "description":"The date-time when the product was created."
         }
       }
     },
-    "WorkflowStatus": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
+    "Product": {
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string",
+          "description":"A unique identifier for the product."
+        },
+        "reference_prefix":{
+          "type":"string",
+          "description":"The reference prefix slug for the product."
+        },
+        "name":{
+          "type":"string",
+          "description":"The name for the product."
+        },
+        "product_line":{
+          "type":"boolean",
+          "description":"Whether the product is a product line or not."
+        },
+        "created_at":{
+          "type":"string",
+          "format":"date-time",
+          "description":"The date-time when the product was created."
+        },
+        "updated_at":{
+          "type":"string",
+          "format":"date-time",
+          "description":"The date-time when the product was updated."
+        },
+        "url":{
+          "type":"string",
+          "description":"User URL for the project."
+        },
+        "resource":{
+          "type":"string",
+          "description":"User URL for the project."
+        },
+        "has_ideas":{
+          "type":"boolean",
+          "description":"Whether the product has ideas or not."
+        },
+        "has_master_features":{
+          "type":"boolean",
+          "description":"Whether the product has master features or not."
         }
       }
     },
-    "User": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
+    "Release":{
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string",
+          "description":"A unique identifier for the release."
+        },
+        "reference_num":{
+          "type":"string",
+          "description":"Release referenence number."
+        },
+        "name":{
+          "type":"string",
+          "description":"Release name."
+        },
+        "start_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Start date in YYYY-MM-DD format."
+        },
+        "release_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Release date in YYYY-MM-DD format."
+        },
+        "external_release_date":{
+          "type":"string",
+          "format":"date",
+          "description":"External release date in YYYY-MM-DD format."
+        },
+        "released":{
+          "type":"boolean"
+        },
+        "parking_lot":{
+          "type":"boolean"
+        },
+        "url":{
+          "type":"string",
+          "description":"Web URL for release."
+        },
+        "resource":{
+          "type":"string",
+          "description":"API URL for release."
         }
       }
     },
-    "Feature": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
+    "FeatureUpdate":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string",
+          "description":"Name of the feature"
         },
-        "reference_num": {
-          "type": "string"
+        "description":{
+          "type":"string",
+          "description":"Description of the feature and it can include HTML formatting."
         },
-        "name": {
-          "type": "string"
+        "created_by":{
+          "type":"string",
+          "description":"Email address of user that created the feature."
         },
-        "created_at": {
-          "type": "string",
-          "format": "date-time"
+        "assigned_to_user":{
+          "type":"string",
+          "description":"Email address of user that is assigned the feature."
         },
-        "due_date": {
-          "type": "string",
-          "format": "date-time"
+        "tags":{
+          "type":"string",
+          "description":"Tags can be automatically assigned to the new feature. If more than one tag is used then tags should be separated by commas"
         },
-        "start_date": {
-          "type": "string",
-          "format": "date-time"
+        "original_estimate_text":{
+          "type":"string",
+          "description":"Set the original estimated effort in a text format, you can use d, h, min (or 'p' for points) to indicate the units to use."
         },
-        "url": {
-          "type": "string"
+        "remaining_estimate_text":{
+          "type":"string",
+          "description":" Set the remaining estimated effort in a text format, you can use d, h, min (or 'p' for points) to indicate the units to use."
         },
-        "resource": {
-          "type": "string"
+        "start_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Date that work will start on the feature in format YYYY-MM-DD."
         },
-        "initiative": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "url": {
-              "type": "string"
-            },
-            "resource": {
-              "type": "string"
-            },
-            "created_at": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
+        "due_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Date that work is due to be completed on the feature in format YYYY-MM-DD."
+        },
+        "release_phase":{
+          "type":"string",
+          "description":"Name or id of release phase which the feature belongs to."
+        },
+        "initiative":{
+          "type":"string",
+          "description":"Name or id of initiative which the feature belongs to."
+        },
+        "master_feature":{
+          "type":"string",
+          "description":"Name or id of master feature which the feature belongs to."
         }
       }
     },
-    "Initiative": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        },
-        "resource": {
-          "type": "string"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time"
+    "ReleaseUpdateWrap":{
+      "type":"object",
+      "properties":{
+        "release":{
+          "type":"object",
+          "$ref":"#/definitions/ReleaseUpdate"
         }
       }
     },
-    "Release": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "A unique identifier for the release."
+    "ReleaseUpdate":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string",
+          "description":"Release name."
         },
-        "reference_num": {
-          "type": "string",
-          "description": "Release referenence number."
+        "start_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Start date in YYYY-MM-DD format."
         },
-        "name": {
-          "type": "string",
-          "description": "Release name."
+        "release_date":{
+          "type":"string",
+          "format":"date",
+          "description":"Release date in YYYY-MM-DD format."
         },
-        "start_date": {
-          "type": "string",
-          "format": "date",
-          "description": "Start date in YYYY-MM-DD format."
+        "development_started_on":{
+          "type":"string",
+          "format":"date",
+          "description":"Date Development started in format YYYY-MM-DD"
         },
-        "release_date": {
-          "type": "string",
-          "format": "date",
-          "description": "Release date in YYYY-MM-DD format."
+        "external_release_date":{
+          "type":"string",
+          "format":"date",
+          "description":"The external release date for this feature in format YYYY-MM-DD"
         },
-        "released": {
-          "type": "boolean"
-        },
-        "parking_lot": {
-          "type": "boolean"
-        },
-        "url": {
-          "type": "string",
-          "description": "Web URL for release."
-        },
-        "resource": {
-          "type": "string",
-          "description": "API URL for release."
+        "parking_lot":{
+          "type":"boolean"
         }
       }
     }
