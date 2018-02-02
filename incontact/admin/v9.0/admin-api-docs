@@ -1,0 +1,406 @@
+{
+  "swagger": "2.0",
+
+  "info": {
+    "description": "Admin commands",
+    "version": "9.0",
+    "title": "AdminAPI"
+  },
+  "tags": [
+    {
+      "name": "AddressBook",
+      "description": "Address Book Management"
+    },
+    {
+      "name": "Agents",
+      "description": "Agent Management <b><i><span style=color:red>(Updated in v11.0)</span></i></b>"
+    },
+    {
+      "name": "Contacts",
+      "description": "General Contact Management"
+    },
+    {
+      "name": "General",
+      "description": "General Admin Management <b><i><span style=color:red>(Updated in v11.0)</span></i></b>"
+    },
+    {
+      "name": "Groups",
+      "description": "Group Management"
+    },
+    {
+      "name": "Lists",
+      "description": "Calling/DNC Group Management"
+    },
+    {
+      "name": "ScheduledCallbacks",
+      "description": "Scheduled Callbacks Management"
+    },
+    {
+      "name": "Skills",
+      "description": "Skill/Campaign Management <b><i><span style=color:red>(Updated in v11.0)</span></i></b>"
+    }
+  ],
+  "schemes": [ "https" ],
+  "paths": {
+    "/address-books": {
+      "$ref": "Admin/AddressBook#/address-books"
+    },
+    "/address-books/{addressBookId}": {
+      "$ref": "Admin/AddressBook#/address-books_addressbooksid"
+    },
+    "/address-books/{addressBookId}/assignment": {
+      "$ref": "Admin/AddressBook#/address-books_addressbooksid_assignment"
+    },
+    "/address-books/{addressBookId}/dynamic-entries": {
+      "$ref": "Admin/AddressBook#/address-books_addressbooksid_dynamic"
+    },
+    "/address-books/{addressBookId}/dynamic-entries/{externalId}": {
+      "$ref": "Admin/AddressBook#/address-books_addressbooksid_dynamic_external"
+    },
+    "/address-books/{addressBookId}/entries": {
+      "$ref": "Admin/AddressBook#/address-books_addressbooksid_entries"
+    },
+    "/address-books/{addressBookId}/entries/{addressBookEntryId}": {
+      "$ref": "Admin/AddressBook#/address-books_addressbooksid_entries_entryid"
+    },
+    "/agents/{agentId}/address-books": {
+      "$ref": "Admin/AddressBook#/agents_agentId_addressbooks"
+    },
+    "/agents": {
+      "$ref": "Admin/Agents#/agents"
+    },
+    "/agents/{agentId}": {
+      "$ref": "Admin/Agents#/agents_agentId"
+    },
+    "/agents/{agentId}/state": {
+      "$ref": "Admin/Agents#/agents-agentId-state"
+    },
+    "/agents/skills": {
+      "$ref": "Admin/Agents#/agents_skills"
+    },
+    "/agents/{agentId}/groups": {
+      "$ref": "Admin/Agents#/agents_agentid_groups"
+    },
+    "/agents/{agentId}/skills": {
+      "$ref": "Admin/Agents#/agents_agentId_skills"
+    },
+    "/agents/{agentId}/skills/unassigned": {
+      "$ref": "Admin/Agents#/agents-agentId-skills-unassigned"
+    },
+    "/agents/skill-data": {
+      "$ref": "Admin/Agents#/agents_skills_data"
+    },
+    "/agents/{agentId}/skill-data": {
+      "$ref": "Admin/Agents#/agents_agentId_skill_data"
+    },
+    "/agents/{agentId}/custom-event": {
+      "$ref": "Admin/Agents#/agents_agentId_custom_event"
+    },
+    "/agents/quick-replies": {
+      "$ref": "Admin/Agents#/agents_quick_replies"
+    },
+    "/agents/{agentId}/quick-replies": {
+      "$ref": "Admin/Agents#/agents_agentId_quick_replies"
+    },
+    "/agents/messages": {
+      "$ref": "Admin/Agents#/agents_messages"
+    },
+     "/agents/messages/{messageid}": {
+      "$ref": "Admin/Agents#/agents_messages_messageid"
+    },
+    "/agents/{agentId}/messages": {
+      "$ref": "Admin/Agents#/agents_agentId_messages"
+    },
+    "/agents/{agentId}/indicators": {
+      "$ref": "Admin/Agents#/agents_agentId_indicators"
+    },
+    "/agents/{agentId}/logout": {
+      "$ref": "Admin/Agents#/agents_agentId_logout"
+    },
+    "/agents/{agentId}/scheduled-callbacks": {
+      "$ref": "Admin/ScheduledCallbacks#/agents_agentId_scheduled_callbacks"
+    },
+    "/agent-patterns": {
+      "$ref": "Admin/Agents#/agent-patterns"
+    },
+    "/agents-states": {
+      "$ref": "Admin/Agents#/agents_states"
+    },
+    "/branding-profiles": {
+      "$ref": "Admin/General#/branding-profiles"
+    },
+    "/business-unit": {
+      "$ref": "Admin/General#/business_unit"
+    },    
+    "/campaigns": {
+      "$ref": "Admin/Skills#/campaigns"
+    },
+    "/campaigns/{campaignId}": {
+      "$ref": "Admin/Skills#/campaigns_campaignId"
+    },
+    "/campaigns/{campaignId}/address-books": {
+      "$ref": "Admin/AddressBook#/campaigns_campaignid_addressbooks"
+    },
+    "/contacts/{contactId}/chat-transcript": {
+      "$ref": "Admin/Contacts#/contacts_contactId_chat_transcript"
+    },
+    "/contacts/{contactId}/email-transcript": {
+      "$ref": "Admin/Contacts#/contacts-contactId-email-transcript"
+    },
+    "/contacts/{contactId}/files": {
+      "$ref": "Admin/Contacts#/contacts_contactId_files"
+    },
+    "/contacts/{contactId}/end": {
+      "$ref": "Admin/Contacts#/contacts_contactId_end"
+    },
+    "/contacts/{contactId}/monitor": {
+      "$ref": "Admin/Contacts#/contacts_contactId_monitor"
+    },
+    "/contacts/{contactId}/record": {
+      "$ref": "Admin/Contacts#/contacts_contactId_record"
+    },
+    "/contacts/{contactId}/tags": {
+      "$ref": "Admin/Contacts#/contacts-contactId-tags"
+    },   
+    "/contact-state-descriptions": {
+      "$ref": "Admin/Contacts#/contact_state_description"
+    },
+    "/contact-state-descriptions/{contactStateId}": {
+      "$ref": "Admin/Contacts#/contact_state_descriptions_stateId"
+    },
+    "/countries": {
+      "$ref": "Admin/General#/countries"
+    },
+    "/countries/{countryId}/states": {
+      "$ref": "Admin/General#/countries-countryId-states"
+    },
+    "/data-definitions/data-types": {
+      "$ref": "Admin/General#/data-definitions-data-types"
+    },
+    "/customers": {
+      "$ref": "Admin/General#/customers"
+    },
+    "/customers_customerid": {
+      "$ref": "Admin/General#/customers_customerid"
+    },
+    "/customers_customerid_contacts": {
+      "$ref": "Admin/General#/customers_customerid_contacts"
+    },
+    "/customers_search": {
+      "$ref": "Admin/General#/customers_search"
+    },
+    "/dispositions": {
+      "$ref": "Admin/General#/dispositions"
+    },
+    "/dispositions/{dispositionId}": {
+      "$ref": "Admin/Skills#/dispositions_dispositionid"
+    },
+    "/dispositions/classifications": {
+      "$ref": "Admin/Skills#/dispositions_classifications"
+    },
+    "/dnc-groups": {
+      "$ref": "Admin/Lists#/dnc_groups"
+    },
+    "/dnc-groups/{groupId}": {
+      "$ref": "Admin/Lists#/dnc_groups_groupId"
+    },
+    "/dnc-groups/{groupId}/contributing-skills": {
+      "$ref": "Admin/Lists#/dnc_groups_groupId_contributing_skills"
+    },
+    "/dnc-groups/{groupId}/contributing-skills/{skillId}": {
+      "$ref": "Admin/Lists#/dnc_groups_groupId_contributing_skill"
+    },
+    "/dnc-groups/{groupId}/records": {
+      "$ref": "Admin/Lists#/dnc_groups_groupId_records"
+    },
+    "/dnc-groups/{groupId}/scrubbed-skills": {
+      "$ref": "Admin/Lists#/dnc_groups_groupId_scrubbed_skills"
+    },
+    "/dnc-groups/{groupId}/scrubbed-skills/{skillId}": {
+      "$ref": "Admin/Lists#/dnc_groups_groupId_scrubbed_skill"
+    },
+    "/dnc-groups/{groupId}/records": {
+      "$ref": "Admin/Lists#/dnc_groups_groupId_records"
+    },
+    "/dnc-groups/search": {
+      "$ref": "Admin/Lists#/dnc_groups_search"
+    },
+    "/files": {
+      "$ref": "Admin/General#/files"
+    },
+    "/files/external": {
+      "$ref": "Admin/General#/files_external"
+    },
+    "/folders": {
+      "$ref": "Admin/General#/folders"
+    },
+    "/feedback-categories-and-priorities": {
+      "$ref": "Admin/General#/feedback_categories_and_priorities"
+    },
+    "/groups": {
+      "$ref": "Admin/Groups#/groups"
+    },
+    "/groups/{groupId}": {
+      "$ref": "Admin/Groups#/groups_groupid"
+    },
+    "/groups/{groupId}/agents": {
+      "$ref": "Admin/Groups#/groups_groupid_agents"
+    },
+    "/hiring-sources": {
+      "$ref": "Admin/General#/hiring-sources"
+    },
+    "/hours-of-operation": {
+      "$ref": "Admin/General#/hours_of_operation"
+    },
+    "/hours-of-operation/{profileId}": {
+      "$ref": "Admin/General#/hours_of_operation_profileId"
+    },
+    "/interactions/{contactId}/signal": {
+      "$ref": "Admin/Contacts#/interactions_contactId_signal"
+    },
+    "/lists/call-lists": {
+      "$ref": "Admin/Lists#/lists_call_lists"
+    },
+    "/lists/call-lists/{listId}": {
+      "$ref": "Admin/Lists#/lists_call_lists_listId"
+    },
+    "/lists/call-lists/{listId}/attempts": {
+      "$ref": "Admin/Lists#/lists_call_lists_listId_attempts"
+    },
+    "/lists/call-lists/{listId}/upload": {
+      "$ref": "Admin/Lists#/lists_call-lists_listId_upload"
+    },
+    "/locations": {
+      "$ref": "Admin/General#/locations"
+    },
+    "/lists/call-lists/jobs": {
+      "$ref": "Admin/Lists#/lists_call-lists_jobs"
+    },
+    "/lists/call-lists/jobs/{jobId}": {
+      "$ref": "Admin/Lists#/lists_call-lists_jobs_jobid"
+    },
+    "/media-types": {
+      "$ref": "Admin/General#/media_types"
+    },
+    "/media-types/{mediaTypeId}": {
+      "$ref": "Admin/General#/media_types_mediaTypeId"
+    },
+    "/message-templates": {
+      "$ref": "Admin/General#/message-templates"
+    },
+    "/message-templates/{templateId}": {
+      "$ref": "Admin/General#/message-templates-templateId"
+    },
+    "/permissions": {
+      "$ref": "Admin/General#/permissions"
+    },
+    "/permissions/{agentId}": {
+      "$ref": "Admin/General#/permissions_agentId"
+    },
+    "/phone-codes": {
+      "$ref": "Admin/General#/phone-codes"
+    },
+    "/points-of-contact": {
+      "$ref": "Admin/General#/points_of_contact"
+    },
+    "/points-of-contact/{pointOfContactId}": {
+      "$ref": "Admin/General#/points_of_contact_pointOfContactId"
+    },
+    "/security-profiles": {
+      "$ref": "Admin/General#/security-profiles"
+    },
+    "/security-profiles/{profileId}": {
+      "$ref": "Admin/General#/security-profiles-profileId"
+    },
+    "/scripts": {
+      "$ref": "Admin/General#/scripts"
+    },
+    "/scripts/{scriptId}/start": {
+      "$ref": "Admin/General#/script_scriptId_start"
+    },
+    "/scheduled-callbacks": {
+      "$ref": "Admin/ScheduledCallbacks#/scheduled_callbacks"
+    },
+    "/scheduled-callbacks/{callbackId}": {
+      "$ref": "Admin/ScheduledCallbacks#/scheduled_callbacks_callbackId"
+    },
+    "/server-time": {
+      "$ref": "Admin/General#/server_time"
+    },
+    "/skills/{skillId}/scheduled-callbacks": {
+      "$ref": "Admin/ScheduledCallbacks#/skills_skillId_scheduled_callbacks"
+    },
+    "/skills": {
+      "$ref": "Admin/Skills#/skills"
+    },
+    "/skills/{skillId}": {
+      "$ref": "Admin/Skills#/skills_skillId"
+    },
+    "/skills/{skillId}/address-books": {
+      "$ref": "Admin/AddressBook#/skills_skillid_addressbooks"
+    },
+    "/skills/{skillId}/start": {
+      "$ref": "Admin/Skills#/skills_skillId_start"
+    },
+    "/skills/{skillId}/stop": {
+      "$ref": "Admin/Skills#/skills_skillId_stop"
+    },
+    "/skills/agents": {
+      "$ref": "Admin/Skills#/skills_agents"
+    },
+    "/skills/{skillId}/agents": {
+      "$ref": "Admin/Skills#/skills_skillId_agents"
+    },
+    "/skills/{skillId}/agents/unassigned": {
+      "$ref": "Admin/Skills#/skills-skillId-agents-unassigned"
+    },
+    "/skills/call-data": {
+      "$ref": "Admin/Skills#/skills_call_data"
+    },
+    "/skills/{skillId}/call-data": {
+      "$ref": "Admin/Skills#/skills_skillId_call_data"
+    },
+    "/skills/{skillId}/dispositions": {
+      "$ref": "Admin/Skills#/skills_skillId_dispositions"
+    },
+    "/skills/{skillId}/dispositions/unassigned": {
+      "$ref": "Admin/Skills#/skills-skillId-dispositions-unassigned"
+    },
+    "/skills/{skillId}/tags": {
+      "$ref": "Admin/Skills#/skills-skillId-tags"
+    },
+    "/skills/{skillId}/parameters/general-settings": {
+      "$ref": "Admin/Skills#/skills_skillid_parameters_general-settings"
+    },
+    "/tags": {
+      "$ref": "Admin/General#/tags"
+    },
+    "/tags/{tagId}": {
+      "$ref": "Admin/General#/tags-tagId"
+    },
+    "/teams": {
+      "$ref": "Admin/Agents#/teams"
+    },
+    "/teams/{teamId}": {
+      "$ref": "Admin/Agents#/teams_teamId"
+    },
+    "/teams/agents": {
+      "$ref": "Admin/Agents#/teams-agents"
+    },
+    "/teams/{teamId}/address-books": {
+      "$ref": "Admin/AddressBook#/teams_teamid_addressbooks"
+    },
+    "/teams/{teamId}/agents": {
+      "$ref": "Admin/Agents#/teams-teamId-agents"
+    },
+    "/teams/{teamId}/unavailable-codes": {
+      "$ref": "Admin/Agents#/teams_teamId_unavailable_codes"
+    },
+    "/timezones": {
+      "$ref": "Admin/General#/timezones"
+    },
+    "/unavailable-codes": {
+      "$ref": "Admin/General#/unavailable_codes"
+    }
+  }
+}

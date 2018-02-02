@@ -1,0 +1,87 @@
+{
+  "work_items": {
+    "post": {
+      "tags": [ "WorkItem" ],
+      "summary": "Create a new work item",
+      "operationId": "requestACallback",
+      "description": "Creates a work item and launches the Point of Contact script for the named point of contact.  The Point of Contact is different from other APIs in that rather than using the GUID in Central, it must be in the format of ID - Name, for example 123456 - workItemPOC.<div class='tabs_wrapper' data-path='patron_workItem_postInteractionsWorkItem.html'></div>",
+      "parameters": [
+        {
+          "name": "pointOfContact",
+          "description": "The point of contact that you want to handle this work item.",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "workItemID",
+          "description": "A user-defined unique ID for this work item.",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "workItemPayload",
+          "description": "The data for this work item",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "workItemType",
+          "description": "A user-defined type for this work item.",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "from",
+          "description": "A user-defined description of the work item's origin.",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Point of contact is not valid for this business unit."
+        },
+        "403": {
+          "description": "Forbidden"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "workItem": {
+      "title": "workItem",
+      "description": "",
+      "properties": {
+        "workItemId": {
+          "type": "string",
+          "description": "The workItemId field is a string with an arbitrary value. It could, for instance, contain the ID of a \"case\" in a 3rd party CRM",
+          "required": true
+        },
+        "workItemPayload": {
+          "type": "string",
+          "description": "The workItemPayload field is an optional string with an arbitrary value. It can be used to send data in support of the work item. It is meant to be light weight, and contain small amounts of data. If there is a large amount of data needed in support of the work item, it is recommended that the data be stored in an accessible location, and the payload be used to contain a link or pointer to the data. The data could be used by agent software when the work item is routed. It could, for instance, contain an encoded representation of binary data, a JSON object or XML document, or other encoded data",
+          "required": true
+        },
+        "workItemType": {
+          "type": "string",
+          "description": "The workItemType field is an optional string with an arbitrary value. It helps agent software identify the type of the work item. It could, for instance, contain something like \"CRM Case\"",
+          "required": true
+        },
+        "from": {
+          "type": "string",
+          "description": "The from field is an optional string field with an arbitrary value. The value of the \"from\" field is displayed where the ANI would be displayed for a phone call, in inContact-created agent software. It could contain, for example, a patronâ€™s name",
+          "required": true
+        },
+        "pointOfContact": {
+          "type": "string",
+          "description": "The pointOfContact field is a required string field that identifies the point of contact to use for creating the Work Item. It must be the name of a valid, active Work Item point of contact in the same business unit as the application registration. The script associated with the named point of contact will execute, and can access the Work Item data values to help guide routing decisions, or support data dips, etc",
+          "required": true
+        }
+      }
+    }
+  }
+}

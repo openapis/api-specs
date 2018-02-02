@@ -1,0 +1,795 @@
+{
+  "agent-sessions_sessionid_interactions_contactid_email-park": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Parks an Email",
+      "operationId": "ParkEmail",
+      "description": "This method allows the agent to park email once it is accepted by the agent <div class='tabs_wrapper' data-path='agent_emails_postParkEmail.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+
+        },
+        {
+          "name": "contactId",
+          "description": "Email Contact ID",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "name": "toAddress",
+          "description": "To address for the forwarded Email, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromAddress",
+          "description": "From address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "ccAddress",
+          "description": "CC address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bccAddress",
+          "description": "BCC address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "subject",
+          "description": "Subject line of Email.  If left blank, no value will be forwarded",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bodyHtml",
+          "description": "HTML formatted body of Email.  If left blank, no value will be forwarded",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachments",
+          "description": "Base64 encoded attachment files.  Use \"|\" symbol to delimit multiple files.  Limited to 10 MB in total",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachmentNames",
+          "description": "Names of attached files in \"attachments\" parameter. Use \"|\" symbol to delimit multiple names",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "isDraft",
+          "description": "Need save the email in draft or not",
+          "type": "boolean"
+        },
+        {
+          "name": "primaryDispositionId",
+          "description": "ID of the primary Disposition",
+          "type": "string"
+        },
+        {
+          "name": "secondaryDispositionId",
+          "description": "ID of the Secondary dispostion",
+          "type": "string"
+        },
+        {
+          "name": "tags",
+          "description": "Collection of Tags to assign",
+          "type": "string"
+        },
+        {
+          "name": "notes",
+          "description": "Assignment Notes",
+          "type": "string"
+        },
+        {
+          "name": "originalAttachmentNames",
+          "description": "Mail's attachment names from the original email.",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Invalid toAddress </p> <p>Invalid fromAddress </p> <p>Invalid ccAddress </p><p>Invalid bccAddress </p><p>Invalid attachmentName </p><p>Invalid state </p><p>Invalid attachment</p><p>File server error</p><p>Invalid tag </p><p>Invalid primaryDispositionId </p><p>Skill does not allow additional disposition</p><p>Invalid secondaryDispositionId </p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Email parking is not enabled"
+        },
+        "404": {
+          "description": "<p>Invalid sessionId</p><p>Invalid contactId</p>"
+        }
+      }
+    }
+  },
+  "agent-sessions_sessionid_interactions_contactid_email-unpark": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Unparks an Email",
+      "operationId": "UnParkEmail",
+      "description": "This method allows the agent to unpark the parked emails <div class='tabs_wrapper' data-path='agent_emails_postUnParkEmail.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Email Contact ID",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "name": "isImmediate",
+          "description": "Agent must be in 'Unavailable' state when 'isImmediate' is true",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Invalid isImmediate </p><p>Agent must be in 'Unavailable' state when 'isImmediate' is true</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "404": {
+          "description": "<p>Invalid sessionId </p><p>Invalid contactId </p>"
+        }
+      }
+    }
+  },
+  "agent-sessions_sessionid_interactions_contactid_email-restore": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Restore an Email",
+      "operationId": "RestoreEmail",
+      "description": "This method allows the agent to restore the emails <div class='tabs_wrapper' data-path='agent_emails_postRestoreEmail.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Email Contact ID",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "404": {
+          "description": "<p>Invalid sessionId </p><p>Invalid contactId </p>"
+        },
+        "409": {
+          "description": "<p>Contact is parked and cannot be restored</p><p>ContactId is not an active contact.</p>"
+        }
+      }
+    }
+  },
+  "agent-sessions_sessionid_interactions_contactid_email-preview": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Preview an Email",
+      "operationId": "PreveiwEmail",
+      "description": "This method allows the agent to preview emails <div class='tabs_wrapper' data-path='agent_emails_postPreviewEmail.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Email Contact ID",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "404": {
+          "description": "<p>Invalid sessionId </p><p>Invalid contactId </p>"
+        },
+        "409": {
+          "description": "Contact is not parked and cannot be previewed"
+        }
+      }
+    }
+  },
+  "interactions_add_email": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Add an Email Contact",
+      "operationId": "AddEmail",
+      "description": "This method accepts an Email Contact for the Agent and places that Email into the Inbox for that Agent.<div class='tabs_wrapper' data-path='agent_emails_postAddEmail.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid skill id.</p><p>Invalid To Address.</p>"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Email limit reached.</p>"
+        },
+        "409": {
+          "description": "Invalid State."
+        }
+      }
+    }
+  },
+  "interactions_email_outbound": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Creates an outbound Email Contact",
+      "operationId": "EmailOutbound",
+      "description": "This method creates a contact used to send an email using the /agent-sessions/{sessionId}/interactions/{contactId}/email-send API.  The contactId will not be returned in this API and should be retrieved from the event that can be accessed using the /agent-sessions/{sessionId}/get-next-event API.<br/><br/><div class='tabs_wrapper' data-path='agent_emails_postOutbound.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "Session Id",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "skillId",
+          "description": "Skill Id",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "toAddress",
+          "description": "To address for outbound Email Contact, comma or semicolon delimited",
+          "required": true,
+          "type": "string",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "parentContactId",
+          "description": "Parent Contact Id",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid skillId <br/>Invalid toAddress <br/>Invalid parentContactId "
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid sessionId"
+        },
+        "409": {
+          "description": "InvalidState"
+        }
+      }
+    }
+  },
+  "interactions_contactId_email_forward": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Forwards an Email",
+      "nickname": "EmailForward",
+      "description": "This method allows the Agent to forward an Email contact they are working on to other Agents or even external addresses.  The Agent must have an outbound Email Skill assigned to them that must be passed in using the skillId parameter.<div class='tabs_wrapper' data-path='agent_emails_postForward.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Email Contact ID",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "name": "skillId",
+          "description": "ID of the outbound Email Skill the Agent will use to Forward the Email",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "toAddress",
+          "description": "To address for the forwarded Email, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromAddress",
+          "description": "From address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "ccAddress",
+          "description": "CC address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bccAddress",
+          "description": "BCC address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "subject",
+          "description": "Subject line of Email.  If left blank, no value will be forwarded",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bodyHtml",
+          "description": "HTML formatted body of Email.  If left blank, no value will be forwarded",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachments",
+          "description": "Base64 encoded attachment files.  Use \"|\" symbol to delimit multiple files.  Limited to 10 MB in total",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachmentNames",
+          "description": "Names of attached files in \"attachments\" parameter. Use \"|\" symbol to delimit multiple names",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "originalAttachmentNames",
+          "description": "Mail's attachment names from the original email.",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid To Address.</p><p>Invalid From Address.</p><p>Invalid CC Address.</p><p>Invalid BCC Address.</p><p>Invalid Skill Id.</p><p>Invalid attachment name.</p><p>Invalid attachment.</p><p>File Server error. Unable to upload file.</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact ID.</p>"
+        },
+        "409": {
+          "description": "ContactId is not an active contact."
+        }
+      }
+    }
+  },
+  "interactions_contactId_email_reply": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Reply to an Email",
+      "operationId": "EmailReply",
+      "description": "This method allows the Agent to reply to an Email contact they are working on.  The Agent must have an outbound Email Skill assigned to them that must be passed in using the skillId parameter.<br/><br/><b>NOTE:</b> The subject and bodyHtml paramters must be populated or they will be sent blank.  The API does not auto-populate these fields.<div class='tabs_wrapper' data-path='agent_emails_postReply.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the Email",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "skillId",
+          "description": "ID of the outbound Email Skill the Agent will use to reply to the Email",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "toAddress",
+          "description": "To address for the forwarded Email",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromAddress",
+          "description": "From address",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "ccAddress",
+          "description": "CC address",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bccAddress",
+          "description": "BCC address",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "subject",
+          "description": "Subject line of Email.  If left blank, no value will be forwarded",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bodyHtml",
+          "description": "HTML formatted body of Email.  If left blank, no value will be forwarded",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachments",
+          "description": "Base64 encoded attachment files.  Use \"|\" symbol to delimit multiple files",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachmentNames",
+          "description": "Names of attached files in \"attachments\" parameter. Use \"|\" symbol to delimit multiple names.  Limited to 10 MB in total",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid To Address.</p><p>Invalid From Address.</p><p>Invalid CC Address.</p><p>Invalid BCC Address.</p><p>Invalid Skill Id.</p><p>Invalid attachment name.</p><p>Invalid attachment.</p><p>File Server error. Unable to upload file.</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact ID.</p>"
+        },
+        "409": {
+          "description": "ContactId is not an active contact."
+        }
+      }
+    }
+  },
+  "interactions_contactId_email_send": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Sends an Email",
+      "operationId": "EmailSend",
+      "description": "This method allows the Agent to send an Email to other Agents or external addresses.  The Agent must have an outbound Email Skill assigned to them that must be passed in using the skillId parameter.<div class='tabs_wrapper' data-path='agent_emails_postSend.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the Email",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "skillId",
+          "description": "ID of the outbound Email Skill the Agent will use to Send the Email",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "toAddress",
+          "description": "To address for the Email, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromAddress",
+          "description": "From address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "ccAddress",
+          "description": "CC addresses, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bccAddress",
+          "description": "BCC address, comma or semicolon delimited",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "subject",
+          "description": "Subject line of Email",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bodyHtml",
+          "description": "HTML formatted body of Email",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachments",
+          "description": "Base64 encoded attachment files.  Use \"|\" symbol to delimit multiple files",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "attachmentNames",
+          "description": "Names of attached files in \"attachments\" parameter. Use \"|\" symbol to delimit multiple names.  Limited to 10 MB in total",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Invalid To Address.</p><p>Invalid From Address.</p><p>Invalid CC Address.</p><p>Invalid BCC Address.</p><p>Invalid Skill Id.</p><p>Invalid attachment name.</p><p>Invalid attachment.</p><p>File Server error. Unable to upload file.</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact ID.</p>"
+        },
+        "409": {
+          "description": "ContactId is not an active contact."
+        }
+      }
+    }
+  },
+  "interactions_contactId_end": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "End an Email Contact",
+      "operationId": "EndContact",
+      "description": "This method will end the Email Contact. This is similar to ending a phone call or work item. If the Agent has only one active Email, ending the Email will move the Agent to their \"next\" state. If there are multiple active Emails routed to the Agent, ending one of them simply results in the Email being ended.<div class='tabs_wrapper' data-path='agent_emails_postEnd.html'></div>",
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the Email",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot end the contact at this time."
+        }
+      }
+    }
+  },
+  "interactions_contactId_transfer_email_to_agent": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Transfer Email to an Agent",
+      "operationId": "EmailTransferAgent",
+      "description": "This method to enable your users to transfer an Email Contact to a different Agent. Make sure to use the Agent ID rather than the Agent name when transferring the Email. A successful transfer moves the Email Contact to the Agent queue.<div class='tabs_wrapper' data-path='agent_emails_postTransferToAgent.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the Email",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "targetAgentId",
+          "description": "Agent ID to transfer the Email to",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid agentId."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact ID.</p>"
+        },
+        "409": {
+          "description": "ContactId is not an active contact."
+        }
+      }
+    }
+  },
+  "interactions_contactId_transfer_email_to_skill": {
+    "post": {
+      "tags": [ "Emails" ],
+      "summary": "Transfer Email to a Skill",
+      "nickname": "EmailTransferSkill",
+      "description": "This method to enable your users to transfer an Email Contact to a different Skill queue. Make sure to use the Skill ID rather than the Skill name when transferring the Email. A successful transfer moves the Email Contact to the Skill queue.<div class='tabs_wrapper' data-path='agent_emails_postTransferToSkill.html'></div>",
+
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An Agent Session ID",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "contactId",
+          "description": "Contact ID of the customer",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "path"
+        },
+        {
+          "name": "targetSkillId",
+          "description": "ID of Skill to transfer the Email to",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid target skill ID."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session Id.</p><p>Invalid Contact ID.</p>"
+        },
+        "409": {
+          "description": "ContactId is not an active contact."
+        }
+      }
+    }
+  }
+}

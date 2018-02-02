@@ -1,0 +1,332 @@
+{
+  "queuecallback": {
+    "post": {
+      "tags": [ "Callback" ],
+      "summary": "Request an immediate callback",
+      "operationId": "requestACallback",
+      "description": "<p>This method allows you to request that a callback be made \"immediately\" (i.e. as soon as an agent is available to call back). The callback request is placed in the queue for the designated skill, and will be routed in order along with other calls that are in that queue.<div class='tabs_wrapper' data-path='patron_callback_postQueueCallBack.html'></div>",
+      "parameters": [
+        {
+          "name": "phoneNumber",
+          "description": "The phone number to call.  Use \"+\" followed by country code for international numbers",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "callerId",
+          "description": "The phone number for Caller ID on callback",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "callDelaySec",
+          "description": "Delay in seconds before callback happens once contact is accepted",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "skill",
+          "description": "ID for skill to queue the call against if wanted",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "targetAgent",
+          "description": "ID for Agent to queue the call for.  If included will override the skill parameter",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "priorityManagement",
+          "description": "DefaultFromSkill means skill manages priority change, Custom means the values in this API manage priority change",
+          "type": "string",
+          "allowableValues": {
+            "values": [
+              "DefaultFromSkill",
+              "Custom"
+            ],
+            "valueType": "LIST"
+          },
+          "in": "query"
+        },
+        {
+          "name": "initialPriority",
+          "description": "Initial priority, default value is \"0\"",
+          "type": "integer",
+          "format": "int64",
+          "in": "query"
+        },
+        {
+          "name": "acceleration",
+          "description": "Rate to accelerate priority, default value is \"0\".  Increases each second by (acceleration/60)",
+          "type": "integer",
+          "format": "int64",
+          "in": "query"
+        },
+        {
+          "name": "maxPriority",
+          "description": "Maximum value priority can accelerate to, default value is \"0\"",
+          "type": "integer",
+          "format": "int64",
+          "in": "query"
+        },
+        {
+          "name": "sequence",
+          "description": "String that is converted to speech and played to agent before patron is dialed",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "zipTone",
+          "description": "<b>BeforeSequence</b> or <b>AfterSequence</b> will play a tone to agent before or after speech.  <b>NoZipTone</b> prevents a tone",
+          "type": "string",
+          "allowableValues": {
+            "values": [
+              "NoZipTone",
+              "BeforeSequence",
+              "AfterSequence"
+            ],
+            "valueType": "LIST"
+          },
+          "in": "query"
+        },
+        {
+          "name": "screenPopSrc",
+          "description": "Defines how to open a URL for the agent in the default browser. <b>DefaultFromSkill</b> opens the skill in central, <b>UseOnPageOpen</b> , <b>Custom</b> uses the URL passed by \"screenPorUrl\"",
+          "type": "string",
+          "allowableValues": {
+            "values": [
+              "DefaultFromSkill",
+              "UseOnPageOpen",
+              "Custom"
+            ],
+            "valueType": "LIST"
+          },
+          "in": "query"
+        },
+        {
+          "name": "screenPopUrl",
+          "description": "URL to be used if \"screenPopSource\" is set to Custom",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "timeout",
+          "description": "Time in seconds the callback should remain active",
+          "type": "integer",
+          "format": "int64",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "promise": {
+    "post": {
+      "tags": [ "Callback" ],
+      "summary": "Schedule a callback",
+      "operationId": "scheduleACallback",
+      "description": "This method allows you to schedule a call back for a future time.  The main difference between this and /queuecallback is that the queuecallback action starts an active contact and places it in the queue (skill or agent) selected.  It will be treated as if it were a live call from a patron as it is processed. <br/> The /promise method simply creates a reminder for someone (skill or agent) to place an outbound call at a specific time in the future.<div class='tabs_wrapper' data-path='patron_callback_postPromise.html'></div>",
+      "parameters": [
+        {
+          "name": "firstName",
+          "description": "The first, or given, name of the patron to be called back",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "lastName",
+          "description": "The last name, or surname, of the patron to be called back",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "phoneNumber",
+          "description": "The phone number to call.  Use \"+\" followed by country code for international numbers",
+          "required": true,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "skill",
+          "description": "The outbound phone skill with which to place the call. If you specify both skill and targetAgent then targetAgent takes precedence. <b>Both the targetAgent and skill must be included</b>. If you intend to queue the callback to a skill (i.e. route the callback to any available agent with that skill), the targetAgent value must be \"\" (empty string)<br/>\"skill\" must be a valid outbound skill ID (not a skill name)",
+          "required": true,
+          "type": "integer",
+          "format": "int64",
+          "in": "query"
+        },
+        {
+          "name": "targetAgent",
+          "description": "The agent to which to queue the callback.  <b>Both the targetAgent and skill must be included</b>. If you intend to queue the callback to a skill (i.e. route the callback to any available agent with that skill), the targetAgent value must be \"\" (empty string).<br/>\"targetAgent\" must be a valid ID of an active agent (not an agent username)",
+          "required": false,
+          "type": "integer",
+          "format": "int64",
+          "in": "query"
+        },
+        {
+          "name": "promiseDate",
+          "description": "The ISO 8601 date the callback should occur",
+          "required": true,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "promiseTime",
+          "description": "The ISO 8601 time the callback should occur",
+          "required": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "notes",
+          "description": "Any callback notes that should be displayed to the agent when the callback is routed",
+          "required": false,
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "timeZone",
+          "description": "Timezone for the callback request",
+          "required": false,
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "<p>Skill Or Agent Required</p><p>First Name Required</p><p>Last Name Required</p><p>Phone Number Required</p><p>Promise Date Required</p><p>Invalid Time Zone</p><p>Promise Date In Past</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "callbackParameters": {
+      "title": "callbackParameters",
+      "description": "",
+      "properties": {
+        "phoneNumber": {
+          "type": "string",
+          "description": "The phone number to call.  Use \"+\" followed by country code for international numbers",
+          "required": true
+        },
+        "callerId": {
+          "type": "string",
+          "description": "The phone number for Caller ID on callback",
+          "required": true
+        },
+        "callDelaySec": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Delay before callback happens once contact is accepted",
+          "required": true
+        },
+        "skill": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID for skill to queue the call against if wanted",
+          "required": true
+        },
+        "targetAgent": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID for Agent to queue the call for.  If included will override the skill parameter",
+          "required": true
+        },
+        "priorityManagement": {
+          "type": "string",
+          "description": "DefaultFromSkill means skill manages priority change, Custom means the values in this API manage priority change",
+          "required": true,
+          "allowableValues": {
+            "values": [
+              "DefaultFromSkill",
+              "Custom"
+            ],
+            "valueType": "LIST"
+          }
+        },
+        "initialPriority": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Initial priority, default value is \"0\"",
+          "required": true
+        },
+        "acceleration": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Rate to accelerate priority, default value is \"0\".  Increases each second by (acceleration/60)",
+          "required": true
+        },
+        "maxPriority": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Maximum value priority can accelerate to, default value is \"0\"",
+          "required": true
+        },
+        "sequence": {
+          "type": "string",
+          "description": "String that is converted to speech and played to agent before patron is dialed",
+          "required": true
+        },
+        "zipTone": {
+          "type": "string",
+          "description": "<b>BeforeSequence</b> or <b>AfterSequence</b> will play a tone to agent before or after speech.  <b>NoZipTone</b> prevents a tone",
+          "allowableValues": {
+            "values": [
+              "NoZipTone",
+              "BeforeSequence",
+              "AfterSequence"
+            ],
+            "valueType": "LIST"
+          },
+          "required": true
+        },
+        "screenPopSrc": {
+          "type": "string",
+          "description": "Defines how to open a URL for the agent in the default browser. <b>DefaultFromSkill</b> opens the skill in central, <b>UseOnPageOpen</b> , <b>Custom</b> uses the URL passed by \"screenPorUrl\"",
+          "allowableValues": {
+            "values": [
+              "DefaultFromSkill",
+              "UseOnPageOpen",
+              "Custom"
+            ],
+            "valueType": "LIST"
+          },
+          "required": true
+        },
+        "screenPopUrl": {
+          "type": "string",
+          "description": "URL to be used if \"screenPopSource\" is set to Custom",
+          "required": true
+        },
+        "timeout": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Time in seconds the callback should remain active",
+          "required": true
+        }
+      }
+    }
+  }
+}

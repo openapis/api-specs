@@ -1,0 +1,1459 @@
+{
+  "groups": {
+    "post": {
+      "tags": [
+        "Groups"
+      ],
+      "summary": "Create Groups",
+      "operationId": "getgroups",
+      "description": "This method creates a group and returns a groupId.<div class='tabs_wrapper' data-path='admin_groups_postgroups.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "groups",
+          "description": "",
+          "type": "DynamicData",
+          "in": "body",
+          "schema": {
+            "$ref": "#/definitions/postgroupsrequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postgroupsresponse"
+          }
+        },
+        "206": {
+          "description": "One or more groups were not created",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "errorCount": {
+                "type": "integer"
+              },
+              "groupResults": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "groupId": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid groups"
+        }
+      }
+    },
+    "get": {
+      "tags": [
+        "Groups"
+      ],
+      "summary": "Get Groups",
+      "operationId": "getgroups",
+      "description": "This method returns an array of groups with fields values for a business unit.<div class='tabs_wrapper' data-path='admin_groups_getgroups.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        },
+        {
+          "$ref": "#/definitions/parameters/isActiveNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getgroupsresponse"
+          }
+        },
+        "204": {
+          "description": "No Groups Found for BU: {0}",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "_links": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string"
+                  },
+                  "next": {
+                    "type": "string"
+                  },
+                  "previous": {
+                    "type": "string"
+                  }
+                }
+              },
+              "totalRecords": {
+                "type": "integer"
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "groupId": {
+                      "type": "integer"
+                    },
+                    "groupName": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "isActive": {
+                      "type": "boolean"
+                    },
+                    "lastUpdated": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}' {2}"
+        }
+      }
+    }
+  },
+  "groups_groupid": {
+    "get": {
+      "tags": [
+        "Groups"
+      ],
+      "summary": "Returns a group config",
+      "operationId": "getgroupsbygroupid",
+      "description": "This method returns the configuration for a group.<div class='tabs_wrapper' data-path='admin_groups_getgroupsbygroupid.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "groupId",
+          "description": "Group Id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getgroupgroupidresponse"
+          }
+        },
+        "400": {
+          "description": "Invalid groupId"
+        },
+        "404": {
+          "description": "Group {0} not found for BU: {1}"
+        }
+      }
+    },
+    "put": {
+      "tags": [
+        "Groups"
+      ],
+      "summary": "Modifies a Group",
+      "operationId": "putgroupsbygroupid",
+      "description": "This method modifies a group.<div class='tabs_wrapper' data-path='admin_groups_postgroupsbygroupid.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "groupId",
+          "description": "Group Id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "groupName",
+          "description": "Group Name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/isActiveNew"
+        },
+        {
+          "name": "notes",
+          "description": "Notes",
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}' {2}"
+        },
+        "403": {
+          "description": "Invalid {0} - '{1}' {2}"
+        },
+        "404": {
+          "description": "Group {0} not found for BU: {1}"
+        }
+      }
+    }
+  },
+  "groups_groupid_agents": {
+    "get": {
+      "tags": [
+        "Groups"
+      ],
+      "summary": "Returns a list of agents assigned to a group",
+      "operationId": "GetGroupAgent",
+      "description": "This method returns a list of agents assigned to a group.  Groups are an optional field set during agent configuration.<div class='tabs_wrapper' data-path='admin_group_getagentsbygroupid.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "groupId",
+          "description": "Group Id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "assigned",
+          "description": "List agents assigned or not assigned for the group",
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "_links": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string"
+                  },
+                  "next": {
+                    "type": "string"
+                  },
+                  "previous": {
+                    "type": "string"
+                  }
+                }
+              },
+              "totalRecords": {
+                "type": "integer"
+              },
+              "agents": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^[a-zA-Z0-9.'_%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,30}$"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 50
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 50
+                    },
+                    "emailAddress": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^[a-zA-Z0-9.'_%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,30}$"
+                    },
+                    "isActive": {
+                      "type": "boolean"
+                    },
+                    "teamId": {
+                      "type": "integer"
+                    },
+                    "teamName": {
+                      "type": "string"
+                    },
+                    "reportToId": {
+                      "type": "integer"
+                    },
+                    "reportToName": {
+                      "type": "string"
+                    },
+                    "isSupervisor": {
+                      "type": "boolean"
+                    },
+                    "lastLogin": {
+                      "type": "string"
+                    },
+                    "lastUpdated": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "custom1": {
+                      "type": "string"
+                    },
+                    "custom2": {
+                      "type": "string"
+                    },
+                    "custom3": {
+                      "type": "string"
+                    },
+                    "custom4": {
+                      "type": "string"
+                    },
+                    "custom5": {
+                      "type": "string"
+                    },
+                    "internalId": {
+                      "type": "string"
+                    },
+                    "profileId": {
+                      "type": "integer"
+                    },
+                    "profileName": {
+                      "type": "string"
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "country": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "countryName": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "chatRefusalTimeout": {
+                      "type": "integer"
+                    },
+                    "phoneRefusalTimeout": {
+                      "type": "integer",
+                      "minimum": 15.0,
+                      "maximum": 300.0
+                    },
+                    "workItemRefusalTimeout": {
+                      "type": "integer",
+                      "minimum": 15.0,
+                      "maximum": 300.0
+                    },
+                    "defaultDialingPattern": {
+                      "type": "integer"
+                    },
+                    "defaultDialingPatternName": {
+                      "type": "string"
+                    },
+                    "useTeamMaxConcurrentChats": {
+                      "type": "boolean"
+                    },
+                    "maxConcurrentChats": {
+                      "type": "integer"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "createDate": {
+                      "type": "string"
+                    },
+                    "inactiveDate": {
+                      "type": "string"
+                    },
+                    "hireDate": {
+                      "type": "string"
+                    },
+                    "terminationDate": {
+                      "type": "string"
+                    },
+                    "hourlyCost": {
+                      "type": "number"
+                    },
+                    "rehireStatus": {
+                      "type": "boolean"
+                    },
+                    "employmentType": {
+                      "type": "integer",
+                      "minimum": 1.0,
+                      "maximum": 5.0
+                    },
+                    "employmentTypeName": {
+                      "type": "string"
+                    },
+                    "referral": {
+                      "type": "string",
+                      "maxLength": 30
+                    },
+                    "atHome": {
+                      "type": "boolean"
+                    },
+                    "hiringSource": {
+                      "type": "integer"
+                    },
+                    "ntLoginName": {
+                      "type": "string"
+                    },
+                    "scheduleNotification": {
+                      "type": "integer"
+                    },
+                    "federatedId": {
+                      "type": "string",
+                      "maxLength": 128
+                    },
+                    "useTeamEmailAutoParkingLimit": {
+                      "type": "boolean"
+                    },
+                    "maxEmailAutoParkingLimit": {
+                      "type": "integer",
+                      "minimum": 1.0,
+                      "maximum": 25.0
+                    },
+                    "sipUser": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "systemUser": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "systemDomain": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "crmUserName": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "useAgentTimeZone": {
+                      "type": "boolean"
+                    },
+                    "timeDisplayFormat": {
+                      "type": "string"
+                    },
+                    "sendEmailNotifications": {
+                      "type": "boolean"
+                    },
+                    "apiKey": {
+                      "type": "string"
+                    },
+                    "telephone1": {
+                      "type": "string"
+                    },
+                    "telephone2": {
+                      "type": "string"
+                    },
+                    "userType": {
+                      "type": "string"
+                    },
+                    "isWhatIfAgent": {
+                      "type": "boolean"
+                    },
+                    "timeZoneOffset": {
+                      "type": "string"
+                    },
+                    "requestContact": {
+                      "type": "boolean"
+                    },
+                    "chatThreshold": {
+                      "type": "integer",
+                      "minimum": 0.0,
+                      "maximum": 12.0
+                    },
+                    "useTeamChatThreshold": {
+                      "type": "boolean"
+                    },
+                    "emailThreshold": {
+                      "type": "integer",
+                      "minimum": 0.0,
+                      "maximum": 25.0
+                    },
+                    "useTeamEmailThreshold": {
+                      "type": "boolean"
+                    },
+                    "workItemThreshold": {
+                      "type": "integer",
+                      "minimum": 0.0,
+                      "maximum": 25.0
+                    },
+                    "useTeamWorkItemThreshold": {
+                      "type": "boolean"
+                    },
+                    "contactAutoFocus": {
+                      "type": "boolean"
+                    },
+                    "useTeamContactAutoFocus": {
+                      "type": "boolean"
+                    },
+                    "useTeamRequestContact": {
+                      "type": "boolean"
+                    },
+                    "subject": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "issuer": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "recordingNumbers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "number": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                          }
+                        },
+                        "required": [
+                          "number"
+                        ]
+                      }
+                    },
+                    "isOpenIdProfileComplete": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Agents found for group {0}",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "_links": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string"
+                  },
+                  "next": {
+                    "type": "string"
+                  },
+                  "previous": {
+                    "type": "string"
+                  }
+                }
+              },
+              "totalRecords": {
+                "type": "integer"
+              },
+              "agents": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^[a-zA-Z0-9.'_%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,30}$"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 50
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 50
+                    },
+                    "emailAddress": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^[a-zA-Z0-9.'_%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,30}$"
+                    },
+                    "isActive": {
+                      "type": "boolean"
+                    },
+                    "teamId": {
+                      "type": "integer"
+                    },
+                    "teamName": {
+                      "type": "string"
+                    },
+                    "reportToId": {
+                      "type": "integer"
+                    },
+                    "reportToName": {
+                      "type": "string"
+                    },
+                    "isSupervisor": {
+                      "type": "boolean"
+                    },
+                    "lastLogin": {
+                      "type": "string"
+                    },
+                    "lastUpdated": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "custom1": {
+                      "type": "string"
+                    },
+                    "custom2": {
+                      "type": "string"
+                    },
+                    "custom3": {
+                      "type": "string"
+                    },
+                    "custom4": {
+                      "type": "string"
+                    },
+                    "custom5": {
+                      "type": "string"
+                    },
+                    "internalId": {
+                      "type": "string"
+                    },
+                    "profileId": {
+                      "type": "integer"
+                    },
+                    "profileName": {
+                      "type": "string"
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "country": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "countryName": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "chatRefusalTimeout": {
+                      "type": "integer"
+                    },
+                    "phoneRefusalTimeout": {
+                      "type": "integer",
+                      "minimum": 15.0,
+                      "maximum": 300.0
+                    },
+                    "workItemRefusalTimeout": {
+                      "type": "integer",
+                      "minimum": 15.0,
+                      "maximum": 300.0
+                    },
+                    "defaultDialingPattern": {
+                      "type": "integer"
+                    },
+                    "defaultDialingPatternName": {
+                      "type": "string"
+                    },
+                    "useTeamMaxConcurrentChats": {
+                      "type": "boolean"
+                    },
+                    "maxConcurrentChats": {
+                      "type": "integer"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "createDate": {
+                      "type": "string"
+                    },
+                    "inactiveDate": {
+                      "type": "string"
+                    },
+                    "hireDate": {
+                      "type": "string"
+                    },
+                    "terminationDate": {
+                      "type": "string"
+                    },
+                    "hourlyCost": {
+                      "type": "number"
+                    },
+                    "rehireStatus": {
+                      "type": "boolean"
+                    },
+                    "employmentType": {
+                      "type": "integer",
+                      "minimum": 1.0,
+                      "maximum": 5.0
+                    },
+                    "employmentTypeName": {
+                      "type": "string"
+                    },
+                    "referral": {
+                      "type": "string",
+                      "maxLength": 30
+                    },
+                    "atHome": {
+                      "type": "boolean"
+                    },
+                    "hiringSource": {
+                      "type": "integer"
+                    },
+                    "ntLoginName": {
+                      "type": "string"
+                    },
+                    "scheduleNotification": {
+                      "type": "integer"
+                    },
+                    "federatedId": {
+                      "type": "string",
+                      "maxLength": 128
+                    },
+                    "useTeamEmailAutoParkingLimit": {
+                      "type": "boolean"
+                    },
+                    "maxEmailAutoParkingLimit": {
+                      "type": "integer",
+                      "minimum": 1.0,
+                      "maximum": 25.0
+                    },
+                    "sipUser": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "systemUser": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "systemDomain": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "crmUserName": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "useAgentTimeZone": {
+                      "type": "boolean"
+                    },
+                    "timeDisplayFormat": {
+                      "type": "string"
+                    },
+                    "sendEmailNotifications": {
+                      "type": "boolean"
+                    },
+                    "apiKey": {
+                      "type": "string"
+                    },
+                    "telephone1": {
+                      "type": "string"
+                    },
+                    "telephone2": {
+                      "type": "string"
+                    },
+                    "userType": {
+                      "type": "string"
+                    },
+                    "isWhatIfAgent": {
+                      "type": "boolean"
+                    },
+                    "timeZoneOffset": {
+                      "type": "string"
+                    },
+                    "requestContact": {
+                      "type": "boolean"
+                    },
+                    "chatThreshold": {
+                      "type": "integer",
+                      "minimum": 0.0,
+                      "maximum": 12.0
+                    },
+                    "useTeamChatThreshold": {
+                      "type": "boolean"
+                    },
+                    "emailThreshold": {
+                      "type": "integer",
+                      "minimum": 0.0,
+                      "maximum": 25.0
+                    },
+                    "useTeamEmailThreshold": {
+                      "type": "boolean"
+                    },
+                    "workItemThreshold": {
+                      "type": "integer",
+                      "minimum": 0.0,
+                      "maximum": 25.0
+                    },
+                    "useTeamWorkItemThreshold": {
+                      "type": "boolean"
+                    },
+                    "contactAutoFocus": {
+                      "type": "boolean"
+                    },
+                    "useTeamContactAutoFocus": {
+                      "type": "boolean"
+                    },
+                    "useTeamRequestContact": {
+                      "type": "boolean"
+                    },
+                    "subject": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "issuer": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "recordingNumbers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "number": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                          }
+                        },
+                        "required": [
+                          "number"
+                        ]
+                      }
+                    },
+                    "isOpenIdProfileComplete": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid parameter"
+        },
+        "404": {
+          "description": "Invalid groupId - '{1}'"
+        }
+      }
+    },
+    "delete": {
+      "tags": [
+        "Groups"
+      ],
+      "summary": "Removes agents from a group.",
+      "operationId": "deleteGroupAgents",
+      "description": "This method removes agents from a group.<div class='tabs_wrapper' data-path='admin_groups_deletegroupsbygroupidagents.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "groupId",
+          "description": "Group Id",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "agents",
+          "description": "Array of Agents",
+          "required": true,
+          "type": "DynamicData",
+          "in": "body",
+          "schema": {
+            "$ref": "#/definitions/deletegroupgroupidrequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/deletegroupgroupidresponse"
+          }
+        },
+        "206": {
+          "description": "One or more agents could not be unassigned from group",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "errorCount": {
+                "type": "integer"
+              },
+              "agentResults": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "agentId"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - {1}"
+        },
+        "403": {
+          "description": "Invalid {0} - {1}, {2}"
+        },
+        "404": {
+          "description": "Group {0} not found for BU: {1}"
+        }
+      }
+    },
+    "post": {
+      "tags": [
+        "Groups"
+      ],
+      "summary": "Assigns Agents to a Group",
+      "operationId": "blank",
+      "description": "This method assigns an array of Agents to a Group.<div class='tabs_wrapper' data-path='admin_groups_postgroupsbygroupidagents.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "groupId",
+          "description": "Group Id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "agents",
+          "description": "Array of Agents",
+          "required": true,
+          "type": "DynamicData",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "agents": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "agents": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "206": {
+          "description": "One or more agents could not be assigned to group",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "errorCount": {
+                "type": "integer"
+              },
+              "agentResults": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "agentId"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid groupId - {1}"
+        },
+        "403": {
+          "description": "Invalid {0} - {1}, {2}"
+        },
+        "404": {
+          "description": "Group {0} not found for BU: {1}"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "agentId": {
+        "name": "agentId",
+        "description": "ID of the Agent",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "teamId": {
+        "name": "teamId",
+        "description": "ID of the Team",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "startDate": {
+        "name": "startDate",
+        "description": "ISO 8601 date/time",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "endDate": {
+        "name": "endDate",
+        "description": "ISO 8601 date/time",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "updatedSince": {
+        "name": "updatedSince",
+        "description": "Return all records updated since ISO 8601 time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "updatedSinceNew": {
+        "name": "updatedSince",
+        "description": "Return all records updated since ISO 8601 time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "isActiveNew": {
+        "name": "isActive",
+        "description": "Filter results based on active status",
+        "type": "boolean",
+        "in": "query"
+      },
+      "searchString": {
+        "name": "searchString",
+        "description": "Filter results to objects with the value in key fields",
+        "type": "string",
+        "in": "query"
+      },
+      "searchStringNew": {
+        "name": "searchString",
+        "description": "Used to filter results to objects with the value in key fields",
+        "type": "string",
+        "in": "query"
+      },
+      "fields": {
+        "name": "fields",
+        "description": "Comma separated list of elements to return in response",
+        "type": "string",
+        "in": "query"
+      },
+      "fieldsNew": {
+        "name": "fields",
+        "description": "Comma separated list of elements to return in response",
+        "type": "string",
+        "in": "query"
+      },
+      "skip": {
+        "name": "skip",
+        "description": "Number of records to skip in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "skipNew": {
+        "name": "skip",
+        "description": "Number of records to skip in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "top": {
+        "name": "top",
+        "description": "Number of records to return in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "topNew": {
+        "name": "top",
+        "description": "Number of records to return in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "orderBy": {
+        "name": "orderBy",
+        "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+        "type": "string",
+        "in": "query"
+      },
+      "orderByNew": {
+        "name": "orderBy",
+        "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+        "type": "string",
+        "in": "query"
+      },
+      "mediaTypeId": {
+        "name": "mediaTypeId",
+        "description": "Filters based on the media type of the Skill",
+        "type": "integer",
+        "in": "query"
+      },
+      "mediaTypeIdNew": {
+        "name": "mediaTypeId",
+        "description": "Filters based on the media type of the Skill",
+        "type": "integer",
+        "in": "query"
+      },
+      "outboundStrategy": {
+        "name": "outboundStrategy",
+        "description": "Filters based on outbound strategy for the Skill",
+        "type": "string",
+        "in": "query"
+      },
+      "outboundStrategyNew": {
+        "name": "outboundStrategy",
+        "description": "Filters based on outbound strategy for the Skill",
+        "type": "string",
+        "in": "query"
+      },
+      "isSkillActive": {
+        "name": "isSkillActive",
+        "description": "Filters based on active state of the Skill",
+        "type": "boolean",
+        "in": "query"
+      },
+      "isSkillActiveNew": {
+        "name": "isSkillActive",
+        "description": "Filters based on active state of the Skill",
+        "type": "boolean",
+        "in": "query"
+      },
+      "contentBodyMetaData": {
+        "in": "body",
+        "name": "",
+        "description": "Content Body",
+        "required": true,
+        "allowMultiple": true
+      }
+    },
+    "postgroupsrequest": {
+      "type": "object",
+      "required": true,
+      "additionalProperties": false,
+      "properties": {
+        "groups": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "groupName": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "notes": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 2000
+              }
+            }
+          }
+        }
+      }
+    },
+    "postgroupsresponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "errorCount": {
+          "type": "integer"
+        },
+        "groupResults": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "success": {
+                "type": "boolean"
+              },
+              "groupId": {
+                "type": "integer"
+              },
+              "error": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "getgroupsresponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "_links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "type": "string"
+            },
+            "next": {
+              "type": "string"
+            },
+            "previous": {
+              "type": "string"
+            }
+          }
+        },
+        "totalRecords": {
+          "type": "integer"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "integer"
+              },
+              "groupName": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "lastUpdated": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getgroupgroupidresponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "totalRecords": {
+          "type": "integer"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "integer"
+              },
+              "groupName": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "lastUpdated": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "deletegroupgroupidrequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agentId": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "deletegroupgroupidresponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "errorCount": {
+          "type": "integer"
+        },
+        "agentResults": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agentId": {
+                "type": "integer"
+              },
+              "success": {
+                "type": "boolean"
+              },
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "agentId"
+            ]
+          }
+        }
+      }
+    }
+  }
+
+}

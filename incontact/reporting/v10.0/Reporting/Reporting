@@ -1,0 +1,5082 @@
+{
+  "interaction_history": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Contact history for an Agent",
+      "operationId": "getAgentHistoryByid",
+      "description": "This method takes an agentId as input and will return back information on the contacts that Agent was involved in between the dates specified, or since the ISO 8601 date/time provided in updatedSince parameter.  You can optionally filter the contacts by media type.<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getAgentIDInteractionHistory.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/agentId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        },
+        {
+          "$ref": "#/definitions/parameters/mediaTypeId"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ContactResultSet",
+            "type": "object",
+            "properties": {
+              "resultSet": {
+                "schema": {
+                  "title": "resultSet",
+                  "description": "Payload Container",
+                  "properties": {
+                    "_links": {
+                      "schema": {
+                        "title": "_links",
+                        "description": "Links used to parse paginated response",
+                        "properties": {
+                          "self": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to same page of results"
+                          },
+                          "next": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to next page of results"
+                          },
+                          "previous": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to previous page of results"
+                          }
+                        }
+                      }
+                    },
+                    "lastPollTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of last database poll.  Value should be passed in \"updatedSince\" parameter on next call",
+                      "required": true
+                    },
+                    "businessUnitId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of Business Unit",
+                      "required": true
+                    },
+                    "contactStates": {
+                      "type": "array",
+                      "description": "",
+                      "items": {
+                        "title": "contactStates",
+                        "description": "",
+                        "properties": {
+                          "transferIndicatorId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of what type of transfer was done on this Contact",
+                            "required": true
+                          },
+                          "transferIndicatorName": {
+                            "type": "string",
+                            "description": "Name of transfer type mapped to transferIndicatorId",
+                            "required": true,
+                            "enum": [
+                              "None",
+                              "ReSkill",
+                              "ReAgent",
+                              "Consult",
+                              "TakeOver",
+                              "External"
+                            ]
+                          },
+                          "contactId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of Contact",
+                            "required": true
+                          },
+                          "masterContactId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of master Contact",
+                            "required": true
+                          },
+                          "contactStartDate": {
+                            "type": "date",
+                            "description": "Start time of the Contact",
+                            "required": true
+                          },
+                          "targetAgentId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of Agent contact was targeted to",
+                            "required": true
+                          },
+                          "fileName": {
+                            "type": "string",
+                            "description": "Name of file",
+                            "required": true
+                          },
+                          "pointOfContact": {
+                            "type": "string",
+                            "description": "Name of point of contact used",
+                            "required": true
+                          },
+                          "lastUpdateTime": {
+                            "type": "date-time",
+                            "description": "ISO 8601 time of last update of Contact",
+                            "required": true
+                          },
+                          "mediaType": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "ID of Media Type",
+                            "required": true
+                          },
+                          "mediaTypeName": {
+                            "type": "string",
+                            "description": "Name of Media Type",
+                            "required": true
+                          },
+                          "agentId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of Agent",
+                            "required": true
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "First name of Agent (replaces AgentName)",
+                            "required": true
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "Last name of Agent (replaces AgentName)",
+                            "required": true
+                          },
+                          "teamId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of Team",
+                            "required": true
+                          },
+                          "teamName": {
+                            "type": "string",
+                            "description": "Name of Team",
+                            "required": true
+                          },
+                          "campaignId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of Campaign",
+                            "required": true
+                          },
+                          "campaignName": {
+                            "type": "string",
+                            "description": "Name of Campaign",
+                            "required": true
+                          },
+                          "skillId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of Skill",
+                            "required": true
+                          },
+                          "skillName": {
+                            "type": "string",
+                            "description": "Name of Skill",
+                            "required": true
+                          },
+                          "isOutbound": {
+                            "type": "boolean",
+                            "description": "Indicates if Contact is Outbound",
+                            "required": true
+                          },
+                          "fromAddr": {
+                            "type": "string",
+                            "description": "From email address for Contact",
+                            "required": true
+                          },
+                          "toAddr": {
+                            "type": "string",
+                            "description": "To email address for Contact",
+                            "required": true
+                          },
+                          "primaryDispositionId": {
+                            "type": "string",
+                            "description": "ID of primary Disposition",
+                            "required": true
+                          },
+                          "secondaryDispositionId": {
+                            "type": "string",
+                            "description": "ID of secondary Disposition",
+                            "required": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid Start Date</p><p>Invalid End Date</p><p>Invalid Updated Since</p><p>Invalid media type Id</p><p>Invalid Fields List</p><p>Invalid Skip</p><p>Invalid Top</p><p>Invalid OrderBy Args</p><p>Invalid Date Range</p>"
+        },
+        "401": {
+          "description": "Unauthenticated"
+        },
+        "403": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Agent Id"
+        }
+      }
+    }
+  },
+  "interaction_recent": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns info on Recent Contacts",
+      "operationId": "RecentContactHistory",
+      "description": "This method returns information for all outbound phone contacts handled by the Agent identified by agentId over the reporting period specified by startDate and endDate. The maximum period that this data can be requested for is 30 days.<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getAgentIDInteractionRecent.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/agentId"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "RecentResultSet",
+            "description": "",
+            "properties": {
+              "resultSet": {
+                "schema": {
+                  "title": "RecentContactHistory",
+                  "description": "Collection of contact history objects",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "ID of the Agent",
+                      "required": true
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "First name of the Agent",
+                      "required": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Last name of the Agent",
+                      "required": true
+                    },
+                    "contactData": {
+                      "type": "array",
+                      "description": "",
+                      "items": {
+                        "title": "recentContact",
+                        "description": "",
+                        "properties": {
+                          "toAgentId": {
+                            "type": "integer",
+                            "description": "ID of Agent contacted",
+                            "required": true
+                          },
+                          "toAgentFirstName": {
+                            "type": "string",
+                            "description": "First name of Agent contacted",
+                            "required": true
+                          },
+                          "toAgentLastName": {
+                            "type": "string",
+                            "description": "Last name of Agent contacted",
+                            "required": true
+                          },
+                          "toSkillId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "ID of Skill used for contact",
+                            "required": true
+                          },
+                          "toSkillName": {
+                            "type": "string",
+                            "description": "Name of Skill used for contact",
+                            "required": true
+                          },
+                          "toAddr": {
+                            "type": "string",
+                            "description": "To email address or phone number for Contact",
+                            "required": true
+                          },
+                          "lastContactStartDate": {
+                            "type": "date-time",
+                            "description": "ISO 8601 time the most recent contact was started",
+                            "required": true
+                          }
+                        }
+                      },
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>Invalid date range. Max 30 days.</p><p>Invalid fields list</p><p>Invalid top</p><p>Invalid mediaTypeId</p><p>Invalid updatedSince</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid agentId"
+        }
+      }
+    }
+  },
+  "agents-agentId-login-history": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Agent Login History",
+      "operationId": "AgentLoginHistory",
+      "description": "This method will return the list of unique logins for the Agent identified by \"agentId\" within the period defined by \"startDate\" and \"endDate\" or return all of the logins if no reporting period is specified.<div class='tabs_wrapper' data-path='reporting_reports_getAgentLoginHistory.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/agentId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "LoginResultSet",
+            "type": "object",
+            "properties": {
+              "resultSet": {
+                "schema": {
+                  "title": "resultSet",
+                  "description": "Payload Container",
+                  "properties": {
+                    "_links": {
+                      "schema": {
+                        "title": "_links",
+                        "description": "Links used to parse paginated response",
+                        "properties": {
+                          "self": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to same page of results"
+                          },
+                          "next": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to next page of results"
+                          },
+                          "previous": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to previous page of results"
+                          }
+                        }
+                      }
+                    },
+                    "totalRecords": {
+                      "type": "integer",
+                      "description": "Total number of logins in the reporting period",
+                      "required": true
+                    },
+                    "agentLogins": {
+                      "type": "array",
+                      "description": "Array of Agent logins",
+                      "items": {
+                        "title": "agentLogins",
+                        "description": "",
+                        "properties": {
+                          "phoneNumber": {
+                            "type": "integer",
+                            "description": "Phone number used by Agent when logging in",
+                            "required": true
+                          },
+                          "callerId": {
+                            "type": "integer",
+                            "description": "Phone number used as caller ID during Agent session",
+                            "required": true
+                          },
+                          "stationId": {
+                            "type": "integer",
+                            "description": "ID of Station used by Agent when logging in",
+                            "required": true
+                          },
+                          "stationName": {
+                            "type": "string",
+                            "description": "Name of Station used by Agent when logging in",
+                            "required": true
+                          },
+                          "loginDate": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Time the Agent logged in",
+                            "required": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid {0} - '{1}'</p><p>Invalid duration - '{0}' - '{1}', cannot exceed {2} days</p><p>Invalid agentId - '{0}', is restricted</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        },
+        "404": {
+          "description": "Invalid agentId - '{0}', does not exist"
+        }
+      }
+    }
+  },
+  "statehistory": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns State duration for an Agent",
+      "operationId": "getAgentStateHistory",
+      "description": "This method returns the total time the Agent specified by \"agentId\" spent in each state over the time period spanned by \"startDate\" and \"endDate\".<br/> <br/> <b><i><span style=color:red></span></i> </b><div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getAgentIDStateHistory.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/agentId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "name": "mediaTypeId",
+          "description": "Filters based on the media type",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        },
+        {
+          "name": "outboundStrategy",
+          "description": "Outbound Strategy",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "AgentStateHistory",
+            "description": "Collection of contact state objects",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "stateIndex": {
+                "type": "integer",
+                "description": "Cardinal order of states for the Agent",
+                "required": true
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Time the state change took place",
+                "required": true
+              },
+              "agentStateId": {
+                "type": "integer",
+                "description": "Numeric identifier for the agent state. The values correspond to the following states:<br/>&nbsp;&nbsp;0 - LoggedOut (the agent logged out)<br/>&nbsp;&nbsp;1 - Available (the agent was set to \"available\")<br/>&nbsp;&nbsp;2 - Unavailable (the agent was set to \"unavailable\")<br/>&nbsp;&nbsp;3 - InboundContact (the agent was on an inbound routed call)<br/>&nbsp;&nbsp;4 - OutboundContact (the agent was on an outbound call)<br/>&nbsp;&nbsp;5 - InboundConsult (the agent accepted an inbound consult request)<br/>&nbsp;&nbsp;6 - OutboundConsult (the agent placed an outbound consult request)<br/>&nbsp;&nbsp;7 - Dialer (the agent was waiting for a dialer-delivered outbound call)<br/>&nbsp;&nbsp;8 - LoggedIn (the agent was logged in, but not yet available or unavailable)<br/>In addition, if the agent is \"Unavailable\" (state ID 2), there may or may not be a related \"outstate\" code and description. Outstate codes are configured on a business unit basis, and are often used for things like \"Lunch\", \"Break\", \"Training\", etc. After call work states are also considered unavailable outstates. There are a few system outstates as well (such as DialerPending and OutboundPending)",
+                "required": true
+              },
+              "agentStateName": {
+                "type": "string",
+                "description": "Name of state for the Agent",
+                "required": true
+              },
+              "agentSessionId": {
+                "type": "integer",
+                "description": "The session ID created when the agent logs in, and ended when they log out",
+                "required": true
+              },
+              "skillId": {
+                "type": "integer",
+                "description": "ID of the Skill if the Agent state is InboundContact (agentStateId 3) or OutboundContact (agentStateId 4)",
+                "required": true
+              },
+              "skillName": {
+                "type": "string",
+                "description": "Name of the Skill",
+                "required": true
+              },
+              "mediaTypeId": {
+                "type": "integer",
+                "description": "Media Type Id",
+                "required": true
+              },
+              "mediaTypeName": {
+                "type": "string",
+                "description": "Name of Media Type",
+                "required": true
+              },
+              "fromAddress": {
+                "type": "string",
+                "description": "From address, comma or semicolon delimited",
+                "required": true
+              },
+              "toAddress": {
+                "type": "string",
+                "description": "To address for the forwarded Email, comma or semicolon delimited",
+                "required": true
+              },
+              "outStateId": {
+                "type": "integer",
+                "description": "ID of the OutState if the agent state is \"Unavailable\" (agentStateId 2). The outstate is not set for every \"Unavailable\" state and is a classification for why the agent was unavailable and is often user for things like \"Lunch\" or \"Break\". Outstate codes are also called \"Unavailable Codes\" in the Central administration web site."
+              },
+              "outStateDescription": {
+                "type": "string",
+                "description": "Descpription of the OutState or Unavailable Code"
+              },
+              "duration": {
+                "type": "integer",
+                "description": "Number of seconds that the Agent was in the state",
+                "required": true
+              },
+              "isOutbound": {
+                "type": "boolean",
+                "description": "Indicates if Contact is outbound",
+                "required": true
+              },
+              "isNaturualCalling": {
+                "type": "boolean",
+                "description": "Indicates if Contact is NaturualCalling",
+                "required": true
+              },
+              "stationId": {
+                "type": "integer",
+                "description": "ID of Station used by Agent when logging in",
+                "required": true
+              }
+            },
+            "stationName": {
+              "type": "string",
+              "description": "Name of Station used by Agent when logging in",
+              "required": true
+            }
+          }
+        },
+        "400": {
+          "description": "<p><p>Invalid agentId </p> <p>Invalid mediaTypeId</p> <p>Invalid startDate</p> <p> Invalid endDate</p> <p> Invalid outboundStrategy</p> <p> Invalid updatedSince</p> <p>Invalid Date Range </p></p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Agent not found for BU"
+        }
+      }
+    }
+  },
+  "performance": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns a performance summary of all Agents",
+      "operationId": "AgentPerformanceSummary",
+      "description": "This method returns a per-agent summary for all Agents in the business unit over the time frame between \"startDate\" and \"endDate\".<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getAgentPerformance.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "AgentPerformanceObjects",
+            "properties": {
+              "agentPerformance": {
+                "type": "array",
+                "description": "Array of performance metrics for all agents",
+                "items": {
+                  "title": "agentPerformance",
+                  "description": "",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "ID of the Agent",
+                      "required": true
+                    },
+                    "teamId": {
+                      "type": "integer",
+                      "description": "ID of the Team for this Agent",
+                      "required": true
+                    },
+                    "agentOffered": {
+                      "type": "integer",
+                      "description": "Number of Contacts offered to Agent",
+                      "required": true
+                    },
+                    "inboundHandled": {
+                      "type": "integer",
+                      "description": "Number of inbound calls handled",
+                      "required": true
+                    },
+                    "inboundTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total time on inbound calls",
+                      "required": true
+                    },
+                    "inboundTalkTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total talk time on inbound calls",
+                      "required": true
+                    },
+                    "inboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "ISO 8601 average time per inbound call",
+                      "required": true
+                    },
+                    "outboundHandled": {
+                      "type": "integer",
+                      "description": "Number of outbound calls handled",
+                      "required": true
+                    },
+                    "outboundTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total time on inbound calls",
+                      "required": true
+                    },
+                    "outboundTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "ISO 8601 total talk time on outbound calls",
+                      "required": true
+                    },
+                    "outboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "ISO 8601 average time per outbound call",
+                      "required": true
+                    },
+                    "totalHandled": {
+                      "type": "integer",
+                      "description": "Number of calls handled",
+                      "required": true
+                    },
+                    "totalTalkTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total talk time on all calls",
+                      "required": true
+                    },
+                    "totalAvgTalkTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 average talk time for all calls",
+                      "required": true
+                    },
+                    "totalAvgHandleTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 average handle time for all calls",
+                      "required": true
+                    },
+                    "consultTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time in consult",
+                      "required": true
+                    },
+                    "availableTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time in available state",
+                      "required": true
+                    },
+                    "unavailableTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time in unavailable state",
+                      "required": true
+                    },
+                    "acwTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time spend in acw work",
+                      "required": true
+                    },
+                    "refused": {
+                      "type": "integer",
+                      "description": "Total calls refused",
+                      "required": true
+                    },
+                    "percentRefused": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent of total calls refused",
+                      "required": true
+                    },
+                    "loginTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time agent logged in",
+                      "required": true
+                    },
+                    "workingRate": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "",
+                      "required": true
+                    },
+                    "occupancy": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent time in (talk/acw) work",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "agentId_performance": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns a performance summary of an Agent",
+      "operationId": "AgentPerformanceSummary",
+      "description": "This method returns a summary for the Agent specified over the time frame between \"startDate\" and \"endDate\".<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getAgentIDPerformance.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/agentId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "AgentPerformanceObjects",
+            "properties": {
+              "agentPerformance": {
+                "type": "array",
+                "description": "Array of performance metrics for all agents",
+                "items": {
+                  "title": "agentPerformance",
+                  "description": "",
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "ID of the Agent",
+                      "required": true
+                    },
+                    "teamId": {
+                      "type": "integer",
+                      "description": "ID of the Team for this Agent",
+                      "required": true
+                    },
+                    "agentOffered": {
+                      "type": "integer",
+                      "description": "Number of Contacts offered to Agent",
+                      "required": true
+                    },
+                    "inboundHandled": {
+                      "type": "integer",
+                      "description": "Number of inbound calls handled",
+                      "required": true
+                    },
+                    "inboundTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total time on inbound calls",
+                      "required": true
+                    },
+                    "inboundTalkTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total talk time on inbound calls",
+                      "required": true
+                    },
+                    "inboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "ISO 8601 average time per inbound call",
+                      "required": true
+                    },
+                    "outboundHandled": {
+                      "type": "integer",
+                      "description": "Number of outbound calls handled",
+                      "required": true
+                    },
+                    "outboundTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total time on inbound calls",
+                      "required": true
+                    },
+                    "outboundTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "ISO 8601 total talk time on outbound calls",
+                      "required": true
+                    },
+                    "outboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "ISO 8601 average time per outbound call",
+                      "required": true
+                    },
+                    "totalHandled": {
+                      "type": "integer",
+                      "description": "Number of calls handled",
+                      "required": true
+                    },
+                    "totalTalkTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 total talk time on all calls",
+                      "required": true
+                    },
+                    "totalAvgTalkTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 average talk time for all calls",
+                      "required": true
+                    },
+                    "totalAvgHandleTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 average handle time for all calls",
+                      "required": true
+                    },
+                    "consultTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time in consult",
+                      "required": true
+                    },
+                    "availableTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time in available state",
+                      "required": true
+                    },
+                    "unavailableTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time in unavailable state",
+                      "required": true
+                    },
+                    "acwTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time spend in acw work",
+                      "required": true
+                    },
+                    "refused": {
+                      "type": "integer",
+                      "description": "Total calls refused",
+                      "required": true
+                    },
+                    "percentRefused": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent of total calls refused",
+                      "required": true
+                    },
+                    "loginTime": {
+                      "type": "string",
+                      "format": "duration",
+                      "description": "ISO 8601 time agent logged in",
+                      "required": true
+                    },
+                    "workingRate": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "",
+                      "required": true
+                    },
+                    "occupancy": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent time in (talk/acw) work",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "contacts_contactId": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Contact details",
+      "operationId": "ContactByID",
+      "description": "This method will return information on the Contact specified by contactId. This method will return different information based on if the Contact is active or completed.  If the Contact is active it will return the same payload as the <a href='/API/RealTimeDataAPI#!/RealTime/ActiveContacts'>GET /contacts/active</a> API and if completed it will return the same payload as the <a href='/API/ReportingAPI#!/Reporting/contacts-completed'>GET /contacts/completed</a> API.<div class='tabs_wrapper' data-path='reporting_reports_getContact.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ContactsResultSet",
+            "properties": {
+              "resultSet": {
+                "schema": {
+                  "title": "ContactDetails",
+                  "description": "Payload Container",
+                  "properties": {
+                    "abandoned": {
+                      "type": "boolean",
+                      "description": "Indicates if Contact is abandoned",
+                      "required": true
+                    },
+                    "abandonSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds until Contact was abandonded",
+                      "required": true
+                    },
+                    "ACWSeconds": {
+                      "type": "string",
+                      "description": "Time spent in ACW in seconds",
+                      "required": true
+                    },
+                    "agentId": {
+                      "type": "integer",
+                      "description": "ID of the Agent who handled the Contact",
+                      "required": true
+                    },
+                    "agentSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds Contact was with the Agent",
+                      "required": true
+                    },
+                    "callbackTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Time a callback was scheduled",
+                      "required": true
+                    },
+                    "campaignId": {
+                      "type": "integer",
+                      "description": "ID of the Campaign for the Contact",
+                      "required": true
+                    },
+                    "campaignName": {
+                      "type": "string",
+                      "description": "Name of the Campaign for the Contact",
+                      "required": true
+                    },
+                    "confSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds the Contact was in conference",
+                      "required": true
+                    },
+                    "contactId": {
+                      "type": "integer",
+                      "description": "ID of the Contact",
+                      "required": true
+                    },
+                    "contactStart": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Time the Contact started",
+                      "required": true
+                    },
+                    "dateACWWarehoused": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Time the ACW was warehoused",
+                      "required": true
+                    },
+                    "dateContactWarehoused": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Time the Contact started",
+                      "required": true
+                    },
+                    "dispositionNotes": {
+                      "type": "string",
+                      "description": "Notes from dispositioning the Contact",
+                      "required": true
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "First name of the Agent who handled the Contact",
+                      "required": true
+                    },
+                    "fromAddr": {
+                      "type": "string",
+                      "description": "ANI or email source of Contact",
+                      "required": true
+                    },
+                    "holdCount": {
+                      "type": "integer",
+                      "description": "Number of times Contact was on hold",
+                      "required": true
+                    },
+                    "holdSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds Contact was on hold",
+                      "required": true
+                    },
+                    "inQueueSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds Contact was in queue",
+                      "required": true
+                    },
+                    "isLogged": {
+                      "type": "boolean",
+                      "description": "Indicates if Contact was logged",
+                      "required": true
+                    },
+                    "isOutbound": {
+                      "type": "boolean",
+                      "description": "Indicates if Contact is outbound",
+                      "required": true
+                    },
+                    "isRefused": {
+                      "type": "boolean",
+                      "description": "Indicates if Contact was refused",
+                      "required": true
+                    },
+                    "isShortAbandon": {
+                      "type": "boolean",
+                      "description": "Indicates if Contact was short abandoned",
+                      "required": true
+                    },
+                    "isTakeover": {
+                      "type": "boolean",
+                      "description": "Indicates if Contact is abandoned",
+                      "required": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Last name of the Agent who handled the Contact",
+                      "required": true
+                    },
+                    "lastUpdateTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Time of the last update to the Contact",
+                      "required": true
+                    },
+                    "masterContactId": {
+                      "type": "integer",
+                      "description": "ID of the Master Contact if any",
+                      "required": true
+                    },
+                    "mediaType": {
+                      "type": "integer",
+                      "description": "ID of Media Type",
+                      "required": true
+                    },
+                    "mediaTypeName": {
+                      "type": "string",
+                      "description": "Name of Media Type",
+                      "required": true
+                    },
+                    "pointOfContactId": {
+                      "type": "integer",
+                      "description": "ID of Point of Contact",
+                      "required": true
+                    },
+                    "pointOfContactName": {
+                      "type": "string",
+                      "description": "Name of Point of Contact",
+                      "required": true
+                    },
+                    "postQueueSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds the Contact was active after being routed to an Agent",
+                      "required": true
+                    },
+                    "preQueueSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds the Contact was active before being put into queue",
+                      "required": true
+                    },
+                    "primaryDispositionId": {
+                      "type": "integer",
+                      "description": "ID of primary disposition",
+                      "required": true
+                    },
+                    "refuseReason": {
+                      "type": "string",
+                      "description": "Reason the Contact was refused",
+                      "required": true
+                    },
+                    "refuseTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Time the Contact was refused",
+                      "required": true
+                    },
+                    "releaseSeconds": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "routingTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "",
+                      "required": true
+                    },
+                    "secondaryDispositionId": {
+                      "type": "integer",
+                      "description": "ID of secondary disposition",
+                      "required": true
+                    },
+                    "serviceLevelFlag": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "skillId": {
+                      "type": "integer",
+                      "description": "ID of the Skill",
+                      "required": true
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "Name of the Skill",
+                      "required": true
+                    },
+                    "teamId": {
+                      "type": "integer",
+                      "description": "ID of the Team",
+                      "required": true
+                    },
+                    "teamName": {
+                      "type": "string",
+                      "description": "Name of the Team",
+                      "required": true
+                    },
+                    "toAddr": {
+                      "type": "string",
+                      "description": "DNIS or email destination for Contact",
+                      "required": true
+                    },
+                    "totalDurationSeconds": {
+                      "type": "integer",
+                      "description": "Number of seconds the Contact was active",
+                      "required": true
+                    },
+                    "transferIndicatorId": {
+                      "type": "integer",
+                      "description": "ID of what transfer type occurred",
+                      "enum": [
+                        "0",
+                        "1",
+                        "2",
+                        "3",
+                        "4"
+                      ]
+                    },
+                    "transferIndicatorName": {
+                      "type": "string",
+                      "description": "Name of transfer type mapped to transferIndicatorId",
+                      "enum": [
+                        "None",
+                        "ReSkill",
+                        "ReAgent",
+                        "Consult",
+                        "TakeOver"
+                      ]
+                    },
+                    "tags": {
+                      "type": "array",
+                      "description": "Tags on Contact",
+                      "items": {
+                        "title": "tags",
+                        "description": "",
+                        "properties": {
+                          "tagId": {
+                            "type": "integer",
+                            "description": "ID of the Tag assigned to the Contact",
+                            "required": true
+                          },
+                          "tagName": {
+                            "type": "string",
+                            "description": "ID of the Tag assigned to the Contact",
+                            "required": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No contacts with tags available"
+        },
+        "400": {
+          "description": "Invalid fields - {0}"
+        },
+        "404": {
+          "description": "Invalid contactId - {0} "
+        }
+      }
+    }
+  },
+  "contacts_contactid_sms-transcripts": {
+    "get": {
+      "tags": [
+        "Reporting"
+      ],
+      "summary": "Returns SMS Transcripts for a contactId.",
+      "operationId": "blank",
+      "description": "This method returns an array of completed sms transcripts for the specified date range and transport code.<div class='tabs_wrapper' data-path='admin_general_getsmstranscriptsforcontactid.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "transportCode",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "_links": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string"
+                  },
+                  "next": {
+                    "type": "string"
+                  },
+                  "previous": {
+                    "type": "string"
+                  }
+                }
+              },
+              "businessUnitId": {
+                "type": "integer"
+              },
+              "totalRecords": {
+                "type": "integer"
+              },
+              "smsTranscripts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "messageStart": {
+                      "type": "string"
+                    },
+                    "messageBody": {
+                      "type": "string"
+                    },
+                    "from": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid parameter</p><p>Invalid date range, max {0} days</p>"
+        }
+      }
+    }
+  },
+  "contacts_sms-transcripts": {
+    "get": {
+      "tags": [
+        "Reporting"
+      ],
+      "summary": "Returns SMS Transcripts for a date range and transport code.",
+      "operationId": "blank",
+      "description": "This method returns an array of sms messages for the specified date range and transport code.<div class='tabs_wrapper' data-path='admin_general_getsmstranscripts.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "transportCode",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "_links": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string"
+                  },
+                  "next": {
+                    "type": "string"
+                  },
+                  "previous": {
+                    "type": "string"
+                  }
+                }
+              },
+              "businessUnitId": {
+                "type": "integer"
+              },
+              "totalRecords": {
+                "type": "integer"
+              },
+              "smsTranscripts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "messageStart": {
+                      "type": "string"
+                    },
+                    "messageBody": {
+                      "type": "string"
+                    },
+                    "from": {
+                      "type": "string"
+                    },
+                    "contactId": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid parameter</p><p>Invalid date range, max {0} days</p>"
+        }
+      }
+    }
+  },
+  "contacts_contactId_callQuality": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Contact Call Quality",
+      "operationId": "ContactCallQuality",
+      "description": "This method returns the metrics associated with the quality of the voice legs for the Contact identified by \"contactId\".<div class='tabs_wrapper' data-path='reporting_contacts_getContactCallQuality.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "contactId",
+          "description": "ID of the Contact",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "CallQuality",
+            "properties": {
+              "contactId": {
+                "type": "integer",
+                "description": "ID of the Contact",
+                "required": true
+              },
+              "endDateTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO 8601 time the Contact ended",
+                "required": true
+              },
+              "businessUnitId": {
+                "type": "integer",
+                "description": "ID of the Business Unit",
+                "required": true
+              },
+              "dnis": {
+                "type": "string",
+                "description": "DNIS number for the Contact",
+                "required": true
+              },
+              "ani": {
+                "type": "string",
+                "description": "ANI number for the Contact",
+                "required": true
+              },
+              "lineType": {
+                "type": "string",
+                "description": "Type of voice channel",
+                "required": true
+              },
+              "mos": {
+                "type": "double",
+                "description": "MOS score for the voice leg",
+                "required": true
+              },
+              "jitter": {
+                "type": "integer",
+                "description": "",
+                "required": true
+              },
+              "packetLoss": {
+                "type": "integer",
+                "description": "",
+                "required": true
+              },
+              "latency": {
+                "type": "integer",
+                "description": "",
+                "required": true
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "<p>Call quality data not available for the contactId - '{parameter value}'</p>"
+        },
+        "404": {
+          "description": "Invalid contactId - '{parameter value}'"
+        }
+      }
+    }
+  },
+  "contacts_completed": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Completed Contacts",
+      "operationId": "Completed Contact Details",
+      "description": "This method will return information on all of the completed Contacts within the period defined by startDate and endDate or return all the completed Contacts that have been updated since the time specified by updatedSince. <br/><br/>This method allows you to filter by multiple fields in the response for example you can request all Contacts for a specific Agent and Skill in a single request.<div class='tabs_wrapper' data-path='reporting_reports_getCompletedContacts.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        },
+        {
+          "$ref": "#/definitions/parameters/mediaTypeId"
+        },
+        {
+          "name": "skillId",
+          "description": "ID of the Skill to filter by",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "campaignId",
+          "description": "ID of the Campaign to filter by",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "agentId",
+          "description": "ID of the Agent to filter by",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "teamId",
+          "description": "ID of the Team to filter by",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "toAddr",
+          "description": "DNIS or email destination of Contact to filter by",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromAddr",
+          "description": "ANI or email source of Contact to filter by",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "isLogged",
+          "description": "Filters by Contacts that have been warehoused",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "isRefused",
+          "description": "Filters by Contacts that have been refused",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "isTakeover",
+          "description": "Filters by Contacts that have been taken over",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "tags",
+          "description": "List of Tags to filter by, delimited with \"|\" character",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "analyticsProcessed",
+          "description": "Filters by Contacts that have completed analytics processing",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ContactsResultSet",
+            "type": "object",
+            "properties": {
+              "resultSet": {
+                "schema": {
+                  "title": "resultSet",
+                  "description": "Payload Container",
+                  "properties": {
+                    "_links": {
+                      "schema": {
+                        "title": "_links",
+                        "description": "Links used to parse paginated response",
+                        "properties": {
+                          "self": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to same page of results"
+                          },
+                          "next": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to next page of results"
+                          },
+                          "previous": {
+                            "type": "string",
+                            "format": "URL",
+                            "description": " Link to previous page of results"
+                          }
+                        }
+                      }
+                    },
+                    "businessUnitId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of Business Unit",
+                      "required": true
+                    },
+                    "lastPollTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of last database poll.  Value should be passed in \"updatedSince\" parameter on next call",
+                      "required": true
+                    },
+                    "completedContacts": {
+                      "type": "array",
+                      "description": "",
+                      "items": {
+                        "title": "completedContacts",
+                        "description": "",
+                        "properties": {
+                          "abandoned": {
+                            "type": "boolean",
+                            "description": "Indicates if Contact is abandoned",
+                            "required": true
+                          },
+                          "abandonSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds until Contact was abandonded",
+                            "required": true
+                          },
+                          "ACWSeconds": {
+                            "type": "string",
+                            "description": "Time spent in ACW in seconds",
+                            "required": true
+                          },
+                          "agentId": {
+                            "type": "integer",
+                            "description": "ID of the Agent who handled the Contact",
+                            "required": true
+                          },
+                          "agentSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds Contact was with the Agent",
+                            "required": true
+                          },
+                          "callbackTime": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Time a callback was scheduled",
+                            "required": true
+                          },
+                          "campaignId": {
+                            "type": "integer",
+                            "description": "ID of the Campaign for the Contact",
+                            "required": true
+                          },
+                          "campaignName": {
+                            "type": "string",
+                            "description": "Name of the Campaign for the Contact",
+                            "required": true
+                          },
+                          "confSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds the Contact was in conference",
+                            "required": true
+                          },
+                          "contactId": {
+                            "type": "integer",
+                            "description": "ID of the Contact",
+                            "required": true
+                          },
+                          "contactStart": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Time the Contact started",
+                            "required": true
+                          },
+                          "dateACWWarehoused": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Time the ACW was warehoused",
+                            "required": true
+                          },
+                          "dateContactWarehoused": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Time the Contact started",
+                            "required": true
+                          },
+                          "dispositionNotes": {
+                            "type": "string",
+                            "description": "Notes from dispositioning the Contact",
+                            "required": true
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "First name of the Agent who handled the Contact",
+                            "required": true
+                          },
+                          "fromAddr": {
+                            "type": "string",
+                            "description": "ANI or email source of Contact",
+                            "required": true
+                          },
+                          "holdCount": {
+                            "type": "integer",
+                            "description": "Number of times Contact was on hold",
+                            "required": true
+                          },
+                          "holdSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds Contact was on hold",
+                            "required": true
+                          },
+                          "inQueueSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds Contact was in queue",
+                            "required": true
+                          },
+                          "isLogged": {
+                            "type": "boolean",
+                            "description": "Indicates if Contact was logged",
+                            "required": true
+                          },
+                          "isOutbound": {
+                            "type": "boolean",
+                            "description": "Indicates if Contact is outbound",
+                            "required": true
+                          },
+                          "isRefused": {
+                            "type": "boolean",
+                            "description": "Indicates if Contact was refused",
+                            "required": true
+                          },
+                          "isShortAbandon": {
+                            "type": "boolean",
+                            "description": "Indicates if Contact was short abandoned",
+                            "required": true
+                          },
+                          "isTakeover": {
+                            "type": "boolean",
+                            "description": "Indicates if Contact is abandoned",
+                            "required": true
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "Last name of the Agent who handled the Contact",
+                            "required": true
+                          },
+                          "lastUpdateTime": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Time of the last update to the Contact",
+                            "required": true
+                          },
+                          "masterContactId": {
+                            "type": "integer",
+                            "description": "ID of the Master Contact if any",
+                            "required": true
+                          },
+                          "mediaType": {
+                            "type": "integer",
+                            "description": "ID of Media Type",
+                            "required": true
+                          },
+                          "mediaTypeName": {
+                            "type": "string",
+                            "description": "Name of Media Type",
+                            "required": true
+                          },
+                          "pointOfContactId": {
+                            "type": "integer",
+                            "description": "ID of Point of Contact",
+                            "required": true
+                          },
+                          "pointOfContactName": {
+                            "type": "string",
+                            "description": "Name of Point of Contact",
+                            "required": true
+                          },
+                          "postQueueSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds the Contact was active after being routed to an Agent",
+                            "required": true
+                          },
+                          "preQueueSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds the Contact was active before being put into queue",
+                            "required": true
+                          },
+                          "primaryDispositionId": {
+                            "type": "integer",
+                            "description": "ID of primary disposition",
+                            "required": true
+                          },
+                          "refuseReason": {
+                            "type": "string",
+                            "description": "Reason the Contact was refused",
+                            "required": true
+                          },
+                          "refuseTime": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Time the Contact was refused",
+                            "required": true
+                          },
+                          "releaseSeconds": {
+                            "type": "integer",
+                            "description": "",
+                            "required": true
+                          },
+                          "routingTime": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "",
+                            "required": true
+                          },
+                          "secondaryDispositionId": {
+                            "type": "integer",
+                            "description": "ID of secondary disposition",
+                            "required": true
+                          },
+                          "serviceLevelFlag": {
+                            "type": "string",
+                            "description": "",
+                            "required": true
+                          },
+                          "skillId": {
+                            "type": "integer",
+                            "description": "ID of the Skill",
+                            "required": true
+                          },
+                          "skillName": {
+                            "type": "string",
+                            "description": "Name of the Skill",
+                            "required": true
+                          },
+                          "teamId": {
+                            "type": "integer",
+                            "description": "ID of the Team",
+                            "required": true
+                          },
+                          "teamName": {
+                            "type": "string",
+                            "description": "Name of the Team",
+                            "required": true
+                          },
+                          "toAddr": {
+                            "type": "string",
+                            "description": "DNIS or email destination for Contact",
+                            "required": true
+                          },
+                          "totalDurationSeconds": {
+                            "type": "integer",
+                            "description": "Number of seconds the Contact was active",
+                            "required": true
+                          },
+                          "transferIndicatorId": {
+                            "type": "integer",
+                            "description": "ID of what transfer type occurred",
+                            "enum": [
+                              "0",
+                              "1",
+                              "2",
+                              "3",
+                              "4"
+                            ]
+                          },
+                          "transferIndicatorName": {
+                            "type": "string",
+                            "description": "Name of transfer type mapped to transferIndicatorId",
+                            "enum": [
+                              "None",
+                              "ReSkill",
+                              "ReAgent",
+                              "Consult",
+                              "TakeOver"
+                            ]
+                          },
+                          "tags": {
+                            "type": "array",
+                            "description": "Tags on Contact",
+                            "items": {
+                              "title": "tags",
+                              "description": "",
+                              "properties": {
+                                "tagId": {
+                                  "type": "integer",
+                                  "description": "ID of the Tag assigned to the Contact",
+                                  "required": true
+                                },
+                                "tagName": {
+                                  "type": "string",
+                                  "description": "ID of the Tag assigned to the Contact",
+                                  "required": true
+                                }
+                              }
+                            }
+                          },
+                          "analyticsProcessed": {
+                            "type": "boolen",
+                            "description": "Indicates if analytics processing has completed",
+                            "required": true
+                          },
+                          "analyticsProcessedDate": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "ISO 8601 timestamp that the analytics processing completed",
+                            "required": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "<p>No Contacts for the specified period</p><p>No contacts with tags available</p>"
+        },
+        "400": {
+          "description": "<p>Invalid filter parameter {0}</p><p>Invalid skip</p><p>Invalid top</p><p>Invalid orderby arguments</p><p>Invalid startDate</p><p>Invalid endDate</p><p>Invalid updatedSince {0}</p><p>Invalid DateRange - {0}</p><p>Invalid fields list</p><p>Invalid tags - Maximum limit of 100 exceeded</p>"
+        }
+      }
+    }
+  },
+  "contacts_statehistory": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Contact State History",
+      "operationId": "ContactStateHistory",
+      "responseClass": "",
+      "description": "This method will return information on the states that a Contact, identified by \"contactId\", has gone through.<div class='tabs_wrapper' data-path='reporting_reports_getContactStateHistory.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ContactStateHistory",
+            "description": "",
+            "properties": {
+              "contactStateHistory": {
+                "type": "array",
+                "description": "Collection of contact state objects",
+                "items": {
+                  "title": "contactState",
+                  "description": "",
+                  "properties": {
+                    "stateIndex": {
+                      "type": "integer",
+                      "description": "Cardinal order of states for the Contact",
+                      "required": true
+                    },
+                    "contactId": {
+                      "type": "integer",
+                      "description": "ID of the Contact",
+                      "required": true
+                    },
+                    "contactStateId": {
+                      "type": "integer",
+                      "description": "Numeric identifier for the Contact state",
+                      "required": true
+                    },
+                    "contactStateName": {
+                      "type": "string",
+                      "description": "Name of the Contact state",
+                      "required": true
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 time the state change took place",
+                      "required": true
+                    },
+                    "isWarehoused": {
+                      "type": "boolean",
+                      "description": "Indicates if Contact was warehoused",
+                      "required": true
+                    },
+                    "agentId": {
+                      "type": "integer",
+                      "description": "ID of the Agent assigned the Contact",
+                      "required": true
+                    },
+                    "skillId": {
+                      "type": "integer",
+                      "description": "ID of the Skill the Contact is assigned",
+                      "required": true
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "Name of the Skill the Contact is assigned",
+                      "required": true
+                    },
+                    "duration": {
+                      "type": "integer",
+                      "description": "Number of seconds that the Agent was in the state",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "404": {
+          "description": "Invalid or missing contactId"
+        }
+      }
+    }
+  },
+  "custom_data": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Contact Custom Data",
+      "operationId": "ContactCustomData",
+      "responseClass": "",
+      "description": "This method will return any custom data for the Contact specified by contactId.<div class='tabs_wrapper' data-path='reporting_reports_getContactCustomData.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ContactCustomData",
+            "properties": {
+              "contactCustomData": {
+                "type": "array",
+                "description": "Array of Custom Data attached to Contact",
+                "items": {
+                  "title": "customData",
+                  "description": "",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the custom data indicator",
+                      "required": true
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Cutom data value",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "404": {
+          "description": "Invalid or missing contactId"
+        }
+      }
+    }
+  },
+  "summary": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns statistics for all Skills",
+      "operationId": "getFullSkillSummaries",
+      "description": "This method returns both real time and reporting summary data for every Skill in the business unit.<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getSkillsSummary.html'></div>",
+      "responseClass": "SkillSummaries",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "SkillSummaries",
+            "description": "",
+            "properties": {
+              "skillSummaries": {
+                "type": "array",
+                "description": "Collection of summarized Skill statistics",
+                "items": {
+                  "title": "skillSummary",
+                  "description": "",
+                  "properties": {
+                    "BusinessUnitId": {
+                      "type": "integer",
+                      "description": "The business unit number",
+                      "required": true
+                    },
+                    "AbandonCount": {
+                      "type": "integer",
+                      "description": "Number of abandoned contacts",
+                      "required": true
+                    },
+                    "AbandonRate": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsACW": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsAvaliable": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsIdle": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsLoggedIn": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsUnavaliable": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsWorking": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageHandleTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageInqueueTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageSpeedToAnswer": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageTalkTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageWrapTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "CampaignId": {
+                      "type": "integer",
+                      "description": "Campaign identifier",
+                      "required": true
+                    },
+                    "CampaignName": {
+                      "type": "string",
+                      "description": "Name of Campaign",
+                      "required": true
+                    },
+                    "ContactsActive": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsHandled": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsOffered": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsQueued": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsOutOfSLA": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsWithinSLA": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "HoldTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "IsOutbound": {
+                      "type": "boolean",
+                      "description": "",
+                      "required": true
+                    },
+                    "LongestQueueDuration": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "MediaTypeId": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "MediaTypeName": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "QueueCount": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ServiceLevel": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "SkillName": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "SkillId": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ServiceLevelGoal": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ServiceLevelThreshold": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>Invalid date range</p><p>Invalid date range. Max 30 days.</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden: Invalid skill"
+        }
+      }
+    }
+  },
+  "skillId_summary": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns statistics for a Skill",
+      "nickname": "getFullSkillSummary",
+      "description": "This method returns both real time and reporting summary data for every Skill in the business unit.<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getSkillIDSummary.html'></div>",
+      "responseClass": "SkillSummaries",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        },
+        {
+          "name": "listVar",
+          "description": "A list of optional variables",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "SkillSummaries",
+            "description": "",
+            "properties": {
+              "skillSummaries": {
+                "type": "array",
+                "description": "Collection of summarized Skill statistics",
+                "items": {
+                  "title": "skillSummary",
+                  "description": "",
+                  "properties": {
+                    "BusinessUnitId": {
+                      "type": "integer",
+                      "description": "The business unit number",
+                      "required": true
+                    },
+                    "AbandonCount": {
+                      "type": "integer",
+                      "description": "Number of abandoned contacts",
+                      "required": true
+                    },
+                    "AbandonRate": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsACW": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsAvaliable": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsIdle": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsLoggedIn": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsUnavaliable": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AgentsWorking": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageHandleTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageInqueueTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageSpeedToAnswer": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageTalkTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "AverageWrapTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "CampaignId": {
+                      "type": "integer",
+                      "description": "Campaign identifier",
+                      "required": true
+                    },
+                    "CampaignName": {
+                      "type": "string",
+                      "description": "Name of Campaign",
+                      "required": true
+                    },
+                    "ContactsActive": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsHandled": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsOffered": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsQueued": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsOutOfSLA": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ContactsWithinSLA": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "HoldTime": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "IsOutbound": {
+                      "type": "boolean",
+                      "description": "",
+                      "required": true
+                    },
+                    "LongestQueueDuration": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "MediaTypeId": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "MediaTypeName": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "QueueCount": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ServiceLevel": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "SkillName": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "SkillId": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ServiceLevelGoal": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "ServiceLevelThreshold": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>Invalid date range. Max 30 days.</p>"
+        },
+        "401": {
+          "description": "Invalid Security User"
+        },
+        "403": {
+          "description": "Forbidden: Invalid skill"
+        },
+        "404": {
+          "description": "Invalid skillId"
+        }
+      }
+    }
+  },
+  "sla_summary": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns SLA summary for all Skills",
+      "operationId": "getFullSLASummaries",
+      "description": "This method will return summary information on the SLA compliance of contacts for all Skills that were created during the time specified between \"startDate\" and \"endDate\".<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getSkillsSLASummary.html'></div>",
+      "responseClass": "SLASummaries",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "SLASummaries",
+            "properties": {
+              "serviceLevelSummaries": {
+                "type": "array",
+                "description": "Array of summarized SLA statistics for all Skills",
+                "items": {
+                  "title": "slaSummary",
+                  "description": "",
+                  "properties": {
+                    "BusinessUnitId": {
+                      "type": "integer",
+                      "description": "The business unit number",
+                      "required": true
+                    },
+                    "SkillId": {
+                      "type": "integer",
+                      "description": "ID of the Skill",
+                      "required": true
+                    },
+                    "SkillName": {
+                      "type": "string",
+                      "description": "Name of the Skill",
+                      "required": true
+                    },
+                    "ContactsWithinSLA": {
+                      "type": "integer",
+                      "description": "Number of Contacts within SLA for each Skill",
+                      "required": true
+                    },
+                    "ContactsOutOfSLA": {
+                      "type": "integer",
+                      "description": "Number of Contacts outside of SLA for each Skill",
+                      "required": true
+                    },
+                    "TotalContacts": {
+                      "type": "integer",
+                      "description": "Total number of Contacts on each Skill",
+                      "required": true
+                    },
+                    "ServiceLevel": {
+                      "type": "integer",
+                      "description": "Configured SLA for each Skill",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid Start Date</p><p>Invalid End Date</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden: Invalid skillId"
+        },
+        "404": {
+          "description": "Invalid Skill Id"
+        }
+      }
+    }
+  },
+  "skillId_sla_summary": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns SLA summary for a Skill",
+      "operationId": "getFullSLASkillSummary",
+      "description": "This method will return summary information on the SLA compliance of contacts for the Skill specified by \"skillId\" that were created during the time specified between \"startDate\" and \"endDate\".<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getSkillIDSLASummary.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skillId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        },
+        {
+          "name": "listVar",
+          "description": "",
+          "type": "object",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "SLASummaries",
+            "properties": {
+              "serviceLevelSummaries": {
+                "type": "array",
+                "description": "Array of summarized SLA statistics for all Skills",
+                "items": {
+                  "title": "slaSummary",
+                  "description": "",
+                  "properties": {
+                    "BusinessUnitId": {
+                      "type": "integer",
+                      "description": "The business unit number",
+                      "required": true
+                    },
+                    "SkillId": {
+                      "type": "integer",
+                      "description": "ID of the Skill",
+                      "required": true
+                    },
+                    "SkillName": {
+                      "type": "string",
+                      "description": "Name of the Skill",
+                      "required": true
+                    },
+                    "ContactsWithinSLA": {
+                      "type": "integer",
+                      "description": "Number of Contacts within SLA for each Skill",
+                      "required": true
+                    },
+                    "ContactsOutOfSLA": {
+                      "type": "integer",
+                      "description": "Number of Contacts outside of SLA for each Skill",
+                      "required": true
+                    },
+                    "TotalContacts": {
+                      "type": "integer",
+                      "description": "Total number of Contacts on each Skill",
+                      "required": true
+                    },
+                    "ServiceLevel": {
+                      "type": "integer",
+                      "description": "Configured SLA for each Skill",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid Start Date</p><p>Invalid End Date</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Skill Id"
+        }
+      }
+    }
+  },
+  "performance_total": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns performance summary of all Teams",
+      "operationId": "Team Performance Summary Totals V3",
+      "description": "This method returns a Team summary for all Teams in the business unit over the time frame between \"startDate\" and \"endDate\".<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getTeamPerformance.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "TeamPerformanceObjects",
+            "description": "Array of performance metrics for all teams",
+            "properties": {
+              "teamPerformanceTotal": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "title": "teamPerformance",
+                  "description": "",
+                  "properties": {
+                    "teamId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of the Team",
+                      "required": true
+                    },
+                    "inboundTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Total talk time on inbound calls",
+                      "required": true
+                    },
+                    "inboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average time per inbound call",
+                      "required": true
+                    },
+                    "outboundHandled": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Number of outbound calls handled",
+                      "required": true
+                    },
+                    "outboundTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Total talk time on outbound calls",
+                      "required": true
+                    },
+                    "outboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average time per outbound call",
+                      "required": true
+                    },
+                    "totalHandled": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Number of calls handled",
+                      "required": true
+                    },
+                    "totalAvgHandled": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Average Number of calls handled",
+                      "required": true
+                    },
+                    "totalTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Total talk time on all calls",
+                      "required": true
+                    },
+                    "totalAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average talk time for all calls",
+                      "required": true
+                    },
+                    "consultTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time in consult",
+                      "required": true
+                    },
+                    "availableTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time in available state",
+                      "required": true
+                    },
+                    "unavailableTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time in unavailable state",
+                      "required": true
+                    },
+                    "avgUnavailableTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average Time in unavailable state",
+                      "required": true
+                    },
+                    "acwTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time spend in acw work",
+                      "required": true
+                    },
+                    "refused": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Total calls refused",
+                      "required": true
+                    },
+                    "percentRefused": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent of total calls refused",
+                      "required": true
+                    },
+                    "loginTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time agent logged in",
+                      "required": true
+                    },
+                    "workingRate": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "",
+                      "required": true
+                    },
+                    "occupancy": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent time in (talk/acw) work",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "teamId_performance_total": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns performance summary of a Team",
+      "operationId": "Team Performance Summary Totals V3",
+      "description": "This method returns a summary for the Team identified by teamId over the time frame between \"startDate\" and \"endDate\".<div class='tabs_wrapper' data-path='RealTimeData_rtdSummaries_getTeamIDPerformance.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/teamId"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate",
+          "required": true
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "TeamPerformanceObjects",
+            "description": "Array of performance metrics for all teams",
+            "properties": {
+              "teamPerformanceTotal": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "title": "teamPerformance",
+                  "description": "",
+                  "properties": {
+                    "teamId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of the Team",
+                      "required": true
+                    },
+                    "inboundTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Total talk time on inbound calls",
+                      "required": true
+                    },
+                    "inboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average time per inbound call",
+                      "required": true
+                    },
+                    "outboundHandled": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Number of outbound calls handled",
+                      "required": true
+                    },
+                    "outboundTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Total talk time on outbound calls",
+                      "required": true
+                    },
+                    "outboundAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average time per outbound call",
+                      "required": true
+                    },
+                    "totalHandled": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Number of calls handled",
+                      "required": true
+                    },
+                    "totalAvgHandled": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Average Number of calls handled",
+                      "required": true
+                    },
+                    "totalTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Total talk time on all calls",
+                      "required": true
+                    },
+                    "totalAvgTalkTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average talk time for all calls",
+                      "required": true
+                    },
+                    "consultTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time in consult",
+                      "required": true
+                    },
+                    "availableTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time in available state",
+                      "required": true
+                    },
+                    "unavailableTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time in unavailable state",
+                      "required": true
+                    },
+                    "avgUnavailableTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Average Time in unavailable state",
+                      "required": true
+                    },
+                    "acwTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time spend in acw work",
+                      "required": true
+                    },
+                    "refused": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Total calls refused",
+                      "required": true
+                    },
+                    "percentRefused": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent of total calls refused",
+                      "required": true
+                    },
+                    "loginTime": {
+                      "type": "duration",
+                      "format": "time",
+                      "description": "Time agent logged in",
+                      "required": true
+                    },
+                    "workingRate": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "",
+                      "required": true
+                    },
+                    "occupancy": {
+                      "type": "double",
+                      "format": "double",
+                      "description": "Percent time in (talk/acw) work",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Content"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        }
+      }
+    }
+  },
+  "reports": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "<b><i><span style=color:red>  Updated in v11.0 </span></i></b> Returns a list of Custom Reports",
+      "operationId": "CustomReports",
+      "description": "This method will allow you to get a list of all reports listed under Custom Reporting in Central for your Business Unit.  This includes both public and private reports written by any user in your Business Unit.<br/><br/>These reports can be started using the <a href='ReportingAPI#!/Reporting/StartReportJob'>POST /report-jobs/{reportId}</a> API call or through the Custom Reporting tool in Central.  <br/><br/>Custom Reporting is the replacement for Data Downloads using the new more flexible DataMart.<br/> <br/> <b><i><span style=color:red> v11.0 NOTE: </span></i></b> Added new response field “reportDataSourceTypes”  <div class='tabs_wrapper' data-path='reporting_reports_getReports.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "CustomReports",
+            "description": "Custom Reports",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "reports": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "type": "object",
+                  "title": "customReport",
+                  "description": "Custom Report Info",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "reportId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of Custom Report",
+                      "required": true
+                    },
+                    "reportName": {
+                      "type": "string",
+                      "description": "Name of Custom Report",
+                      "required": true
+                    },
+                    "reportType": {
+                      "type": "string",
+                      "description": "Type of Custom Report",
+                      "required": true
+                    },
+                    "reportDataSourceTypes": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    }
+  },
+  "report_jobs": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns a list of Reporting Jobs",
+      "operationId": "ReportJobs",
+      "description": "This method will allow you to retrieve a list of Custom Reporting Jobs made up of jobs that have already completed and those that are currently running.  The information for completed jobs will include a URL that can be used to retrieve the results of the completed report job. <br/><br/>These are reports that are started using the <a href='ReportingAPI#!/Reporting/StartReportJob'>POST /report-jobs/{reportId}</a> API call or through the Custom Reporting tool in Central.  <br/><br/>Custom Reporting is the replacement for Data Downloads using the new more flexible DataMart.<div class='tabs_wrapper' data-path='reporting_reports_getReportJobs.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "name": "reportId",
+          "description": "ID of a Report to filter results by",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "jobStatus",
+          "description": "Filter results by \"running\" or \"completed\" status of jobs",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "jobSpan",
+          "description": "Number of days of completed Report jobs to include.  Default is 7 days",
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ReportJobs",
+            "description": "",
+            "properties": {
+              "runningJobs": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "title": "runJobs",
+                  "description": "",
+                  "properties": {
+                    "jobId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of the Report Job",
+                      "required": true
+                    },
+                    "reportId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of Report being run",
+                      "required": true
+                    },
+                    "reportName": {
+                      "type": "string",
+                      "description": "Name of report being run",
+                      "required": true
+                    },
+                    "jobStart": {
+                      "type": "date-time",
+                      "format": "ISO 8601",
+                      "description": "Time the Report Job was started",
+                      "required": true
+                    }
+                  }
+                },
+                "required": false
+              },
+              "completedJobs": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "title": "completeJobs",
+                  "description": "",
+                  "properties": {
+                    "jobId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of the Report Job",
+                      "required": true
+                    },
+                    "reportId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "ID of Report being run",
+                      "required": true
+                    },
+                    "reportName": {
+                      "type": "string",
+                      "description": "Name of report being run",
+                      "required": true
+                    },
+                    "jobStart": {
+                      "type": "date-time",
+                      "format": "ISO 8601",
+                      "description": "Time the Report Job was started",
+                      "required": true
+                    },
+                    "jobEnd": {
+                      "type": "date-time",
+                      "format": "ISO 8601",
+                      "description": "Time the Report Job was completed",
+                      "required": true
+                    },
+                    "fileName": {
+                      "type": "string",
+                      "description": "Name of the file containing Report results",
+                      "required": true
+                    },
+                    "resultFileURL": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": "URL used to download result file",
+                      "required": true
+                    }
+                  }
+                },
+                "required": false
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No jobs run in the specified jobSpan"
+        },
+        "400": {
+          "description": "<p>Invalid fields</p><p>Invalid reportId</p><p>Invalid jobStatus</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        }
+      }
+    }
+  },
+  "report_jobs_jobId": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns a Reporting Job",
+      "operationId": "ReportJobByID",
+      "description": "This method will allow you to retrieve information about a Custom Reporting Job.  The information for completed jobs will include a URL that can be used to retrieve the results of the completed report job. <br/><br/>These are reports that are started using the <a href='ReportingAPI#!/Reporting/StartReportJob'>POST /report-jobs/{reportId}</a>  API call or through the Custom Reporting tool in Central.  <br/><br/>Custom Reporting is the replacement for Data Downloads using the new more flexible DataMart.<div class='tabs_wrapper' data-path='reporting_reports_getReportJobsByID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/jobId"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ReportJobByID",
+            "description": "",
+            "properties": {
+              "jobId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "ID of the Report Job",
+                "required": true
+              },
+              "reportId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "ID of Report being run",
+                "required": true
+              },
+              "reportName": {
+                "type": "string",
+                "description": "Name of report being run",
+                "required": true
+              },
+              "jobStart": {
+                "type": "date-time",
+                "format": "ISO 8601",
+                "description": "Time the Report Job was started",
+                "required": true
+              },
+              "jobEnd": {
+                "type": "date-time",
+                "format": "ISO 8601",
+                "description": "Time the Report Job was completed",
+                "required": true
+              },
+              "fileName": {
+                "type": "string",
+                "description": "Name of the file containing Report results",
+                "required": true
+              },
+              "resultFileURL": {
+                "type": "string",
+                "format": "URL",
+                "description": "URL used to download result file",
+                "required": true
+              },
+              "deleteTime": {
+                "type": "date-time",
+                "format": "ISO 8601",
+                "description": "Time when reulst file will be deleted",
+                "required": true
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid fields argument"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "404": {
+          "description": "Invalid or missing jobId"
+        },
+        "409": {
+          "description": "Result file not available. Run report again"
+        }
+      }
+    }
+  },
+  "report_jobs_reportId": {
+    "post": {
+      "tags": [ "Reporting" ],
+      "summary": "Start a Custom Reporting Job",
+      "operationId": "StartReportJob",
+      "description": "This method will allow you to start a report job for a Custom Reporting Template identified by reportId.  The status of Reporting Jobs can be monitored using the <a href='ReportingAPI#!/Reporting/ReportJobs'>GET /report-jobs</a> using the jobId returned from this API.  <br/><br/>Custom Reporting is the replacement for Data Downloads using the new more flexible DataMart.   There are predefined reports that can be run as is and you can use the Custom Reporting tool in Central to create new reports specific to your needs and then run those reports using this method.<div class='tabs_wrapper' data-path='reporting_reports_postReportJob.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/reportId"
+        },
+        {
+          "name": "fileType",
+          "description": "Output file type for Report results",
+          "type": "string",
+          "in": "query",
+          "enum": [
+            "CSV",
+            "TAB",
+            "XML",
+            "Excel"
+          ]
+        },
+        {
+          "name": "includeHeaders",
+          "description": "Indicates if a header row is added to result file",
+          "type": "boolean",
+          "default": false,
+          "in": "query"
+        },
+        {
+          "name": "appendDate",
+          "description": "Indicates if output file name will have date appended",
+          "type": "boolean",
+          "default": true,
+          "in": "query"
+        },
+        {
+          "name": "deleteAfter",
+          "description": "Number of days to keep results after Job completes",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "name": "overwrite",
+          "description": "Indicates if existing output file is overwritten",
+          "type": "boolean",
+          "default": true,
+          "in": "query"
+        },
+        {
+          "name": "startDate",
+          "description": "ISO 8601 beginning of report interval",
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "endDate",
+          "description": "ISO 8601 end of report interval",
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Report job has started",
+          "schema": {
+            "title": "StartReportJob",
+            "description": "",
+            "properties": {
+              "jobId": {
+                "type": "integer",
+                "description": "ID of the Report Job",
+                "required": true
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid FileType. Possible values are CSV, PDF, XML or Excel.</p><p>Invalid OverWrite.</p><p>Invalid IncludeHeaders</p><p>Invalid AppendDate.</p><p>Invalid DeleteAfter. The value should be between 7 and 14.</p><p>Invalid startDate</p><p>Invalid endDate</p><p>Invalid date range. Range must be less than 90 days.</p>"
+        },
+        "401": {
+          "description": "InvalidOrExpiredToken"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data."
+        },
+        "404": {
+          "description": "Invalid or missing reportId."
+        },
+        "409": {
+          "description": "File Already Exists"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    }
+  },
+  "report_jobs_datadownload_reportid": {
+    "post": {
+      "tags": [ "Reporting" ],
+      "summary": "Generates a link to a datadownload report",
+      "operationId": "Generate a datadownload report file",
+      "description": "This method will allow you to generate a datadownload report as a eiter a base 64 encoded string or a file in central.<div class='tabs_wrapper' data-path='reporting_reports_postdatadownloadbyreportid.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "reportId",
+          "description": "Report Id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "fileName",
+          "description": "File Name",
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "name": "saveAsFile",
+          "description": "",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p><p><p><p><p><p>Invalid or missing parameter.</p><p>Report Execution Failure.</p></p><p>Target report period must be within the last two years.</p></p><p>Date range cannot be greater than 30 days</p></p><p>Invalid or missing reportId.</p></p><p>File Already Exists.</p></p><p>Filename must have extension of either 'csv', 'tsv', 'xml', or 'excel'.</p>"
+        },
+        "500": {
+          "description": "Internal Server Error."
+        }
+      }
+    }
+  },
+  "wfo-data-ascm": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Return Scorecard Statistics",
+      "operationId": "ScorecardStatistics",
+      "description": "This method will return the daily scorecard statistics generated by the WFM Data Collector for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.<div class='tabs_wrapper' data-path='reporting_reports_getWFOData_ascm.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "description": "ISO 8601 beginning of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "endDate",
+          "description": "ISO 8601 End of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "fields",
+          "description": "List of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "ScoreCard",
+            "name": "scorecardStats",
+            "description": "List of System Address Books",
+            "properties": {
+              "wfoScorecardStats": {
+                "type": "array",
+                "items": {
+                  "title": "wfoScorecardStats",
+                  "description": "",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "agentId": {
+                      "type": "integer",
+                      "description": "ID of the Agent",
+                      "required": true
+                    },
+                    "loginTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of the Agent login",
+                      "required": true
+                    },
+                    "totalTime": {
+                      "type": "double",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "talkTime": {
+                      "type": "double",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "acwTime": {
+                      "type": "double",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "holdTime": {
+                      "type": "double",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "totalCalls": {
+                      "type": "integer",
+                      "description": "Total Contacts handled",
+                      "required": true
+                    },
+                    "abandonedCalls": {
+                      "type": "integer",
+                      "description": "Total number of abandonded Contacts",
+                      "required": true
+                    },
+                    "auxTime": {
+                      "type": "double",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "auxInTime": {
+                      "type": "integer",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "auxOutTime": {
+                      "type": "integer",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "idleTime": {
+                      "type": "double",
+                      "description": "Total time spent in seconds",
+                      "required": true
+                    },
+                    "actualCalls": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>endDate is before startDate</p><p>Invalid Fields List</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "WFM data access is not authorized"
+        },
+        "409": {
+          "description": "Business Unit not configured for WFO"
+        }
+      }
+    }
+  },
+  "wfo-data-asi": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Return ASI Metadata",
+      "operationId": "ReturnASIMetadata",
+      "responseClass": "",
+      "description": "This method will return the agent metadata changes that are sent to Verint through the ASI file dfor a specific date range bounded by the \"startDate\" and \"endDate\" parameters.  The maximum range for this method is 14 days.<div class='tabs_wrapper' data-path='reporting_reports_getWFOData_asi.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "description": "ISO 8601 beginning of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "endDate",
+          "description": "ISO 8601 End of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "fields",
+          "description": "List of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "AgentStats",
+            "name": "agentStats",
+            "description": "List of System Address Books",
+            "properties": {
+              "wfoAgentSpecificStats": {
+                "type": "array",
+                "items": {
+                  "title": "wfoAgentSpecificStats",
+                  "description": "",
+                  "properties": {
+                    "agentNo": {
+                      "type": "integer",
+                      "description": "ID of the Agent",
+                      "required": true
+                    },
+                    "teamName": {
+                      "type": "string",
+                      "description": "Name of the Team",
+                      "required": true
+                    },
+                    "teamNo": {
+                      "type": "integer",
+                      "description": "ID of the Team",
+                      "required": true
+                    },
+                    "businessUnitId": {
+                      "type": "integer",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "businessUnitName": {
+                      "type": "string",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "First name of the Agent",
+                      "required": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Last name of the Agent",
+                      "required": true
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    },
+                    "createDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of record creation",
+                      "required": true
+                    },
+                    "modDateTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of record modification",
+                      "required": true
+                    },
+                    "productId": {
+                      "type": "integer",
+                      "description": "ID of the product",
+                      "required": true
+                    },
+                    "ntLoginName": {
+                      "type": "string",
+                      "description": "",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>endDate is before startDate or range has exceeded maximum amount of 14 days</p><p>Invalid Fields List</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "WFM data access is not authorized"
+        },
+        "409": {
+          "description": "Business Unit not configured for WFO"
+        }
+      }
+    }
+  },
+  "wfo-data-csi": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns CSI Statistics",
+      "operationId": "ReturnsCSIStatistics",
+      "responseClass": "",
+      "description": "This method will return the Contact statistics generated by the WFM Data Collector for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.  The maximum range for this method is 6 hours.<div class='tabs_wrapper' data-path='reporting_reports_getWFOData_csi.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "description": "ISO 8601 beginning of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "endDate",
+          "description": "ISO 8601 End of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "fields",
+          "description": "List of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "wfoContactStats",
+            "name": "wfoContactStats",
+            "description": "List of System Address Books",
+            "properties": {
+              "wfoContactStats": {
+                "type": "array",
+                "items": {
+                  "title": "wfoContactStats",
+                  "description": "",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "businessUnitName": {
+                      "type": "string",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "intervalStartDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of the start of the interval",
+                      "required": true
+                    },
+                    "skillId": {
+                      "type": "integer",
+                      "description": "ID of the Skill",
+                      "required": true
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "ID of the Skill",
+                      "required": true
+                    },
+                    "serviceLevel": {
+                      "type": "integer",
+                      "description": "Service level of the Skill",
+                      "required": true
+                    },
+                    "mediaTypeId": {
+                      "type": "integer",
+                      "description": "The media type ID for the Skill's media type (phone, chat, etc.)",
+                      "required": true
+                    },
+                    "mediaTypeName": {
+                      "type": "string",
+                      "description": "The textual description or name of the media type for the Skill",
+                      "required": true
+                    },
+                    "wfoTotalContacts": {
+                      "type": "integer",
+                      "description": "Total number of Contacts offered",
+                      "required": true
+                    },
+                    "wfoTotalHandled": {
+                      "type": "integer",
+                      "description": "Total number of Contacts handled",
+                      "required": true
+                    },
+                    "wfoAverageHandleTime": {
+                      "type": "integer",
+                      "description": "Average time spent handling contacts in minutes",
+                      "required": true
+                    },
+                    "wfoAbandonCount": {
+                      "type": "integer",
+                      "description": "Total number of abandoned Contacts",
+                      "required": true
+                    },
+                    "wfoAverageSpeedOfAnswer": {
+                      "type": "integer",
+                      "description": "Average time to answer a Contact in minutes",
+                      "required": true
+                    },
+                    "totalContactTime": {
+                      "type": "integer",
+                      "description": "Total time spent on contact handling in minutes",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>endDate is before startDate or range has exceeded maximum amount of 6 hours</p><p>Invalid Fields List</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "WFM data access is not authorized"
+        },
+        "409": {
+          "description": "Business Unit not configured for WFO"
+        }
+      }
+    }
+  },
+  "wfo-data-ftci": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns FTCI Adherence Statistics",
+      "operationId": "ReturnsFTCIStatistics",
+      "responseClass": "",
+      "description": "This method will return the schedule adherence statistics generated by the WFM Data Collector for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.  The maximum range for this method is 5 minutes.<div class='tabs_wrapper' data-path='reporting_reports_getWFOData_ftci.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "description": "ISO 8601 beginning of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "endDate",
+          "description": "ISO 8601 End of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "fields",
+          "description": "List of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "AgentStats",
+            "name": "agentStats",
+            "description": "List of System Address Books",
+            "properties": {
+              "wfoAgentStats": {
+                "type": "array",
+                "items": {
+                  "title": "wfoAgentStats",
+                  "description": "",
+                  "properties": {
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>endDate is before startDate or range has exceeded maximum amount of 5 minutes</p><p>Invalid Fields List</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        },
+        "409": {
+          "description": "Business Unit not configured for WFO"
+        }
+      }
+    }
+  },
+  "wfo-data-osi": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns OSI Statistics",
+      "operationId": "ReturnsOSIStatistics",
+      "responseClass": "",
+      "description": "This method will return the outbound phone call statistics generated by the WFM Data Collector for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.  The maximum range for this method is 6 hours.<div class='tabs_wrapper' data-path='reporting_reports_getWFOData_osi.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "description": "ISO 8601 beginning of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "endDate",
+          "description": "ISO 8601 End of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "fields",
+          "description": "List of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "wfoOutboundStats",
+            "name": "wfoOutboundStats",
+            "description": "List of System Address Books",
+            "properties": {
+              "wfoOutboundStats": {
+                "type": "array",
+                "items": {
+                  "title": "wfoOutboundStats",
+                  "description": "",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer",
+                      "description": "ID of the Business Unit",
+                      "required": true
+                    },
+                    "intervalStartDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 timestamp of the start of the interval",
+                      "required": true
+                    },
+                    "skillId": {
+                      "type": "integer",
+                      "description": "ID of the Skill",
+                      "required": true
+                    },
+                    "skillName": {
+                      "type": "string",
+                      "description": "ID of the Skill",
+                      "required": true
+                    },
+                    "dials": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "connects": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "connectsAHT": {
+                      "type": "double",
+                      "description": "",
+                      "required": true
+                    },
+                    "rightPartyConnects": {
+                      "type": "integer",
+                      "description": "",
+                      "required": true
+                    },
+                    "rightPartyConnectsAHT": {
+                      "type": "double",
+                      "description": "",
+                      "required": true
+                    },
+                    "abandons": {
+                      "type": "integer",
+                      "description": "Total number of abandoned Contacts",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>endDate is before startDate or range has exceeded maximum amount of 6 hours</p><p>Invalid Fields List</p><p>Invalid fields list</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "WFM data access is not authorized"
+        },
+        "409": {
+          "description": "Business Unit not configured for WFO"
+        }
+      }
+    }
+  },
+  "wfo-data-qm": {
+    "get": {
+      "tags": [ "Reporting" ],
+      "summary": "Returns Quality Management Statistics",
+      "operationId": "ReturnsQMStatistics",
+      "responseClass": "",
+      "description": "This method will return specific evaluation metrics and Quality Management metadata of evaluated Contacts in the Verint Impact 360 website for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.  The maximum range for this method is 14 days.<div class='tabs_wrapper' data-path='reporting_reports_getWFOData_qm.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "description": "ISO 8601 beginning of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "endDate",
+          "description": "ISO 8601 End of report period",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "fields",
+          "description": "List of elements to return in response",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "title": "QMEvalStats",
+            "name": "QMEvalStats",
+            "description": "List of System Address Books",
+            "properties": {
+              "wfoQmContactEvaluationStats": {
+                "type": "array",
+                "items": {
+                  "title": "wfoQmContactEvaluationStats",
+                  "description": "",
+                  "properties": {
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate</p><p>Invalid endDate</p><p>endDate is before startDate or range has exceeded maximum amount of 14 days</p><p>Invalid fields list</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "QM data access is not authorized"
+        },
+        "409": {
+          "description": "Business Unit not configured for WFO"
+        }
+      }
+    }
+  },
+  "wfm-data_skills_contacts": {
+    "get": {
+      "tags": [
+        "WFM Data"
+      ],
+      "description": "This method will return the Contact statistics generated by the WFM Data Collector for a specific date range bounded by the startDate and endDate parameters. The maximum range for this method is 6 hours. <div class='tabs_wrapper' data-path='reporting_report_getwfmdataskillcontacts.html'></div>",
+      "operationId": "wfmskillscontacts",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/mediaTypeId"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "{0}",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "businessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "businessUnitName": {
+                "type": "string",
+                "description": "Business Unit Name"
+              },
+              "intervalStartDate": {
+                "type": "string"
+              },
+              "skillId": {
+                "type": "integer",
+                "description": "Skill Id required to run the Script"
+              },
+              "skillName": {
+                "type": "string"
+              },
+              "isOutbound": {
+                "type": "boolean"
+              },
+              "serviceLevel": {
+                "type": "number"
+              },
+              "mediaTypeId": {
+                "type": "integer",
+                "description": "Media Type Id"
+              },
+              "MediaTypeName": {
+                "type": "string",
+                "description": "Media Type Name"
+              },
+              "totalContacts": {
+                "type": "integer"
+              },
+              "totalHandled": {
+                "type": "integer"
+              },
+              "averageHandleTime": {
+                "type": "number"
+              },
+              "abandonCount": {
+                "type": "integer"
+              },
+              "averageSpeedOfAnswer": {
+                "type": "number"
+              },
+              "totalContactTime": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid parameter</p><p>Invalid date range, max {0} days</p>"
+        },
+        "409": {
+          "description": "Interval Contact Data Pending"
+        }
+      },
+      "summary": "Returns contact statistics for WFM"
+    }
+  },
+  "wfm-data_agents": {
+    "get": {
+      "tags": [
+        "WFM Data"
+      ],
+      "summary": "Returns agent metadata",
+      "operationId": "wfmDataAgent",
+      "description": "This method will return the agent metadata changes that are sent to Verint through the ASI file for a specific date range bounded by the \"startDate\" and \"endDate\" parameters. The maximum range for this method is 14 days.<br/><br/><div class='tabs_wrapper' data-path='reporting_report_getwfmAgentMetadata.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "wfM_Data_Agents": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agentNo": {
+                      "type": "integer"
+                    },
+                    "teamName": {
+                      "type": "string"
+                    },
+                    "teamNo": {
+                      "type": "integer"
+                    },
+                    "businessUnitId": {
+                      "type": "integer"
+                    },
+                    "businessUnitName": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "middleName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "createDate": {
+                      "type": "string"
+                    },
+                    "modDateTime": {
+                      "type": "string"
+                    },
+                    "productId": {
+                      "type": "integer"
+                    },
+                    "ntLoginName": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Range has exceeded maximum amount of 14 days</p><p>Invalid date between start date and end date</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        }
+      }
+    }
+  },
+  "wfm-data_skills_dialer-contacts": {
+    "get": {
+      "tags": [
+        "WFM Data"
+      ],
+      "summary": "Returns dailer contact statistics",
+      "operationId": "wfmDailerContactStatistics",
+      "description": "This method will return the dialer-contact generated by the WFM Data Collector for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.<br/><br/><b><i><span style='color:red'></span></i></b><div class='tabs_wrapper' data-path='reporting_report_getwfmDailerContactStatistics.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/mediaTypeId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "wfM_OB_StatsV9": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer"
+                    },
+                    "businessUnitName": {
+                      "type": "string"
+                    },
+                    "intervalStartDate": {
+                      "type": "string"
+                    },
+                    "skillId": {
+                      "type": "integer"
+                    },
+                    "skillName": {
+                      "type": "string"
+                    },
+                    "mediaTypeId": {
+                      "type": "integer"
+                    },
+                    "mediaTypeName": {
+                      "type": "string"
+                    },
+                    "dials": {
+                      "type": "integer"
+                    },
+                    "connects": {
+                      "type": "integer"
+                    },
+                    "connectsAHT": {
+                      "type": "number"
+                    },
+                    "rightPartyConnects": {
+                      "type": "integer"
+                    },
+                    "rightPartyConnectsAHT": {
+                      "type": "number"
+                    },
+                    "abandons": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p><p>Invalid date range</p>"
+        }
+      }
+    }
+  },
+  "wfm-data_agents_schedule-adherence": {
+    "get": {
+      "tags": [
+        "WFM Data"
+      ],
+      "summary": "Returns adherence statistics",
+      "operationId": "wfmAdherenceStatistics",
+      "description": "This method will return the schedule adherence statistics generated by the WFM Data Collector for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.The maximum range for this method is 5 minutes. <br/><br/><div class='tabs_wrapper' data-path='reporting_report_getwfmAgentAdherenceStatistics.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "agentStateHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer"
+                    },
+                    "businessUnitName": {
+                      "type": "string"
+                    },
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "stateIndex": {
+                      "type": "integer"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "agentStateId": {
+                      "type": "integer"
+                    },
+                    "agentSessionId": {
+                      "type": "integer"
+                    },
+                    "skillId": {
+                      "type": "integer"
+                    },
+                    "outStateId": {
+                      "type": "integer"
+                    },
+                    "outStateDescription": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Content",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "agentStateHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer"
+                    },
+                    "businessUnitName": {
+                      "type": "string"
+                    },
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "stateIndex": {
+                      "type": "integer"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "agentStateId": {
+                      "type": "integer"
+                    },
+                    "agentSessionId": {
+                      "type": "integer"
+                    },
+                    "skillId": {
+                      "type": "integer"
+                    },
+                    "outStateId": {
+                      "type": "integer"
+                    },
+                    "outStateDescription": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid date range. Range must be less than or equal to 5 minutes</p>"
+        }
+      }
+    }
+  },
+  "wfm-data_agents_scorecards": {
+    "get": {
+      "tags": [
+        "WFM Data"
+      ],
+      "summary": "Returns scorecard statistics",
+      "operationId": "wfmAgentScorecard",
+      "description": "This method will return the daily scorecard statistics generated by the WFM Data Collector for a specific date range bounded by the \"startDate\" and \"endDate\" parameters.<br/><br/><b><i><span style='color:red'></span></i></b><div class='tabs_wrapper' data-path='reporting_report_getwfmAgentScorecard.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "agentStateHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer"
+                    },
+                    "businessUnitName": {
+                      "type": "string"
+                    },
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "stateIndex": {
+                      "type": "integer"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "agentStateId": {
+                      "type": "integer"
+                    },
+                    "agentSessionId": {
+                      "type": "integer"
+                    },
+                    "skillId": {
+                      "type": "integer"
+                    },
+                    "outStateId": {
+                      "type": "integer"
+                    },
+                    "outStateDescription": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "204": {
+          "description": "No Content",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "agentStateHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "businessUnitId": {
+                      "type": "integer"
+                    },
+                    "businessUnitName": {
+                      "type": "string"
+                    },
+                    "agentId": {
+                      "type": "integer"
+                    },
+                    "stateIndex": {
+                      "type": "integer"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "agentStateId": {
+                      "type": "integer"
+                    },
+                    "agentSessionId": {
+                      "type": "integer"
+                    },
+                    "skillId": {
+                      "type": "integer"
+                    },
+                    "outStateId": {
+                      "type": "integer"
+                    },
+                    "outStateDescription": {
+                      "type": "string"
+                    },
+                    "duration": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p>Invalid startDate </p> <p> Invalid endDate</p><p>Invalid date range. Range must not exceed {0} days</p>"
+        }
+      }
+    }
+  },
+  "wfm-data_skills_agent-performance": {
+    "get": {
+      "tags": [
+        "WFM Data"
+      ],
+      "summary": "Returns agent-performance",
+      "operationId": "wfmAgentPerformance",
+      "description": "This method will return the daily agent-performance generated by the WFM Data Collector for a single day range bounded by the \"startDate\" and \"endDate\" parameters.<div class='tabs_wrapper' data-path='reporting_report_getwfmAgentPerformance.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/startDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/endDate"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "businessUnitId": {
+                "type": "integer"
+              },
+              "businessUnitName": {
+                "type": "string"
+              },
+              "skillId": {
+                "type": "integer"
+              },
+              "skillName": {
+                "type": "string"
+              },
+              "agentId": {
+                "type": "integer"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "halfHour": {
+                "type": "integer"
+              },
+              "totalHandled": {
+                "type": "integer"
+              },
+              "totalHandledTime": {
+                "type": "integer"
+              },
+              "totalACWTime": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "<p><p>Invalid startDate </p> <p> Invalid endDate</p><p>Invalid Date Range </p></p>"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "agentId": {
+        "name": "agentId",
+        "description": "Agent Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "contactId": {
+        "name": "contactId",
+        "description": "Contact Id",
+        "required": true,
+        "type": "integer",
+        "format": "int64",
+        "in": "path"
+      },
+      "skillId": {
+        "name": "skillId",
+        "description": "Skill Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "teamId": {
+        "name": "teamId",
+        "description": "Team Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "jobId": {
+        "name": "jobId",
+        "description": "Job Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "reportId": {
+        "name": "reportId",
+        "description": "Report Template Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "startDate": {
+        "name": "startDate",
+        "description": "ISO 8601 beginning of report interval",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "endDate": {
+        "name": "endDate",
+        "description": "ISO 8601 End of report interval",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "updatedSince": {
+        "name": "updatedSince",
+        "description": "Returns all records updated since ISO 8601 time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "searchString": {
+        "name": "searchString",
+        "description": "Used to filter results to objects with the value in key fields",
+        "type": "string",
+        "in": "query"
+      },
+      "fields": {
+        "name": "fields",
+        "description": "Comma separated list of elements to return in response",
+        "type": "string",
+        "in": "query"
+      },
+      "skip": {
+        "name": "skip",
+        "description": "Number of records to skip in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "top": {
+        "name": "top",
+        "description": "Number of records to return in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "orderBy": {
+        "name": "orderBy",
+        "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+        "type": "string",
+        "in": "query"
+      },
+      "mediaTypeId": {
+        "name": "mediaTypeId",
+        "description": "Filters based on the media type",
+        "required": true,
+        "type": "integer",
+        "in": "query",
+        "enum": [ "1", "3", "4", "5", "6", "7", "8" ]
+      }
+    }
+  }
+}

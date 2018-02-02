@@ -1,0 +1,156 @@
+{
+  "monitor": {
+    "post": {
+      "tags": [ "Supervisor" ],
+      "summary": "Gives the ability to monitor an agent on a live call",
+      "operationId": "contactMonitor",
+      "description": "This API call allows an agent to monitor a call that is active for another agent using their active agent login/session. The monitoring agent's \"station phone number\" (or phone number associated with the \"station ID\") will be used to contact the monitoring agent, and connect them with one-way-audio to the call's conversation stream. When monitoring, the monitoring agent can only hear the active agent and patron, but cannot speak to either of them.<br/>The monitoring agent must be configured as a \"supervisor\" of the active agent in the Central website. Attempting to monitor another agent for whom you are not a supervisor will result in an error status code being returned.<br/>The monitoring session will remain active as long as the active agent's agent leg is connected. If the active agent's station is disconnected or hangs up, the monitoring session is discontinued.<br/>There are events that are generated when you are successfully monitoring another agent.<div class='tabs_wrapper' data-path='Agent_supervisor_postSessionIDMonitor.html'></div>",
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "targetAgentId",
+          "description": "The agent ID of the agent to monitor",
+          "required": true,
+          "allowMultiple": false,
+          "type": "integer",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "400": {
+          "description": "Invalid Agent Id."
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Agent is not a Supervisor."
+        },
+        "403a": {
+          "description": "Monitor not enabled for user."
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "coach": {
+    "post": {
+      "tags": [ "Supervisor" ],
+      "summary": "Gives the ability to coach an agent on a live call",
+      "operationId": "contactCoach",
+      "description": "A supervising agent can \"coach\" an active agent while on a call. This is very similar to monitoring another agent's call, except the supervising agent is able to \"whisper\" to the active agent. The supervising agent is able to hear the full conversation, and is also able to talk to the agent. When in \"coach\" mode, the patron cannot hear the supervising agent.<br/>An active monitoring session must be established before a supervising agent can coach an active agent. There is no parameter that indicates which agent to coach, because the target agent is specified in the monitor session. Attempting to call the \"coach\" API without an active monitoring session will result in a 409 Conflict status code.<div class='tabs_wrapper' data-path='Agent_supervisor_postSessionIDCoach.html'></div>",
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "<p>Agent is not a Supervisor.</p><p>Coach not enabled for user.</p>"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "barge": {
+    "post": {
+      "tags": [ "Supervisor" ],
+      "summary": "Gives a supervisor the ability to barge an agent on a live call",
+      "operationId": "contactBarge",
+      "description": "Barge mode can be activated on an active monitoring session, similar to coach mode. In barge mode, the supervising agent is able to hear the target agent AND the patron, and both the target agent and patron can hear the supervising agent.<br/>Attempting to enter barge mode without an active monitoring session will result in a 409 Conflict status code.<div class='tabs_wrapper' data-path='Agent_supervisor_postSessionIDBarge.html'></div>",
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "<p>Agent is not a Supervisor.</p><p>Barge not enabled for user.</p>"
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "take_over": {
+    "post": {
+      "tags": [ "Supervisor" ],
+      "summary": "Gives the ability to take over an agent on a live call",
+      "nickname": "contactTakeover",
+      "description": "Entering Takeover mode is similar to coaching or barging: an active monitoring session must exist. Attempting to enter Takeover mode without an active monitoring session will result in a 409 Conflict error status code.<br/>There is no indication of a contact ID or agent ID in this API call, because the agent is identified when the monitor API call is made, and the contact that can be taken over is the active contact for the target agent.<br/>The target agent is disconnected from the call, and the supervising agent is connected to the patron.<div class='tabs_wrapper' data-path='Agent_supervisor_postSessionIDTakeover.html'></div>",
+      "parameters": [
+        {
+          "name": "sessionId",
+          "description": "An agent Session Id",
+          "required": true,
+          "allowMultiple": false,
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Take over not enabled for user."
+        },
+        "404": {
+          "description": "Invalid agent session."
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "accept": {
+    "post": {
+      "tags": [ "WorkItems" ],
+      "summary": "Accept a work item",
+      "operationId": "acceptWorkItem",
+      "description": "The inContact platform supports multiple contact \"channels\" (also known as \"media types\"). Agents can receive phone calls, chat requests, emails, voice mails, and \"work items\". <br/><br/>When a work item contact is routed to an agent, an inbound \"work item contact event\" will be delivered to the agent session. The platform must be notified that the agent has \"accepted\" the work item in order for the contact to be considered \"active\". This can be done by prompting the agent to accept or reject the work item, or by having software automatically accept or reject a work item based on business logic.<br/><br/>When software that is connected to an agent session receives an inbound \"work item contact\" event, the platform begins a timer of 45 seconds. The software must reply with an \"accept\" API call within that time period, or the platform will set the agent's status to \"Unavailable – Refused\", and re-queue the work item for delivery to another available agent. Any agent software connected to the agent session will receive a \"disconnected\" work item contact event for the contact, as well as an agent state change event indicating that the agent is now \"Unavailable – Refused\".<br/><br/>You can also manually reject a work item before the timeout period by calling the \"reject\" API call.<br/><br/>You would typically display information about the work item to the agent, with a prompt to \"accept\" or \"reject\" the work item, and make the appropriate API call based on agent response.<div class='tabs_wrapper' data-path='Agent_workItems_postSessionIDInteractionsContactIDAccept.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "reject": {
+    "post": {
+      "tags": [ "WorkItems" ],
+      "summary": "Reject a work item",
+      "operationId": "rejectWorkItem",
+      "description": "The inContact platform supports multiple contact \"channels\" (also known as \"media types\"). Agents can receive phone calls, chat requests, emails, voice mails, and \"work items\". <br/><br/>When a work item contact is routed to an agent, an inbound \"work item contact event\" will be delivered to the agent session. The platform must be notified that the agent either accepts or rejects the work item (the platform will assume the agent has rejected the work item if it is not accepted within 45 seconds).<br/><br/>When a work item is rejected (whether manually or automatically), the agent's state will be changed to \"Unavailable – Refused\".<div class='tabs_wrapper' data-path='Agent_workItems_postSessionIDInteractionsContactIDReject.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Invalid state."
+        }
+      }
+    }
+  },
+  "hold": {
+    "post": {
+      "tags": [ "WorkItems" ],
+      "summary": "Hold a work item",
+      "operationId": "holdAWorkItem",
+      "description": "An active work item can be placed on \"hold\" in order to allow the agent to place an outbound phone call. Holding and resuming a work item is similar to holding and resuming a phone call. The work item is in a \"holding\" state so that the agent can place an outbound phone call in support of the work item (for instance, if the agent is working on a CRM trouble ticket that was routed to them, they may need to place an outbound phone call to the patron, or to another agent, etc.)<div class='tabs_wrapper' data-path='Agent_workItems_postSessionIDInteractionsContactIDHold.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot put the contact on hold at this time."
+        }
+      }
+    }
+  },
+  "resume": {
+    "post": {
+      "tags": [ "WorkItems" ],
+      "summary": "Resume a work item",
+      "operationId": "resumeAWorkItem",
+      "description": "If a work item is placed on hold, the agent may resume it. Note that if the agent application places a phone call while a work item is on hold, the work item will automatically resume when the phone call ends.<div class='tabs_wrapper' data-path='Agent_workItems_postSessionIDInteractionsContactIDResume.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot resume the contact at this time."
+        }
+      }
+    }
+  },
+  "end": {
+    "post": {
+      "tags": [ "WorkItems" ],
+      "summary": "End a work item",
+      "operationId": "endAWorkItem",
+      "description": "There are two patterns for ending a work item:<br/><ol style='margin-left: 20px; list-style-type: decimal'><li style='list-style-type: decimal'>Agent-initiated<br/></li><li style='list-style-type: decimal'>From an IVR script (or other external API call)</li></ol><br/>Agents can choose to end a work item when they are done working on it. This will cause the agent to move to their \"next\" state.<div class='tabs_wrapper' data-path='Agent_workItems_postSessionIDInteractionsContactIDEnd.html'></div>",
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/sessionId"
+        },
+        {
+          "$ref": "#/definitions/parameters/contactId"
+        }
+      ],
+      "responses": {
+        "202": {
+          "description": "Accepted"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "<p>Invalid agent session.</p><p>Invalid contact ID.</p>"
+        },
+        "409": {
+          "description": "Cannot end the contact at this time."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "sessionId": {
+        "name": "sessionId",
+        "description": "Agent Session Id",
+        "required": true,
+        "type": "string",
+        "in": "path"
+      },
+      "contactId": {
+        "name": "contactId",
+        "description": "Contact Id",
+        "required": true,
+        "type": "integer",
+        "format": "int64",
+        "in": "path"
+      }
+    }
+  }
+}

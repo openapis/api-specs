@@ -1,0 +1,3732 @@
+{
+  "branding-profiles": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns Branding Profile",
+      "operationId": "Branding Profiles",
+      "description": "This method will return the active Branding Profile for the Business Unit specified by \"businessUnitId\", including base64 encoded image artifacts that can be used for branding custom applications.  If your Business Unit has a child Business Unit associated with it, you can use the \"businessUnitId\" parameter to return the active profile associated with that Business Unit.<div class='tabs_wrapper' data-path='admin_general_getBrandingProfile.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/businessUnitId"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getBrandingProfilesResponse"
+          }
+        },
+        "204": {
+          "description": "No Branding Profile assigned for businessUnitId - '{0}'"
+        },
+        "400": {
+          "description": "<p>Invalid businessUnitId - '{0}', {1}</p><p>Invalid fields - '{0}', must be list of valid field names</p>"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        }
+      }
+    }
+  },
+  "business_unit": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "<b><i><span style='color:red'>Updated in v11.0</span></i></b> Returns Business Unit config",
+      "operationId": "Business Unit Info",
+      "description": "This method will return the configuration elements of your Business Unit.  This includes what features are available and whether or not they have been enabled.<br/><br/><b><i><span style='color:red'>v11.0 NOTE: </span></i></b>added new response fields “tenantId” and “isIntegratedTenant”.<div class='tabs_wrapper' data-path='admin_general_getBusinessUnit.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "name": "includeTrustedBusinessUnits",
+          "description": "Include Trusted Business Units",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getBusinessUnitResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid fields list"
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }   
+  },  
+  "countries": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns Countries",
+      "operationId": "GetCountries",
+      "description": "This method will return the list of Countries.  This can be used when creating Agents through the <a href='AdminAPI#!/Agents/CreateAnAgent'>POST /agents</a> method.<div class='tabs_wrapper' data-path='admin_general_getCountries.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getCountriesResponse"
+          }
+        },
+        "204": {
+          "description": "No countries configured"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Forbidden. Check Security Profile permissions"
+        }
+      }
+    }
+  },
+  "countries-countryId-states": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns States or Provinces",
+      "operationId": "GetsStatesProvinces",
+      "description": "This method will return the list of States or Provinces if the Country identified by \"countryId\" is configured for either.  This can be used when creating Agents through the <a href='AdminAPI#!/Agents/CreateAnAgent'>POST /agents</a> method.<div class='tabs_wrapper' data-path='admin_general_getStates.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/countryId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getCountryStatesResponse"
+          }
+        },
+        "204": {
+          "description": "No states configured"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Forbidden. Check Security Profile permissions"
+        },
+        "404": {
+          "description": "Invalid countryId - '{0}'"
+        },
+        "500": {
+          "description": "Internal Error"
+        }
+      }
+    }
+  },
+  "data-definitions-data-types": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns Data Types",
+      "operationId": "DataDefinitions",
+      "description": "This method will return all Data Definition types for use with defining custom data definitions that can be used when mapping columns of data when uploading a calling list.<div class='tabs_wrapper' data-path='admin_general_getDataDefinition.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getDataDefinitionsDataTypesResponse"
+          }
+        }
+      }
+    }
+  },
+  "dispositions": {
+    "get": {
+      "tags": [
+        "General"
+      ],
+      "summary": "Returns a list of dispositions",
+      "operationId": "getdispostion",
+      "description": "This method returns a list of dispositions with response fields.<br/><br/><div class='tabs_wrapper' data-path='admin_general_getdispositions.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        },
+        {
+          "name": "isPreviewDispositions",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getdispositionsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid parameter</p><p>Invalid fields - '{0}' is not a valid field name</p>"
+        }
+      }
+    },
+    "post": {
+      "tags": [
+        "Skills"
+      ],
+      "summary": "Create a new disposition",
+      "operationId": "postdisposition",
+      "description": "This method allow you to create disposition(s) <div class='tabs_wrapper' data-path='admin_general_postdispositions.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "dispositions",
+          "description": "",
+          "type": "DynamicData",
+          "required": true,
+          "in": "body",
+          "schema": {
+            "$ref": "#/definitions/postdispositionsRequest"
+
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postdispositionsResponse"
+          }
+        },
+        "206": {
+          "description": "Partial success. One or more dispositions were not created",
+          "schema": {
+            "$ref": "#/definitions/postdispositionsResponseNew"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid Dispositions - cannot be null or empty</p><p>Maximum {0} limit of {1} exceeded</p>"
+        }
+      }
+    }
+  },
+  "files": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Get a File",
+      "operationId": "Retrieve a File",
+      "description": "This method will return a file from the file server as identified by the fileName.  The file is returned in a Base64 encoded format.<div class='tabs_wrapper' data-path='admin_general_getFile.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "fileName",
+          "description": "Full path of file to retrieve.  i.e. CallingLists list1000.csv",
+          "type": "string",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getFilesResponse"
+          }
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden"
+        }
+      }
+    },
+    "delete": {
+      "tags": [ "General" ],
+      "summary": "Deletes a File",
+      "operationId": "DeleteFile",
+      "description": "This method will delete a file on the file server as identified by \"fileName\".  The parameter \"fileName\" parameter must contain the filename as well as the directory path.<div class='tabs_wrapper' data-path='admin_general_deleteFile.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "fileName",
+          "description": "Full path of file to delete.  i.e. \"\/CallingLists\/list1000.csv\"",
+          "type": "string",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>File Protected</p><p>File Not Found</p><p>Invalid fileName</p>"
+        }
+      }
+    },
+    "post": {
+      "tags": [ "General" ],
+      "summary": "Uploads a File",
+      "operationId": "UploadFile",
+      "description": "This method will upload a file to the file server as identified by \"fileName\".  The file is uploaded in a Base64 encoded format.  The parameter \"fileName\" must contain the filename as well as the directory path.<div class='tabs_wrapper' data-path='admin_general_postFile.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "fileName",
+          "description": "Full path of file to post.  i.e. \"/CallingLists\\/list1000.csv\"",
+          "type": "string",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "format": "base64",
+          "description": "Base64 encoded file",
+          "in": "query"
+        },
+        {
+          "name": "overwrite",
+          "description": "Indicates if file should overwrite existing file",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>File exists, set overwrite true to overwrite</p><p>File stream is corrupt</p><p>Invalid {0} - '{1}', {2}</p><p>Invalid file size. Max size is {0} KB</p><p>Max concurrent file uploads per business unit reached</p>"
+        }
+      }
+    },
+    "put": {
+      "tags": [ "General" ],
+      "summary": "Moves or Renames a File",
+      "operationId": "MoveFile",
+      "description": "This method will move a file on the file server as identified by \"fileName\" to a new location or rename the file in the existing location.  The parameters \"oldPath\" and \"newPath\" must contain the filename as well as the directory paths.<div class='tabs_wrapper' data-path='admin_general_putFile.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "oldPath",
+          "description": "Full path of file to move or rename.  i.e. \"/CallingLists/list1000.csv\"",
+          "type": "string",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "newPath",
+          "description": "Full path of new location or name of file.  i.e. \"/CallingLists/list1000.csv\"",
+          "type": "string",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "overwrite",
+          "description": "Indicates if file should overwrite existing file at the new location",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Action Failed</p><p>File Not Found</p><p>Invalid {0} - '{1}', {2}</p>"
+        }
+      }
+    }
+  },
+  "files_external": {
+    "get": {
+      "tags": [
+        "General"
+      ],
+      "summary": "Returns a list of unprocessed files",
+      "operationId": "GetExternalfiles",
+      "description": "This method returns a list of unprocessed files without a contactId.",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "folderPath",
+          "description": "Location of the folder",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "File Name"
+                    },
+                    "fileNameWithPath": {
+                      "type": "string",
+                      "description": "File Name"
+                    },
+                    "needsProcessing": {
+                      "type": "boolean",
+                      "description": "Needs Processing"
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Folder Not Found"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
+    "put": {
+      "tags": [
+        "General"
+      ],
+      "summary": "Marks a file as processed.",
+      "operationId": "putexteranlfiles",
+      "description": "This method marks a file as processed.",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "fileName",
+          "description": "File Name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "needsProcessing",
+          "description": "Needs Processing",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p><p>Invalid fileName</p><p>File Not Found</p></p><p>Action Failed</p>"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
+    "post": {
+      "tags": [
+        "General"
+      ],
+      "summary": "Marks a file to be processed.",
+      "operationId": "postexternalfiles",
+      "description": "This method marks a file as “needs to be processed” ",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "fileName",
+          "description": "File Name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "file",
+          "description": "File",
+          "type": "string"
+        },
+        {
+          "name": "overwrite",
+          "description": "Overwrite",
+          "type": "boolean"
+        },
+        {
+          "name": "needsProcessing",
+          "description": "Needs Processing",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p><p><p>Invalid 'fileName' </p><p>File exists, set overwrite true to overwrite</p></p><p>File stream is corrupt</p></p><p>Invalid file size. Max size is {0} KB</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "429": {
+          "description": "Max concurrent file uploads per business unit reached"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    }
+  },
+  "folders": {
+    "delete": {
+      "tags": [ "General" ],
+      "summary": "Deletes a Folder",
+      "operationId": "DeleteFolder",
+      "description": "This method will delete a folder on the file server as identified by \"folderName\".<div class='tabs_wrapper' data-path='admin_general_deleteFolder.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "folderName",
+          "description": "Full path of folder to delete.  i.e. \"/CallingLists/Campaigns\"",
+          "type": "string",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Folder Protected</p><p>Folder Not Found</p><p>Invalid folderName</p>"
+        }
+      }
+    },
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a Directory Listing",
+      "operationId": "ReturnFolder",
+      "description": "This method will return the directory listing of a folder in the file server as identified by \"folderName\".<div class='tabs_wrapper' data-path='admin_general_getFolder.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "folderName",
+          "description": "Full path of folder to return contents of.  i.e. \"/CallingLists/Campaigns\"",
+          "type": "string",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "400": {
+          "description": "<p>Folder Not Found</p><p>Invalid folderName</p>"
+        }
+      }
+    }
+  },
+  "feedback_categories_and_priorities": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Get all feedback categories and priorities",
+      "operationId": "Categories and Priorities",
+      "description": "This method returns a list of all of the system assigned Feedback Categories and Priorities that can be used with the <a href='/API/AgentAPI#!/Sessions/Send_Feedback'>POST /agent-sessions/{sessionId}/submit-feedback</a> method to allow an Agent to send a Feedback description.<div class='tabs_wrapper' data-path='admin_contacts_getFeedback.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getFeedbackCategoriesAndPrioritiesResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "hiring-sources": {
+    "post": {
+      "tags": [ "General" ],
+      "summary": "Create a Hiring Source",
+      "operationId": "CreateHiringScource",
+      "description": "This method will create a Hiring Source for your Business Unit.  This can be used when creating Agents through the <a href='AdminAPI#!/Agents/CreateAnAgent'>POST /agents</a> method.<div class='tabs_wrapper' data-path='admin_general_postHiringSources.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "sourceName",
+          "description": "Hiring Source Name",
+          "type": "string",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postHiringSourcesResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid sourceName - '{0}', {1}</p><p>Invalid sourceName - cannot be null or empty</p>"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    },
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns Hiring Sources",
+      "operationId": "GetHiringSources",
+      "responseClass": "",
+      "description": "This method will return all Hiring Sources for your Business Unit.  This can be used when creating Agents through the <a href='AdminAPI#!/Agents/CreateAnAgent'>POST /agents</a> method.<div class='tabs_wrapper' data-path='admin_general_getHiringSources.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getHiringSourcesResponse"
+          }
+        },
+        "204": {
+          "description": "No hiring sources configured"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Forbidden. Check Security Profile permissions"
+        }
+      }
+    }
+  },
+  "hours_of_operation": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns Hours of Operation profiles",
+      "operationId": "HoursofOperationList",
+      "description": "This method will return all Hours of Operation profiles.<div class='tabs_wrapper' data-path='admin_general_getHoursOfOperation.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/updatedSince"
+        },
+        {
+          "$ref": "#/definitions/parameters/skipNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/topNew"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderByNew"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getHoursOfOperationsResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "hours_of_operation_profileId": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns an Hour of Operation profile",
+      "operationId": "HoursofOperationList",
+      "description": "This method will return the Hours of Operation profile identified by profileId.<div class='tabs_wrapper' data-path='admin_general_getHoursOfOperationById.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "profileId",
+          "description": "ID of the profile",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "path"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getHoursOfOperationsProfileResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid fields list</p><p>Invalid updatedSince</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid or missing profileId"
+        }
+      }
+    }
+  },
+  "locations": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns Locations",
+      "operationId": "ReturnsLocations",
+      "description": "This method will return the list of Locations configured for your Business Unit.  This can be used when creating Agents through the <a href='AdminAPI#!/Agents/CreateAnAgent'>POST /agents</a> method.<div class='tabs_wrapper' data-path='admin_general_getLocations.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "includeAgents",
+          "description": "Indicates if Agent information should be returned",
+          "type": "boolean",
+          "default": false,
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getLocationsResponse"
+          }
+        },
+        "204": {
+          "description": "No Locations configured"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "media_types": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a list of media types",
+      "operationId": "getMediaTypes",
+      "description": "This method will return a list of all of the media types available.  These values will be integers that can be used in the /media-types/{mediaTypeId} API to return the names of the media types as well.<div class='tabs_wrapper' data-path='admin_contacts_getMediaTypes.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getMediaTypesResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized: token is expired"
+        },
+        "403": {
+          "description": "Insufficient Privileges: security profile prevents access"
+        },
+        "404": {
+          "description": "Not Found: invalid media type ID"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use GET"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "media_types_mediaTypeId": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a single media type",
+      "operationId": "getMediaTypeById",
+      "description": "Useful for mapping media type ID's that are returned in other API calls to textual, human-friendly descriptions, for display in reports or on dashboards.<div class='tabs_wrapper' data-path='admin_contacts_getMediaTypeID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "mediaTypeId",
+          "description": "Media Type Id",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getMediaTypesResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized: token is expired"
+        },
+        "403": {
+          "description": "Insufficient Privileges: security profile prevents access"
+        },
+        "404": {
+          "description": "Invalid Media Type"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use GET"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "message-templates": {
+    "post": {
+      "tags": [ "General" ],
+      "summary": "Creates a Message Template",
+      "operationId": "CreatesMessageTemplate",
+      "description": "This method will return all Message Templates for use with agentless SMS or Email using Personal Connection.<div class='tabs_wrapper' data-path='admin_general_postMessageTemplate.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "templateName",
+          "description": "Name of template",
+          "type": "string",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "templateTypeId",
+          "description": "ID of the template type. 1 = SMS, 2 = Email",
+          "type": "integer",
+          "in": "query",
+          "required": true,
+          "enum": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "name": "subject",
+          "description": "Subject of Email message",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "body",
+          "description": "Content of SMS message.  Changed from smsContent in v7.0",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "isHTML",
+          "description": "Indicates if body is HTML formatted string",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "ccAddress",
+          "description": "Email addresses to be placed in the CC field of email.  Multiple addresses can be passed with the \";\" delimiter",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bccAddress",
+          "description": "Email addresses to be placed in the BCC field of email.  Multiple addresses can be passed with the \";\" delimiter",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "replyToAddress",
+          "description": "Email addresses to be placed in the repl field of email.  Multiple addresses can be passed with the \";\" delimiter",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromName",
+          "description": "Name to be displayed in the from field of the email",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromAddress",
+          "description": "Email addresses to be placed in the from field of email",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postMessageTemplatesResponse"
+          }
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        },
+        "400": {
+          "description": "<p>Invalid {parameter name} - '{parameter name}'{parameter value}</p>"
+        }
+      }
+    },
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Gets all Message Templates",
+      "operationId": "MessageTemplates",
+      "description": "This method will return all Message Templates for use with agentless SMS or Email using Personal Connection.<div class='tabs_wrapper' data-path='admin_general_getMessageTemplate.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getMessageTemplatesResponse"
+          }
+        },
+        "204": {
+          "description": "No message templates defined"
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'{2}"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "message-templates-templateId": {
+    "put": {
+      "tags": [ "General" ],
+      "summary": "Updates a Message Template",
+      "operationId": "UpdatesMessageTemplate",
+      "description": "This method will update a Message Template indicated by \"templateId\" for use with agentless SMS or Email using Personal Connection.<div class='tabs_wrapper' data-path='admin_general_putMessageTemplateID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "templateId",
+          "description": "ID of the Message Template",
+          "required": true,
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "templateName",
+          "description": "Name of template",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "isActive",
+          "description": "Sets the template active or inactive",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "subject",
+          "description": "Subject of Email message",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "body",
+          "description": "Content of SMS message.  Changed from smsContent in v7.0",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "isHTML",
+          "description": "Indicates if body is HTML formatted string",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "ccAddress",
+          "description": " Email addresses to be placed in the CC field of email.  Multiple addresses can be passed with the \";\" delimiter",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "bccAddress",
+          "description": " Email addresses to be placed in the BCC field of email.  Multiple addresses can be passed with the \";\" delimiter",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "replyToAddress",
+          "description": "Email addresses to be placed in the repl field of email.  Multiple addresses can be passed with the \";\" delimiter",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromName",
+          "description": "Name to be displayed in the from field of the email",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "fromAddress",
+          "description": "Email addresses to be placed in the from field of email",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        },
+        "404": {
+          "description": "<p>Invalid {0} - '{1}'{2}</p><p>Invalid {0}, cannot be longer than {1} characters</p>"
+        }
+      }
+    },
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a Message Template",
+      "operationId": "MessageTemplate",
+      "description": "This method will return the Message Template indicated by \"templateId\" for use with agentless SMS or Email using Personal Connection.<div class='tabs_wrapper' data-path='admin_general_getMessageTemplateID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/templateId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getMessageTemplateResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'{2}"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "permissions": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a list of permissions",
+      "operationId": "getPermissions",
+      "description": "This method returns a list of all available permissions.<div class='tabs_wrapper' data-path='admin_general_getPermissions.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getPermissionsResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Agent Id"
+        }
+      }
+    }
+  },
+  "permissions_agentId": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a list of permissions for an agent",
+      "operationId": "Agent Permissions List",
+      "description": "This method returns a list of all permissions assigned to the agent specified by agentId.<div class='tabs_wrapper' data-path='admin_general_getPermissionsID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/pathAgentId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getPermissionsResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Agent Id"
+        }
+      }
+    }
+  },
+  "phone-codes": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns SMS Phone Codes",
+      "operationId": "PhoneCodes",
+      "description": "This method will return the list of SMS Phone Codes configured for your Business Unit.  This can be used when creating a Proactive Agentless SMS Skill for use with Personal Connection using the <a href='AdminAPI#!/Skills/CreateSkill'>POST /skills</a> method.<div class='tabs_wrapper' data-path='admin_general_getPhoneCodes.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getPhoneCodesResponse"
+          }
+        },
+        "204": {
+          "description": "No phone codes registered"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "points_of_contact": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a list of points of contact",
+      "operationId": "getPointsOfContact",
+      "description": "A point of contact is essentially an \"address\" where patrons can request an interaction with an agent. For example, a point of contact for the phone channel would be a phone number that someone can dial. A point of contact for the email channel would be an email address to which they can send emails. A point of contact for a work item or chat channel is a GUID for each channel, which applications can use to get chat requests or work items into queue.<div class='tabs_wrapper' data-path='admin_contacts_getPointOfContact.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getPointsOfContactResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized: token is expired"
+        },
+        "403": {
+          "description": "Insufficient Privileges: security profile prevents access"
+        },
+        "404": {
+          "description": "Not Found: invalid point of contact ID"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use GET"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "points_of_contact_pointOfContactId": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a single point of contact",
+      "operationId": "getPointOfContactById",
+      "description": "A point of contact is essentially an \"address\" where patrons can request an interaction with an agent. For example, a point of contact for the phone channel would be a phone number that someone can dial. A point of contact for the email channel would be an email address to which they can send emails. A point of contact for a work item or chat channel is a GUID for each channel, which applications can use to get chat requests or work items into queue.<div class='tabs_wrapper' data-path='admin_contacts_getPointOfContactID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "pointOfContactId",
+          "description": "Point of Contact Id",
+          "required": true,
+          "allowMultiple": false,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getPointsOfContactResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Insufficient Privileges: security profile prevents access"
+        },
+        "404": {
+          "description": "Invalid Point Of Contact Id"
+        },
+        "405": {
+          "description": "Method Not Allowed: must use GET"
+        },
+        "500": {
+          "description": "Internal Server Error: contact tech support"
+        }
+      }
+    }
+  },
+  "security-profiles": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns all Security Profiles",
+      "operationId": "GetSecurityProfiles",
+      "description": "This method will return the list of Security Profiles configured for your Business Unit.  This includes information on the password complexity for this profile.  This can be used when creating Agents through the <a href='AdminAPI#!/Agents/CreateAnAgent'>POST /agents</a> method.<div class='tabs_wrapper' data-path='admin_general_getSecurityProfiles.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "isExternal",
+          "description": "Filters by external or internal",
+          "type": "boolean",
+          "in": "query"
+        },
+        {
+          "name": "isActive",
+          "description": "Filters by active state",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSecurityProfilesResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}', {2}"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "security-profiles-profileId": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a Security Profile",
+      "operationId": "GetSecurityProfilesID",
+      "description": "This method will return the a Security Profile indicated by \"profileId\" including all of the Agents currently assigned to this profile and information on the password complexity for this profile.  This can be used when creating Agents through the <a href='AdminAPI#!/Agents/CreateAnAgent'>POST /agents</a> method.<div class='tabs_wrapper' data-path='admin_general_getSecurityProfilesID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "profileId",
+          "description": "Security Profile Id",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getSecurityProfileResponse"
+          }
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}', {2}"
+        },
+        "403": {
+          "description": "Security permissions prevent access to data"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a list of Scripts",
+      "operationId": "Script List",
+      "description": "This method returns all of the Scripts that are available for the Business Unit.<div class='tabs_wrapper' data-path='admin_contacts_getScripts.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "mediaTypeId",
+          "description": "Filters based on the Media Type of the Script",
+          "type": "integer",
+          "in": "query"
+        },
+        {
+          "$ref": "#/definitions/parameters/isActive"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        },
+        {
+          "$ref": "#/definitions/parameters/fields"
+        },
+        {
+          "$ref": "#/definitions/parameters/skip"
+        },
+        {
+          "$ref": "#/definitions/parameters/top"
+        },
+        {
+          "$ref": "#/definitions/parameters/orderBy"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getScriptsResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "400": {
+          "description": "Invalid {0} - '{1}'"
+        }
+      }
+    }
+  },
+  "script_scriptId_start": {
+    "post": {
+      "tags": [ "General" ],
+      "summary": "Starts a Script",
+      "operationId": "Script Start",
+      "description": "This method will start a script that is identified by scriptId.  Currently this only supports channel related scripts such as Email, Phone, Chat etc.  You cannot start Generic or API scripts using this method.  We plan to provide this additional functionality in a later release. <br/><br/>This method also requires a Skill identified by skillId through which the script can be run.  In order for the skill to be valid the media type of the script must match the media type of the skill.<br/><br/>You can also send up to 20 separate values into the script using the parameters parameter separated by the | symbol.  These will be assigned to ascending parameters named P1, P2, P3... for access in Studio.<div class='tabs_wrapper' data-path='admin_contacts_postScripts.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "scriptId",
+          "description": "Script Id",
+          "required": true,
+          "type": "integer",
+          "in": "path"
+        },
+        {
+          "name": "skillId",
+          "description": "Skill Id required to run the Script",
+          "required": true,
+          "type": "integer",
+          "format": "int32",
+          "in": "query"
+        },
+        {
+          "name": "startDate",
+          "description": "ISO 8601 time for script to start in the future",
+          "type": "string",
+          "format": "date-time",
+          "in": "query"
+        },
+        {
+          "name": "parameters",
+          "description": "A string of | delimited values i.e. \"value1|value2|...\"",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postScriptsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid Skill Id</p><p>Invalid Start Date</p><p>Invalid parameter length. Limited to 20 parameters and less than 32k</p>"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Invalid Script"
+        }
+      }
+    }
+  },
+  "server_time": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns the server time in ISO 8601",
+      "operationId": "getServerTime",
+      "description": "This is an important operation, as all times specified in events and other API return data are relative to the server's clock, which may differ significantly from the agent's local machine clock. When calculating time elapsed or durations, use the server time as compared to last update times in API return values.<div class='tabs_wrapper' data-path='admin_contacts_getServerTime.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getServerTimeResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        }
+      }
+    }
+  },
+  "tags": {
+    "post": {
+      "tags": [ "General" ],
+      "summary": "Creates a Tag",
+      "operationId": "CreatesTag",
+      "description": "This method will create a new Tag in the Business Unit.<div class='tabs_wrapper' data-path='admin_general_postTags.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "tagName",
+          "description": "Tag Name",
+          "type": "string",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "notes",
+          "description": "Tag Notes",
+          "type": "string",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/postTagsResponse"
+          }
+        },
+        "400": {
+          "description": "<p>Invalid tagName - {0}</p><p>Invalid notes - maximum length is 2000 characters</p>"
+        }
+      }
+    },
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a list of Tags",
+      "operationId": "ReturnsTags",
+      "description": "This method will return the details of all Tags in the Business Unit.<div class='tabs_wrapper' data-path='admin_general_getTags.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/isActive"
+        },
+        {
+          "$ref": "#/definitions/parameters/searchString"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getTagsResponse"
+          }
+        },
+        "204": {
+          "description": "No tags available"
+        },
+        "400": {
+          "description": "Invalid isActive - '{0}', must be a boolean"
+        }
+      }
+    }
+  },
+  "tags-tagId": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a Tag",
+      "operationId": "GetTagDetailsById",
+      "description": "This method will return the details of a Tag identified by \"tagId\".<div class='tabs_wrapper' data-path='admin_general_getTagID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/tagId"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getTagsResponse"
+          }
+        },
+        "404": {
+          "description": "Invalid tagId - {0}"
+        }
+      }
+    },
+    "put": {
+      "tags": [ "General" ],
+      "summary": "Updates a Tag",
+      "operationId": "UpdatesTag",
+      "description": "This method will update the details of a Tag identified by \"tagId\".<div class='tabs_wrapper' data-path='admin_general_putTagID.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "$ref": "#/definitions/parameters/tagId"
+        },
+        {
+          "name": "tagName",
+          "description": "Tag Name",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "notes",
+          "description": "Tag Notes",
+          "type": "string",
+          "in": "query"
+        },
+        {
+          "name": "isActive",
+          "description": "Indicates if the Tag is active",
+          "type": "boolean",
+          "in": "query"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success"
+        },
+        "304": {
+          "description": "No changes made to tag '{0}'"
+        },
+        "400": {
+          "description": "<p>Invalid tagName - {0}</p><p>Invalid notes - maximum length is 2000 characters</p><p>Invalid isActive - {0}</p>"
+        },
+        "404": {
+          "description": "Invalid tagId - {0}"
+        }
+      }
+    }
+  },
+  "timezones": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns possible Timezones",
+      "operationId": "Timezones",
+      "description": "This method will return a list of possible timezones that can be used to interact with the API methods.  These values are derived from the Windows TimeZoneInfo.GetSystemTimeZones() call.<div class='tabs_wrapper' data-path='admin_general_getTimezones.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getTimeZonesResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Security privileges prevent access to data"
+        }
+      }
+    }
+  },
+  "unavailable_codes": {
+    "get": {
+      "tags": [ "General" ],
+      "summary": "Returns a list of Unavailable Codes",
+      "operationId": "getUnavailableCodes",
+      "description": "This method returns all of the unavailable codes that are configured for a business unit.  These unavailable codes can be used in the POST /agent-sessions/{sessionId}/state API as the reason value if setting the Agent's state to unavailable.<div class='tabs_wrapper' data-path='admin_contacts_getUnavailablecode.html'></div>",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [ ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "schema": {
+            "$ref": "#/definitions/getUnavailableCodesResponse"
+          }
+        },
+        "400": {
+          "description": "Internal Server Error"
+        },
+        "401": {
+          "description": "Invalid or expired token"
+        },
+        "403": {
+          "description": "<p>Forbidden. Check Security Profile permissions</p><p>Security permissions prevent access to data</p>"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "parameters": {
+      "businessUnitId": {
+        "name": "businessUnitId",
+        "description": "Business Unit Id",
+        "required": true,
+        "type": "integer",
+        "format": "int32",
+        "paramType": "query"
+      },
+      "endDate": {
+        "name": "endDate",
+        "description": "This is an ISO 8601 date/time",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "countryId": {
+        "name": "countryId",
+        "description": "Country Id",
+        "required": true,
+        "type": "string",
+        "in": "path"
+      },
+      "templateId": {
+        "name": "templateId",
+        "description": "Message Template Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "templateName": {
+        "name": "templateName",
+        "description": "Template Name",
+        "type": "string",
+        "in": "query"
+      },
+      "pathAgentId": {
+        "name": "agentId",
+        "description": "Agent Id",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      "tagId": {
+        "name": "tagId",
+        "description": "Tag Id",
+        "required": true,
+        "allowMultiple": false,
+        "type": "integer",
+        "in": "path"
+      },
+      "startDate": {
+        "name": "startDate",
+        "description": "This is an ISO 8601 date/time",
+        "required": true,
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "templateTypeId": {
+        "name": "templateTypeId",
+        "description": "Template Type Id",
+        "type": "integer",
+        "in": "query"
+      },
+      "isTemplateActive": {
+        "name": "isActive",
+        "description": "Sets the template active or inactive",
+        "type": "boolean",
+        "in": "query"
+      },
+      "smsContent": {
+        "name": "smsContent",
+        "description": "SMS Message Content",
+        "type": "string",
+        "in": "query"
+      },
+      "updatedSince": {
+        "name": "updatedSince",
+        "description": "Returns all records updated since ISO 8601 time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "updatedSinceNew": {
+        "name": "updatedSinceNew",
+        "description": "Returns all records updated since ISO 8601 time",
+        "type": "string",
+        "format": "date-time",
+        "in": "query"
+      },
+      "isActive": {
+        "name": "isActive",
+        "description": "Filters results based on active status",
+        "type": "boolean",
+        "in": "query"
+      },
+      "isActiveNew": {
+        "name": "isActive",
+        "description": "Filters results based on active status",
+        "type": "boolean",
+        "in": "query"
+      },
+      "searchString": {
+        "name": "searchString",
+        "description": "Used to filter results to objects with the value in key fields",
+        "type": "string",
+        "in": "query"
+      },
+      "searchStringNew": {
+        "name": "searchString",
+        "description": "Used to filter results to objects with the value in key fields",
+        "type": "string",
+        "in": "query"
+      },
+      "fields": {
+        "name": "fields",
+        "description": "Comma separated list of elements to return in response",
+        "type": "string",
+        "in": "query"
+      },
+      "fieldsNew": {
+        "name": "fields",
+        "description": "Comma separated list of elements to return in response",
+        "type": "string",
+        "in": "query"
+      },
+      "skip": {
+        "name": "skip",
+        "description": "Number of records to skip in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "skipNew": {
+        "name": "skip",
+        "description": "Number of records to skip in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "top": {
+        "name": "top",
+        "description": "Number of records to return in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "topNew": {
+        "name": "top",
+        "description": "Number of records to return in the results",
+        "type": "integer",
+        "in": "query"
+      },
+      "orderBy": {
+        "name": "orderBy",
+        "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+        "type": "string",
+        "in": "query"
+      },
+      "orderByNew": {
+        "name": "orderBy",
+        "description": "Values used to order results before paginating them.  Can also specify \"asc\" or \"desc\" to specify direction for example \"field1 asc,field2 desc,...\".  Default is asc",
+        "type": "string",
+        "in": "query"
+      }
+    },
+    "getUnavailableCodesResponse": {
+      "title": " ",
+      "description": "Collection of Unavailable Codes",
+      "type": "object",
+      "required": [ "unavailableList" ],
+      "properties": {
+        "unavailableList": {
+          "type": "array",
+          "items": {
+            "title": "UnavailableCode",
+            "description": "Unavailable Code",
+            "required": [ "BusinessUnitId", "OutStateId", "OutStateDescription", "IsAcw", "AgentTimeout", "IsActive" ],
+            "properties": {
+              "BusinessUnitId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Business Unit Id"
+              },
+              "OutStateId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Out State Id"
+              },
+              "OutStateDescription": {
+                "type": "string",
+                "description": "Out State Description. When setting an agent session to an unavailable state, the actual state is always \"unavailable\", but you can supply the outstate description as well. Use this API call to retrieve possible outstates"
+              },
+              "IsAcw": {
+                "type": "boolean",
+                "description": "Whether or not the unavailable code is used as an ACW state"
+              },
+              "AgentTimeout": {
+                "type": "integer",
+                "format": "int32",
+                "description": "If IsACW is true, this field indicates how long the agent will stay in the ACW state before being automatically moved to the next state. Note that if ACW is required (a property of the skill), this field has no meaning and is undefined"
+              },
+              "IsActive": {
+                "type": "boolean",
+                "description": "Unavailable Code State"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getBrandingProfilesResponse": {
+      "title": " ",
+      "type": "object",
+      "description": "",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "BrandingProfile",
+            "description": "Branding Profile",
+            "required": [ "profileId", "profileName", "brandName", "adminEmail", "active", "subdomain", "stylePackName", "description", "coBrand" ],
+            "properties": {
+              "profileId": {
+                "type": "integer",
+                "description": "Branding Profile Id"
+              },
+              "profileName": {
+                "type": "string",
+                "description": "Branding Profile Name"
+              },
+              "brandName": {
+                "type": "string",
+                "description": "Profile Brand Name"
+              },
+              "adminEmail": {
+                "type": "string",
+                "description": "Admin Email Address"
+              },
+              "active": {
+                "type": "boolean",
+                "description": "Branding Profile Active State"
+              },
+              "subdomain": {
+                "type": "string",
+                "description": "Branding Profile Subdomain"
+              },
+              "stylePackName": {
+                "type": "string",
+                "description": "Name of which style pack should be used"
+              },
+              "coBrand": {
+                "type": "boolean",
+                "description": "Indicates if the inContact cobranding image should be used"
+              },
+              "centralLogo": {
+                "type": "base64",
+                "format": "int64",
+                "description": "Base64 encoded image, only returned if available"
+              },
+              "centralFavicon": {
+                "type": "base64",
+                "description": "Base64 encoded image, only returned if available"
+              },
+              "agentLogo": {
+                "type": "base64",
+                "description": "Base64 encoded image, only returned if available"
+              },
+              "chatLogo": {
+                "type": "base64",
+                "description": "Base64 encoded image, only returned if available"
+              },
+              "sfdcAgentLogo": {
+                "type": "base64",
+                "description": "Base64 encoded image, only returned if available"
+              },
+              "maxAgentLogo": {
+                "type": "base64",
+                "description": "Base64 encoded image, only returned if available"
+              },
+              "maxGlanceLogo": {
+                "type": "base64",
+                "description": "Base64 encoded image, only returned if available"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getBusinessUnitResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "businessUnits": {
+          "type": "array",
+          "items": {
+            "title": "BusinessUnit",
+            "description": "Business Unit",
+            "type": "object",
+            "properties": {
+              "businessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "businessUnitName": {
+                "type": "string",
+                "description": "Business Unit Name"
+              },
+              "globalCallerId": {
+                "type": "string",
+                "description": "Default Caller ID for outbound contacts"
+              },
+              "phoneTimeout": {
+                "type": "integer",
+                "description": "Timeout in seconds for outbound contacts"
+              },
+              "userSessionTimeout": {
+                "type": "integer",
+                "description": "Timeout in seconds for Agent sessions"
+              },
+              "startDayOfWeek": {
+                "type": "integer",
+                "description": "Integer indicator of which day to use as start of the week. 1 is Monday, 7 is Sunday"
+              },
+              "defaultTimeZone": {
+                "type": "string",
+                "description": "Default Time Zone for Business Unit"
+              },
+              "agentsUseDefaultTimeZone": {
+                "type": "boolean",
+                "description": "Indicates if Agent must use defaultTimeZone"
+              },
+              "maxScriptHistory": {
+                "type": "integer",
+                "description": "Maximum number of script versions"
+              },
+              "authGUID": {
+                "type": "string",
+                "description": "Business Unit GUID"
+              },
+              "coBrand": {
+                "type": "boolean",
+                "description": "Co-branding enabled or disabled"
+              },
+              "coBrandProfileId": {
+                "type": "integer",
+                "description": "ID of Co-branding profile"
+              },
+              "coBrandProfileName": {
+                "type": "string",
+                "description": "Name of Co-branding profile"
+              },
+              "connectivityType": {
+                "type": "string",
+                "description": "Description of connectivity type"
+              },
+              "clientConnectorPort": {
+                "type": "integer",
+                "description": "Description of connectivity type"
+              },
+              "callSuppression": {
+                "type": "boolean",
+                "description": "Call Suppression enabled or disabled"
+              },
+              "priorityBasedBlending": {
+                "type": "boolean",
+                "description": "Priority blending enabled or disabled"
+              },
+              "enableFiltering": {
+                "type": "boolean",
+                "description": "Filtering enabled or disabled"
+              },
+              "allowPredictiveDialing": {
+                "type": "boolean",
+                "description": "Predictive Dialing enabled or disabled"
+              },
+              "enableTrueBlending": {
+                "type": "boolean",
+                "description": "True blending enabled or disabled"
+              },
+              "enableSkillAbandonRate": {
+                "type": "boolean",
+                "description": "Skill abandon rate enabled or disabled"
+              },
+              "abandonRateScope": {
+                "type": "integer",
+                "description": "Abandon Rate Scope"
+              },
+              "defaultConfirmationDeliveryModeId": {
+                "type": "integer",
+                "description": "Default Confirmation Delivery Mode Id"
+              },
+              "defaultConfirmationDeliveryMode": {
+                "type": "string",
+                "description": "Default Confirmation Delivery Mode Description"
+              },
+              "defaultComplianceRecordTypeId": {
+                "type": "integer",
+                "description": "Default Compliance Record Type Id"
+              },
+              "defaultComplianceRecordType": {
+                "type": "string",
+                "description": "Default Compliance Record Type Description"
+              },
+              "defaultContactExpirationMinutes": {
+                "type": "integer",
+                "description": "Default Contact Expiration Minutes"
+              },
+              "daysUntilListSourceIsFlaggedForDeletion": {
+                "type": "integer",
+                "description": "Days until List Source is Flagged for Deletion"
+              },
+              "scriptNamespace": {
+                "type": "string",
+                "description": "Script Namespace"
+              },
+              "apiPublishedLimit": {
+                "type": "integer",
+                "description": "Number of daily REST API calls allowed before an Event is triggered.  This Event can be managed in Central through the Event Manager to send an email alert"
+              },
+              "concurrentPortLimit": {
+                "type": "integer",
+                "description": "Number of concurrent ports allowed"
+              },
+              "ivrSurveyCallbackLimit": {
+                "type": "integer",
+                "description": ""
+              },
+              "stationLimit": {
+                "type": "integer",
+                "description": "Station Limit"
+              },
+              "userLimit": {
+                "type": "integer",
+                "description": "User Limit"
+              },
+              "concurrentAgentLimit": {
+                "type": "integer",
+                "description": "Number of concurrent Agents allowed"
+              },
+              "outboundPortLimit": {
+                "type": "integer",
+                "description": "Maximum number of outbound ports allowed"
+              },
+              "agentlessPortLimit": {
+                "type": "integer",
+                "description": "Maximum number of Agentless outbound ports allowed"
+              },
+              "maxConferenceParties": {
+                "type": "integer",
+                "description": "Maximum number of legs allowed in a conference"
+              },
+              "custom1": {
+                "type": "string",
+                "description": "Custom value 1"
+              },
+              "custom2": {
+                "type": "string",
+                "description": "Custom value 2"
+              },
+              "custom3": {
+                "type": "string",
+                "description": "Custom value 3"
+              },
+              "custom4": {
+                "type": "string",
+                "description": "Custom value 4"
+              },
+              "custom5": {
+                "type": "string",
+                "description": "Custom value 5"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "presenceMasterId": {
+                "type": "integer",
+                "description": "Indicates if inContact or an external source is the presence master.  1 - inContact, 2 - Skype for Business, empty when presence sync is not enabled"
+              },
+              "tenantId": {
+                "type": "string"
+              },
+              "parentTenantId": {
+                "type": "string"
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "productId": {
+                      "type": "integer"
+                    },
+                    "productDescription": {
+                      "type": "string"
+                    },
+                    "isEnabled": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "fileExtensions": {
+                "type": "array",
+                "title": "FileExtensions",
+                "description": "Collection of FileExtensions",
+                "items": {
+                  "title": "FileExtension",
+                  "type": "object",
+                  "description": "File Extension",
+                  "required": [ "extension" ],
+                  "properties": {
+                    "extension": {
+                      "type": "string",
+                      "description": "File extension allowed for Email, file upload etc..."
+                    }
+                  }
+                }
+              },
+              "timeZones": {
+                "type": "array",
+                "title": "Timezones",
+                "description": "Collection of Timezones",
+                "items": {
+                  "title": "Timezone",
+                  "description": "Timezone",
+                  "required": [ "displayName", "standardName" ],
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string",
+                      "description": "Name to display to Agent"
+                    },
+                    "standardName": {
+                      "type": "string",
+                      "description": "Common name of Timezone"
+                    }
+                  }
+                }
+              },
+              "parentBusinessUnitID": {
+                "type": "integer"
+              },
+              "isIntegratedTenant": {
+                "type": "boolean"
+              },
+              "niceEngageConfigId": {
+                "type": "integer"
+              },
+              "niceWFMConfigID": {
+                "type": "integer"
+              },
+              "niceQMTenantID": {
+                "type": "integer"
+              },
+              "niceWFMTenantId": {
+                "type": "integer"
+              },
+              "ieX_CustomerName": {
+                "type": "string"
+              },
+              "isMultiContactHandling": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },          
+    "getBusinessUnitMaxsettings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxConferenceParties": {
+          "type": "integer"
+        },
+        "deleteCommitmentId": {
+          "type": "integer"
+        },
+        "deleteCommitmentString": {
+          "type": "string"
+        },
+        "persistentPanels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "persistentPanelId": {
+                "type": "integer"
+              },
+              "persistentPanelURI": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getdispositionsResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "businessUnitId": {
+          "type": "integer"
+        },
+        "totalRecords": {
+          "type": "integer"
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dispositionId": {
+                "type": "integer"
+              },
+              "dispositionName": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "lastUpdated": {
+                "type": "string"
+              },
+              "classificationId": {
+                "type": "string"
+              },
+              "systemOutcome": {
+                "type": "string"
+              },
+              "isPreviewDisposition": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "postdispositionsResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "errorCount": {
+          "type": "integer"
+        },
+        "dispositionResults": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dispositionId": {
+                "type": "integer"
+              },
+              "success": {
+                "type": "boolean"
+              },
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "dispositionId"
+            ]
+          }
+        }
+      }
+    },
+    "postdispositionsResponseNew": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "errorCount": {
+          "type": "integer"
+        },
+        "dispositionResults": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dispositionId": {
+                "type": "integer"
+              },
+              "success": {
+                "type": "boolean"
+              },
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "dispositionId"
+            ]
+          }
+        }
+      }
+    },
+    "postdispositionsRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+
+            "properties": {
+              "dispositionName": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "isPreviewDisposition": {
+                "type": "boolean"
+              },
+              "classificationId": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "dispositionName",
+              "isPreviewDisposition"
+            ]
+          }
+        }
+      },
+      "required": [
+        "dispositions"
+      ]
+    },
+    "getCountriesResponse": {
+      "title": " ",
+      "description": "Collection of Countries",
+      "type": "object",
+      "required": [ "countries" ],
+      "properties": {
+        "countries": {
+          "type": "array",
+          "items": {
+            "title": "Country",
+            "description": "Country",
+            "required": [ "countryId", "countryCode", "countryName" ],
+            "properties": {
+              "countryId": {
+                "type": "integer",
+                "description": "Country Id"
+              },
+              "countryCode": {
+                "type": "string",
+                "description": "Country Code (2 characters)"
+              },
+              "countryName": {
+                "type": "string",
+                "description": "Country Name"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getCountryStatesResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "countryId", "countryName" ],
+            "properties": {
+              "countryId": {
+                "type": "integer",
+                "description": "Country Id"
+              },
+              "countryName": {
+                "type": "string",
+                "description": "Country Name"
+              },
+              "states": {
+                "type": "array",
+                "description": "Collection of States",
+                "items": {
+                  "title": "State",
+                  "description": "State",
+                  "required": [ "stateId", "stateName", "stateCode" ],
+                  "properties": {
+                    "stateId": {
+                      "type": "integer",
+                      "description": "State or Province Id"
+                    },
+                    "stateName": {
+                      "type": "string",
+                      "description": "State or Province Name"
+                    },
+                    "stateCode": {
+                      "type": "string",
+                      "description": "2 character code for the State or Province"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getDataDefinitionsDataTypesResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "dataTypes" ],
+      "properties": {
+        "dataTypes": {
+          "type": "array",
+          "description": "Collection of Data Types",
+          "items": {
+            "title": "DataType",
+            "description": "Data Type",
+            "required": [ "dataTypeId", "dataTypeName" ],
+            "properties": {
+              "dataTypeId": {
+                "type": "integer",
+                "description": "Data Type Id"
+              },
+              "dataTypeName": {
+                "type": "string",
+                "description": "Data Type Name"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getDispositionsResponse": {
+      "title": " ",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "businessUnitId": {
+          "type": "integer"
+        },
+        "totalRecords": {
+          "type": "integer"
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dispositionId": {
+                "type": "integer"
+              },
+              "dispositionName": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "lastUpdated": {
+                "type": "string"
+              },
+              "classificationId": {
+                "type": "string"
+              },
+              "systemOutcome": {
+                "type": "string"
+              },
+              "isPreviewDisposition": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "getFilesResponse": {
+      "title": " ",
+      "type": "object",
+      "description": "Files",
+      "required": [ "files" ],
+      "properties": {
+        "files": {
+          "schema": {
+            "title": "File",
+            "type": "object",
+            "description": "The Named File",
+            "required": [ "file", "fileName" ],
+            "properties": {
+              "file": {
+                "type": "string",
+                "format": "base64",
+                "description": "File Content (Base64 encoded)"
+              },
+              "fileName": {
+                "type": "string",
+                "description": "File Name"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getFeedbackCategoriesAndPrioritiesResponse": {
+      "title": " ",
+      "description": "Feedback",
+      "required": [ "CategoriesAndPriorities" ],
+      "properties": {
+        "categoriesAndPriorities": {
+          "schema": {
+            "title": "Feedback",
+            "description": "Feedback",
+            "type": "object",
+            "required": [ "feedbackCategories", "feedbackPriorities" ],
+            "properties": {
+              "feedbackCategories": {
+                "type": "array",
+                "description": "Collection of Feedback Categories",
+                "items": {
+                  "title": "FeedbackCategory",
+                  "description": "Feedback Category",
+                  "type": "object",
+                  "required": [ "title", "name" ],
+                  "properties": {
+                    "title": {
+                      "type": "integer",
+                      "description": "Feedback Category Id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Feedback Category Name"
+                    }
+                  }
+                },
+                "required": true
+              },
+              "feedbackPriorities": {
+                "type": "array",
+                "description": "Collection of Feedback Priorities",
+                "items": {
+                  "title": "FeedbackPriority",
+                  "description": "Feedback priority",
+                  "required": [ "name" ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Feedback Priority Name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getHiringSourcesResponse": {
+      "title": " ",
+      "description": "Hiring Sources",
+      "required": [ "sources" ],
+      "properties": {
+        "sources": {
+          "schema": {
+            "type": "array",
+            "description": "Collection of Hiring Sources",
+            "items": {
+              "title": "HiringSource",
+              "description": "Hiring Source",
+              "type": "object",
+              "required": [ "sourceId", "sourceName" ],
+              "properties": {
+                "sourceId": {
+                  "type": "integer",
+                  "description": "Hiring Source Id"
+                },
+                "sourceName": {
+                  "type": "string",
+                  "description": "Hiring Source Name"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postHiringSourcesResponse": {
+      "title": " ",
+      "required": [ "sourceId" ],
+      "properties": {
+        "sourceId": {
+          "type": "integer",
+          "description": "Hiring Source Id"
+        }
+      }
+    },
+    "getHoursOfOperationsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "businessUnitId", "totalRecords", "lastPollTime", "hoursOfOperationProfiles" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "businessUnitId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Business Unit Id"
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total number of records in the result"
+              },
+              "lastPollTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO 8601 timestamp of last database poll.  Value should be passed in \"updatedSince\" parameter on next call"
+              },
+              "hoursOfOperationProfiles": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "title": "HoursOfOperationProfile",
+                  "description": "Collection of Hours of Operation Profiles",
+                  "required": [ "profileId", "profileName", "description", "notes", "overrideBranch", "overrideExpirationDate", "lastUpdateTime", "days" ],
+                  "properties": {
+                    "profileId": {
+                      "type": "integer",
+                      "description": "Hours of Operation Profile Id"
+                    },
+                    "profileName": {
+                      "type": "string",
+                      "description": "Hours of Operation Profile Name"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Hours of Operation Profile Description"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Hours of Operation Profile Notes"
+                    },
+                    "overrideBranch": {
+                      "type": "string",
+                      "description": "Name of configured Override Branch in profile"
+                    },
+                    "overrideExpirationDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 date when override will expire"
+                    },
+                    "lastUpdateTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 date when profile was last updated"
+                    },
+                    "days": {
+                      "type": "array",
+                      "description": "Collection of Days",
+                      "items": {
+                        "title": "Day",
+                        "description": "Day",
+                        "required": [ "day", "openTime", "closeTime", "hasAdditionalHours", "additionalOpenTime", "additionalCloseTime", "isClosedAllDay" ],
+                        "properties": {
+                          "day": {
+                            "type": "string",
+                            "description": "Name of day"
+                          },
+                          "openTime": {
+                            "type": "string",
+                            "description": "Time of opening in 24-hour clock"
+                          },
+                          "closeTime": {
+                            "type": "string",
+                            "description": "Time of closing in 24-hour clock"
+                          },
+                          "hasAdditionalHours": {
+                            "type": "boolean",
+                            "description": "Any additional hours configured"
+                          },
+                          "additionalOpenTime": {
+                            "type": "string",
+                            "description": "Time of additional opening in 24-hour clock"
+                          },
+                          "additionalCloseTime": {
+                            "type": "string",
+                            "description": "Time of additional closing in 24-hour clock"
+                          },
+                          "isClosedAllDay": {
+                            "type": "boolean",
+                            "description": "Is profile closed for entire day"
+                          }
+                        }
+                      }
+                    },
+                    "holidays": {
+                      "type": "array",
+                      "description": "Collection of Holidays",
+                      "items": {
+                        "title": "Day",
+                        "description": "Day",
+                        "required": [ "day", "openTime", "closeTime", "hasAdditionalHours", "additionalOpenTime", "additionalCloseTime", "isClosedAllDay" ],
+                        "properties": {
+                          "day": {
+                            "type": "string",
+                            "description": "Name of day"
+                          },
+                          "openTime": {
+                            "type": "string",
+                            "description": "Time of opening in 24-hour clock"
+                          },
+                          "closeTime": {
+                            "type": "string",
+                            "description": "Time of closing in 24-hour clock"
+                          },
+                          "hasAdditionalHours": {
+                            "type": "boolean",
+                            "description": "Any additional hours configured"
+                          },
+                          "additionalOpenTime": {
+                            "type": "string",
+                            "description": "Time of additional opening in 24-hour clock"
+                          },
+                          "additionalCloseTime": {
+                            "type": "string",
+                            "description": "Time of additional closing in 24-hour clock"
+                          },
+                          "isClosedAllDay": {
+                            "type": "boolean",
+                            "description": "Is profile closed for entire day"
+                          }
+                        }
+                      }
+                    },
+                    "scripts": {
+                      "type": "array",
+                      "description": "Collection of Scripts",
+                      "items": {
+                        "title": "Script",
+                        "description": "Script",
+                        "required": [ "scriptId", "scriptName" ],
+                        "properties": {
+                          "scriptId": {
+                            "type": "integer",
+                            "description": "Script Id"
+                          },
+                          "scriptName": {
+                            "type": "string",
+                            "description": "Script Name"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getHoursOfOperationsProfileResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "hoursOfOperationProfiles" ],
+            "properties": {
+              "hoursOfOperationProfiles": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "title": "HoursOfOperationProfile",
+                  "description": "Collection of Hours of Operation Profiles",
+                  "required": [ "profileId", "profileName", "description", "notes", "overrideBranch", "overrideExpirationDate", "lastUpdateTime", "days" ],
+                  "properties": {
+                    "profileId": {
+                      "type": "integer",
+                      "description": "Hours of Operation Profile Id"
+                    },
+                    "profileName": {
+                      "type": "string",
+                      "description": "Hours of Operation Profile Name"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Hours of Operation Profile Description"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Hours of Operation Profile Notes"
+                    },
+                    "overrideBranch": {
+                      "type": "string",
+                      "description": "Name of configured Override Branch in profile"
+                    },
+                    "overrideExpirationDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 date when override will expire"
+                    },
+                    "lastUpdateTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO 8601 date when profile was last updated"
+                    },
+                    "days": {
+                      "type": "array",
+                      "description": "Collection of Days",
+                      "items": {
+                        "title": "Day",
+                        "description": "Day",
+                        "required": [ "day", "openTime", "closeTime", "hasAdditionalHours", "additionalOpenTime", "additionalCloseTime", "isClosedAllDay" ],
+                        "properties": {
+                          "day": {
+                            "type": "string",
+                            "description": "Name of day"
+                          },
+                          "openTime": {
+                            "type": "string",
+                            "description": "Time of opening in 24-hour clock"
+                          },
+                          "closeTime": {
+                            "type": "string",
+                            "description": "Time of closing in 24-hour clock"
+                          },
+                          "hasAdditionalHours": {
+                            "type": "boolean",
+                            "description": "Any additional hours configured"
+                          },
+                          "additionalOpenTime": {
+                            "type": "string",
+                            "description": "Time of additional opening in 24-hour clock"
+                          },
+                          "additionalCloseTime": {
+                            "type": "string",
+                            "description": "Time of additional closing in 24-hour clock"
+                          },
+                          "isClosedAllDay": {
+                            "type": "boolean",
+                            "description": "Is profile closed for entire day"
+                          }
+                        }
+                      }
+                    },
+                    "holidays": {
+                      "type": "array",
+                      "description": "Collection of Holidays",
+                      "items": {
+                        "title": "Day",
+                        "description": "Day",
+                        "required": [ "day", "openTime", "closeTime", "hasAdditionalHours", "additionalOpenTime", "additionalCloseTime", "isClosedAllDay" ],
+                        "properties": {
+                          "day": {
+                            "type": "string",
+                            "description": "Name of day"
+                          },
+                          "openTime": {
+                            "type": "string",
+                            "description": "Time of opening in 24-hour clock"
+                          },
+                          "closeTime": {
+                            "type": "string",
+                            "description": "Time of closing in 24-hour clock"
+                          },
+                          "hasAdditionalHours": {
+                            "type": "boolean",
+                            "description": "Any additional hours configured"
+                          },
+                          "additionalOpenTime": {
+                            "type": "string",
+                            "description": "Time of additional opening in 24-hour clock"
+                          },
+                          "additionalCloseTime": {
+                            "type": "string",
+                            "description": "Time of additional closing in 24-hour clock"
+                          },
+                          "isClosedAllDay": {
+                            "type": "boolean",
+                            "description": "Is profile closed for entire day"
+                          }
+                        }
+                      }
+                    },
+                    "scripts": {
+                      "type": "array",
+                      "description": "Collection of Scripts",
+                      "items": {
+                        "title": "Script",
+                        "description": "Script",
+                        "required": [ "scriptId", "scriptName" ],
+                        "properties": {
+                          "scriptId": {
+                            "type": "integer",
+                            "description": "Script Id"
+                          },
+                          "scriptName": {
+                            "type": "string",
+                            "description": "Script Name"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getLocationsResponse": {
+      "title": " ",
+      "description": "Result Set",
+      "required": [ "locations" ],
+      "properties": {
+        "locations": {
+          "type": "array",
+          "description": "Collection of Locations",
+          "items": {
+            "title": "Location",
+            "description": "Location",
+            "required": [ "locaitonId", "locationName" ],
+            "properties": {
+              "locationId": {
+                "type": "integer",
+                "description": "Location Id"
+              },
+              "locationName": {
+                "type": "string",
+                "description": "Location Name"
+              },
+              "agents": {
+                "type": "array",
+                "description": "Collection of Agents",
+                "items": {
+                  "title": "Agent",
+                  "description": "Agent",
+                  "required": [ "agentId", "firstName", "lastName" ],
+                  "properties": {
+                    "agentId": {
+                      "type": "integer",
+                      "description": "Agent Id"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "Agent First Name"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Agent Last Name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getMediaTypesResponse": {
+      "title": " ",
+      "description": "Result Set",
+      "required": [ "mediaTypes" ],
+      "properties": {
+        "mediaTypes": {
+          "type": "array",
+          "description": "Collection of Media Types",
+          "items": {
+            "title": "mediaType",
+            "description": "Media Type",
+            "required": [ "MediaTypeId", "MediaTypeName" ],
+            "properties": {
+              "MediaTypeId": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Media Type Id"
+              },
+              "MediaTypeName": {
+                "type": "string",
+                "description": "Media Type Name"
+              }
+            }
+          }
+        }
+      }
+    },
+    "postMessageTemplatesResponse": {
+      "title": " ",
+      "required": [ "templateId" ],
+      "properties": {
+        "templateId": {
+          "type": "integer",
+          "description": "Message Template Id"
+        }
+      }
+    },
+    "getMessageTemplatesResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "messageTemplates" ],
+      "properties": {
+        "messageTemplates": {
+          "type": "array",
+          "description": "Collection of Message Templates",
+          "items": {
+            "title": "MessageTemplate",
+            "description": "Message Template",
+            "required": [ "templateId", "templateName", "templateTypeId", "templateTypeDesc", "isActive", "smsContent" ],
+            "properties": {
+              "templateId": {
+                "type": "integer",
+                "description": "Message Template Id"
+              },
+              "templateName": {
+                "type": "string",
+                "description": "Message Template Name"
+              },
+              "templateTypeId": {
+                "type": "integer",
+                "description": "Message Template Type Id"
+              },
+              "templateTypeDesc": {
+                "type": "string",
+                "description": "Message Template Type Description"
+              },
+              "isActive": {
+                "type": "boolean",
+                "description": "Indicates if the template is active"
+              },
+              "isHTML": {
+                "type": "boolean",
+                "description": " Indicates if body is HTML formatted string",
+                "required": true
+              },
+              "ccAddress": {
+                "type": "string",
+                "description": "Email addresses in the CC field of email.",
+                "required": true
+              },
+              "bccAddress": {
+                "type": "string",
+                "description": " Email addresses in the BCC field of email.",
+                "required": true
+              },
+              "replyToAddress": {
+                "type": "string",
+                "description": "Email addresses in the reply field of email.",
+                "required": true
+              },
+              "fromName": {
+                "type": "string",
+                "description": "Name in the from field of the email",
+                "required": true
+              },
+              "fromAddress": {
+                "type": "string",
+                "description": "Email addresses in the from field of email.",
+                "required": true
+              },
+              "body": {
+                "type": "string",
+                "description": " Content of the SMS or Email message.  Changed from smsContent in v7.0",
+                "required": true
+              },
+              "subject": {
+                "type": "string",
+                "description": " Subject of the Email message",
+                "required": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "getMessageTemplateResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "messageTemplate" ],
+      "properties": {
+        "messageTemplate": {
+          "title": "MessageTemplate",
+          "type": "object",
+          "description": "Message Template",
+          "required": [ "templateId", "templateName", "templateTypeId", "templateTypeDesc", "isActive", "smsContent" ],
+          "properties": {
+            "templateId": {
+              "type": "integer",
+              "description": "Message Template Id"
+            },
+            "templateName": {
+              "type": "string",
+              "description": "Message Template Name"
+            },
+            "templateTypeId": {
+              "type": "integer",
+              "description": "Message Template Type Id"
+            },
+            "templateTypeDesc": {
+              "type": "string",
+              "description": "Message Template Type Description"
+            },
+            "isActive": {
+              "type": "boolean",
+              "description": "Indicates if the template is active"
+            },
+            "isHTML": {
+              "type": "boolean",
+              "description": "Indicates if body is HTML formatted string",
+              "required": true
+            },
+            "ccAddress": {
+              "type": "string",
+              "description": " Email addresses in the CC field of email.",
+              "required": true
+            },
+            "bccAddress": {
+              "type": "string",
+              "description": " Email addresses in the BCC field of email.",
+              "required": true
+            },
+            "replyToAddress": {
+              "type": "string",
+              "description": "Email addresses in the reply field of email.",
+              "required": true
+            },
+            "fromName": {
+              "type": "string",
+              "description": "Name in the from field of the email",
+              "required": true
+            },
+            "fromAddress": {
+              "type": "string",
+              "description": "Email addresses in the from field of email.",
+              "required": true
+            },
+            "body": {
+              "type": "string",
+              "description": " Content of the SMS or Email message.",
+              "required": true
+            },
+            "subject": {
+              "type": "string",
+              "description": " Subject of the Email message",
+              "required": true
+            }
+          }
+        }
+      }
+    },
+    "getPermissionsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "permissions" ],
+      "properties": {
+        "permissions": {
+          "type": "array",
+          "description": "Collection of Permissions",
+          "items": {
+            "title": "permission",
+            "description": "Permission",
+            "required": [ "BusinessUnitId", "Key", "Value" ],
+            "properties": {
+              "BusinessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "Key": {
+                "type": "string",
+                "description": "Permission Name"
+              },
+              "Value": {
+                "type": "string",
+                "description": "Permission Action"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getPhoneCodesResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "phoneCodes" ],
+      "properties": {
+        "phoneCodes": {
+          "type": "array",
+          "description": "Collection of Phone Codes",
+          "items": {
+            "title": "PhoneCode",
+            "description": "Phone Code",
+            "required": [ "transportCode", "transportTypeId", "transportTypeDesc", "note" ],
+            "properties": {
+              "transportCode": {
+                "type": "integer",
+                "description": "Transport Code"
+              },
+              "transportTypeId": {
+                "type": "integer",
+                "description": "Transport Type Id"
+              },
+              "transportTypeDesc": {
+                "type": "string",
+                "description": "Transport Type Description"
+              },
+              "note": {
+                "type": "string",
+                "description": "Transport Type Note"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getPointsOfContactResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "pointsOfContact" ],
+      "properties": {
+        "pointsOfContact": {
+          "type": "array",
+          "description": "Collection of Points of Contact",
+          "items": {
+            "title": "PointOfContact",
+            "description": "Point of Contact",
+            "required": [ "BusinessUnitId", "ContactAddress", "ContactCode", "ContactDescription", "DefaultSkillId", "IsActive", "MediaTypeName", "MediaTypeId", "Notes", "OutboundSkill", "ScriptName" ],
+            "properties": {
+              "BusinessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "ContactAddress": {
+                "type": "string",
+                "description": "Point of Contact Address. The format will depend on the media type. For phone points of contact, the address is a phone number. For email points of contact, it will be an email address. For Work Item and Chat points of contact, the address is a GUID"
+              },
+              "ContactCode": {
+                "type": "integer",
+                "description": "Point of Contact Code"
+              },
+              "ContactDescription": {
+                "type": "string",
+                "description": "Point of Contact Description"
+              },
+              "DefaultSkillId": {
+                "type": "integer",
+                "description": "Point of Contact Default Skill Id"
+              },
+              "IsActive": {
+                "type": "boolean",
+                "description": "Indicates whether the point of contact is active"
+              },
+              "MediaTypeId": {
+                "type": "integer",
+                "description": "Media Type Id. Corresponds to ID's found in the media types list"
+              },
+              "MediaTypeName": {
+                "type": "string",
+                "description": "Media Type Name (\"Phone\", \"Email\", etc.)"
+              },
+              "Notes": {
+                "type": "string",
+                "description": "Point of Contact Notes"
+              },
+              "OutboundSkill": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether the point of contact is an outbound point of contact. Generally, this will be false"
+              },
+              "ScriptName": {
+                "type": "string",
+                "description": "The name of the workflow application (a.k.a. \"script\") that will be executed when a new contact is queued using the point of contact address. This is the script that will either effect a \"self-service\" resolution, or place the contact in queue"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSecurityProfilesResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "profiles" ],
+      "properties": {
+        "profiles": {
+          "type": "array",
+          "description": "Collection of Security Profiles",
+          "items": {
+            "title": "SecurityProfile",
+            "description": "Security Profile",
+            "required": [ "profileId", "profileName", "description", "isActive", "isExternal", "pwUseRandom", "pwMinLength", "pwMinLower", "pwMinUpper", "pwMinNumeric", "pwMinNonAlpha" ],
+            "properties": {
+              "profileId": {
+                "type": "integer",
+                "description": "Profile Id"
+              },
+              "profileName": {
+                "type": "string",
+                "description": "Profile Name"
+              },
+              "description": {
+                "type": "string",
+                "description": "Profile Description"
+              },
+              "isActive": {
+                "type": "boolean",
+                "description": "Indicates if the profile is active"
+              },
+              "isExternal": {
+                "type": "boolean",
+                "description": "Indicates if the profile is external"
+              },
+              "pwUseRandom": {
+                "type": "boolean",
+                "description": "Indicates if the password is generated randomly"
+              },
+              "pwMinLength": {
+                "type": "integer",
+                "description": "Minimum length of password"
+              },
+              "pwMinLower": {
+                "type": "integer",
+                "description": "Minimum number of lower case characters in the password"
+              },
+              "pwMinUpper": {
+                "type": "integer",
+                "description": "Minimum number of upper case characters in the password"
+              },
+              "pwMinNumeric": {
+                "type": "integer",
+                "description": "Minimum number of numeric characters in the password"
+              },
+              "pwMinNonAlpha": {
+                "type": "integer",
+                "description": "Minimum number of non alphabetic characters in the password"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getSecurityProfileResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "profile" ],
+      "properties": {
+        "profile": {
+          "title": "SecurityProfile",
+          "type": "object",
+          "description": "Security Profile",
+          "required": [ "profileId", "profileName", "description", "isActive", "isExternal", "pwUseRandom", "pwMinLength", "pwMinLower", "pwMinUpper", "pwMinNumeric", "pwMinNonAlpha" ],
+          "properties": {
+            "profileId": {
+              "type": "integer",
+              "description": "Profile Id"
+            },
+            "profileName": {
+              "type": "string",
+              "description": "Profile Name"
+            },
+            "description": {
+              "type": "string",
+              "description": "Profile Description"
+            },
+            "isActive": {
+              "type": "boolean",
+              "description": "Indicates if the profile is active"
+            },
+            "isExternal": {
+              "type": "boolean",
+              "description": "Indicates if the profile is external"
+            },
+            "pwUseRandom": {
+              "type": "boolean",
+              "description": "Indicates if the password is generated randomly"
+            },
+            "pwMinLength": {
+              "type": "integer",
+              "description": "Minimum length of password"
+            },
+            "pwMinLower": {
+              "type": "integer",
+              "description": "Minimum number of lower case characters in the password"
+            },
+            "pwMinUpper": {
+              "type": "integer",
+              "description": "Minimum number of upper case characters in the password"
+            },
+            "pwMinNumeric": {
+              "type": "integer",
+              "description": "Minimum number of numeric characters in the password"
+            },
+            "pwMinNonAlpha": {
+              "type": "integer",
+              "description": "Minimum number of non alphabetic characters in the password"
+            },
+            "assignedAgents": {
+              "type": "array",
+              "description": "Collection of Assigned Agents",
+              "items": {
+                "title": "Agent",
+                "description": "Agent",
+                "required": [ "agentId", "firstName", "lastName" ],
+                "properties": {
+                  "agentId": {
+                    "type": "integer",
+                    "description": "Agent Id"
+                  },
+                  "firstName": {
+                    "type": "string",
+                    "description": "Agent First Name"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "description": "Agent Last Name"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getScriptsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "resultSet" ],
+      "properties": {
+        "resultSet": {
+          "schema": {
+            "title": "ResultSet",
+            "description": "Result Set",
+            "required": [ "businessUnitId", "totalRecords", "scripts" ],
+            "properties": {
+              "_links": {
+                "schema": {
+                  "title": "_links",
+                  "description": "Links used to parse paginated response",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to same page of results"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to next page of results"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "URL",
+                      "description": " Link to previous page of results"
+                    }
+                  }
+                }
+              },
+              "businessUnitId": {
+                "type": "integer",
+                "description": "Business Unit Id"
+              },
+              "totalRecords": {
+                "type": "integer",
+                "description": "Total number of records in the result set"
+              },
+              "scripts": {
+                "type": "array",
+                "description": "Collection of Scripts",
+                "items": {
+                  "title": "Script",
+                  "description": "Script",
+                  "required": [ "scriptId", "scriptName", "isActive", "createDate", "lastModified", "hidden", "readOnly", "isLocked", "lockedBy", "mediaTypeId", "mediaTypeName" ],
+                  "properties": {
+                    "scriptId": {
+                      "type": "integer",
+                      "description": "Script Id"
+                    },
+                    "scriptName": {
+                      "type": "string",
+                      "description": "Script Name"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Indicates if Script is active"
+                    },
+                    "createDate": {
+                      "type": "date-time",
+                      "description": "Script Create Date (ISO 8601 format)"
+                    },
+                    "lastModified": {
+                      "type": "date-time",
+                      "description": "Script Last Modified Date (ISO 8601 format)"
+                    },
+                    "hidden": {
+                      "type": "boolean",
+                      "description": "Indicates whether the Script is hidden"
+                    },
+                    "readOnly": {
+                      "type": "boolean",
+                      "description": "Indicates whether the Script is read only"
+                    },
+                    "isLocked": {
+                      "type": "boolean",
+                      "description": "Indicates whether the Script is locked"
+                    },
+                    "lockedBy": {
+                      "type": "integer",
+                      "description": "Script Locking Agent Id"
+                    },
+                    "mediaTypeId": {
+                      "type": "integer",
+                      "description": "Script Media Type Id"
+                    },
+                    "mediaTypeName": {
+                      "type": "string",
+                      "description": "Script Media Type Name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postScriptsResponse": {
+      "title": " ",
+      "type": "object",
+      "description": "Contact",
+      "required": [ "contactId" ],
+      "properties": {
+        "contactId": {
+          "type": "integer",
+          "description": "Contact Id"
+        }
+      }
+    },
+    "getServerTimeResponse": {
+      "title": " ",
+      "type": "object",
+      "description": "Server Time",
+      "required": [ "ServerTime" ],
+      "properties": {
+        "ServerTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server Time (ISO 8601 format)"
+        }
+      }
+    },
+    "getTagsResponse": {
+      "title": " ",
+      "type": "object",
+      "required": [ "tags" ],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "description": "Collection of Tags",
+          "items": {
+            "title": "Tag",
+            "description": "Tag",
+            "required": [ "tagId", "tagName", "isActive", "notes" ],
+            "properties": {
+              "tagId": {
+                "type": "integer",
+                "description": "Tag Id"
+              },
+              "tagName": {
+                "type": "string",
+                "description": "Tag Name",
+                "required": true
+              },
+              "isActive": {
+                "type": "boolean",
+                "description": "Indicates if Tag is active"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Tag Notes"
+              }
+            }
+          }
+        }
+      }
+    },
+    "postTagsResponse": {
+      "title": " ",
+      "required": [ "tagId" ],
+      "properties": {
+        "tagId": {
+          "type": "integer",
+          "description": "Tag Id"
+        }
+      }
+    },
+    "getTimeZonesResponse": {
+      "title": " ",
+      "required": [ "timeZones" ],
+      "properties": {
+        "timeZones": {
+          "type": "array",
+          "description": "Collection of Timezones",
+          "items": {
+            "title": "Timezone",
+            "description": "Timezone",
+            "required": [ "displayName", "standardName", "offset" ],
+            "properties": {
+              "displayName": {
+                "type": "string",
+                "description": "Timezone Display Name"
+              },
+              "standardName": {
+                "type": "string",
+                "description": "Timezone Standard Name"
+              },
+              "offset": {
+                "type": "string",
+                "description": "Offset from UTC Timezone"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
