@@ -1198,12 +1198,14 @@
             description: "Internal identifier of a RingCentral account (integer) or tilde (~) to indicate the account which was logged-in within the current session."
             required: true
             type: "string"
+            default: "~"
           - 
             name: "extensionId"
             in: "path"
             description: "Internal identifier of an extension (integer) or tilde (~) to indicate the extension assigned to the account logged-in within the current session"
             required: true
             type: "string"
+            default: "~"
           - 
             name: "attachment"
             in: "formData"
