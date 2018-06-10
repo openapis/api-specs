@@ -1,5 +1,5 @@
 Generator	Company	Language	Status	Repo
-Swagger DocuSign	C#	Live	https://github.com/docusign/docusign-csharp-client
+Swagger	DocuSign	C#	Live	https://github.com/docusign/docusign-csharp-client
 Swagger	DocuSign	PHP	Live	https://github.com/docusign/docusign-php-client
 Swagger	DocuSign	Python	Live	https://github.com/docusign/docusign-python-client
 Swagger	DocuSign	Ruby	Live	https://github.com/docusign/docusign-ruby-client
