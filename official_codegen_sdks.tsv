@@ -3,6 +3,7 @@ Swagger	DocuSign	C#	Live	https://github.com/docusign/docusign-csharp-client
 Swagger	DocuSign	PHP	Live	https://github.com/docusign/docusign-php-client
 Swagger	DocuSign	Python	Live	https://github.com/docusign/docusign-python-client
 Swagger	DocuSign	Ruby	Live	https://github.com/docusign/docusign-ruby-client
+Swagger	Microsoft	Swift	Live	https://github.com/Microsoft/EmbeddedSocial-Swift-API-Library
 Swagger	Lyft	Go	Deprecated	https://github.com/lyft/lyft-go-sdk
 Swagger	Lyft	JavaScript	Deprecated	https://github.com/lyft/lyft-node-sdk
 Swagger	Square	C#	Live	https://github.com/square/connect-csharp-sdk
