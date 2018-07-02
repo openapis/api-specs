@@ -1,0 +1,52 @@
+---
+  swagger: "2.0"
+  info:
+    description: Compatibility Spec
+    version: "0.1"
+    title: "Compatibility Spec"
+    termsOfService: "https://github.com/grokify/api-specs"
+  host: "example.com"
+  basePath: "/0.1"
+  schemes:
+    - "https"
+  tags:
+    -
+      name: "Responses"
+  paths:
+    /responses/models/file-definition:
+      get:
+        operationId: responsesModelFileDefinition
+        tags:
+          - "Responses"
+        description: "Gets all the questions on the site.\nThis method allows you make fairly flexible queries across the entire corpus of questions on a site."
+        produces:
+          - "application/json"
+        parameters:
+        responses:
+          default:
+            description: "Success"
+            schema:
+              $ref: "#/definitions/ResponsesModelFileDefinitionResponse"
+  definitions:
+    ResponsesModelFileDefinitionResponse:
+      type: "object"
+      properties:
+        description:
+          type: string
+        fileInfo:
+          $ref: "#/definitions/File"
+        filesInfo:
+          type: array
+          items:
+            $ref: "#/definitions/File"
+        backdate:
+          $ref: "#/definitions/OuterBoolean"
+    File:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    OuterBoolean:
+      type: boolean
