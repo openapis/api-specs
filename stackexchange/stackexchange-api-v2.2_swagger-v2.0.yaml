@@ -348,11 +348,22 @@
             description: "Success"
             schema:
               $ref: "#/definitions/ReputationResponse"
+    /me/reputation:
+      tags:
+        - "Users"
+      description: "Returns the reputation changed for the user associated with the given access_token.\n\nThis method returns a list of [reputation changes](https://api.stackexchange.com/docs/types/reputation)."
+      operationId: getMyReputation
+      responses:
+        default:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ReputationResponse"
     /users/{userIds}/reputation-history:
       get:
         tags:
           - "Users"
         description: "Returns users' public reputation history.\nThis method returns a list of reputation_history."
+        operationId: getUsersReputationHistory
         produces:
           - "application/json"
         parameters:
@@ -377,6 +388,29 @@
             required: true
             default: "stackoverflow"
             type: "string"
+        responses:
+          default:
+            description: "Success"
+            schema:
+              $ref: "#/definitions/ReputationHistoryResponse"
+    /me/reputation-history:
+      get:
+        tags:
+          - "Users"
+        description: "Returns user's public reputation history.\n\nThis method returns a list of [reputation_history](https://api.stackexchange.com/docs/types/reputation-history)."
+        produces:
+          - "application/json"
+        parameters:
+          -
+            name: "page"
+            in: "query"
+            required: false
+            type: "integer"
+          -
+            name: "pagesize"
+            in: "query"
+            required: false
+            type: "integer"
         responses:
           default:
             description: "Success"
