@@ -3,15 +3,12 @@ info:
   title: "Connect First API"
   description: "CCaaS Configuration and Data API"
   version: "1.0.0"
-host: portal.virtualacd.biz
+host: "portal.virtualacd.biz"
 schemes:
-  - https
-basePath: /api
+  - "https"
+basePath: "/api"
 produces:
-  - application/json
-externalDocs:
-  description: Medium REST API docs 
-  url: https://github.com/Medium/medium-api-docs
+  - :application/json"
 tags:
 - name: "Active Call API"
   description: "Active Call Agent Controller"
