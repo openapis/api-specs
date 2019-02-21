@@ -295,6 +295,80 @@ paths:
           description: "Forbidden"
         404:
           description: "Not Found"
+  /v1/admin/accounts/{accountId}/activeCalls/list:
+    get:
+      tags: 
+        - "Active Call API"
+      summary: "Returns a listing of current active calls for a given product on an account"
+      description: "Permissions: READ on Account"
+      operationId: "getProductActiveCallsListRequestUsingGET"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - 
+        name: "accountId"
+        in: "path"
+        description: "accountId"
+        required: true
+        type: "string"
+      -
+        name: "product"
+        in: "query"
+        description: "product"
+        required: true
+        type: "string"
+        enum: 
+          - "ACCOUNT"
+          - "ACD"
+          - "AGENT"
+          - "CHAT_QUEUE"
+          - "OUTBOUND"
+          - "VISUAL_IVR"
+          - "CLOUD_PROFILE"
+          - "CLOUD_DESTINATION"
+          - "TRAC_NUMBER"
+          - "HTTP_SERVICES"
+          - "SCRIPTING"
+          - "TN_MANAGER"
+          - "SURVEY"
+          - "DNIS"
+          - "TEAMS"
+          - "KNOWLEDGE_BASE"
+          - "UTILITIES"
+      -
+        name: "productId"
+        in: "query"
+        description: "productId"
+        required: true
+        type: "integer"
+        format: "int32"
+      -
+        name: "page"
+        in: "query"
+        description: "page"
+        required: false
+        type: "integer"
+        format: "int32"
+      -
+        name: "maxRows"
+        in: "query"
+        description: "maxRows"
+        required: false
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          type: "array"
+          items:
+            $ref: "#/definitions/ActiveCallListResponse"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Not Found"
 definitions: 
   ActiveCallListResponse: 
     type: "object"
