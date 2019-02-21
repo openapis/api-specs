@@ -1,0 +1,263 @@
+swagger: "2.0"
+info:
+  title: "Connect First API"
+  description: "CCaaS Configuration and Data API"
+  version: "1.0.0"
+host: portal.virtualacd.biz
+schemes:
+  - https
+basePath: /api
+produces:
+  - application/json
+externalDocs:
+  description: Medium REST API docs 
+  url: https://github.com/Medium/medium-api-docs
+tags:
+- name: "Active Call API"
+  description: "Active Call Agent Controller"
+paths:
+  /v1/admin/accounts/{accountId}/activeCalls/createAdHocOutboundCall:
+    post:
+      tags: 
+        - "Active Call API"
+      summary: "Creates a manual agent call"
+      description: "This is an example opeartion to show how security is applied to the call."
+      operationId: "createManualAgentCallUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - 
+        name: "accountId"
+        in: "path"
+        description: "accountId"
+        required: true
+        type: "string"
+      - 
+        name: "campaignId"
+        in: "query"
+        description: "campaignId"
+        required: true
+        type: "integer"
+        format: "int32"
+      -
+        name: "destination1"
+        in: "query"
+        description: "destination1"
+        required: true
+        type: "string"
+      -
+        name: "destination2"
+        in: "query"
+        description: "destination2"
+        required: true
+        type: "string"
+      -
+        name: "callerId"
+        in: "query"
+        description: "callerId"
+        required: true
+        type: "string"
+      -
+        name: "uniqueId"
+        in: "query"
+        description: "uniqueId"
+        required: true
+        type: "string"
+      -
+        name: "agentDestination"
+        in: "query"
+        description: "agentDestination"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+        201:
+          description: "Created"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Not Found"
+  /v1/admin/accounts/{accountId}/activeCalls/findRandomCall:
+    get:
+      tags: 
+        - "Active Call API"
+      summary: "Returns a random ActiveCallListResponse record of an active or queued call for a given product or product group, on an account. When attempting to pull for a single product, include the productId query param, when pulling for a group, include the productGroupId query param. For Inbound Products, use 'ACD' as the product, and for outbound, use 'OUTBOUND'"
+      description: "Permissions: READ on Account"
+      operationId: "getRandomUiiForProductOrProductGroupUsingGET"
+      consumes:
+      - "application/json"
+      produces:
+      - "*/*"
+      parameters:
+      -
+        name: "accountId"
+        in: "path"
+        description: "accountId"
+        required: true
+        type: "string"
+      -
+        name: "product"
+        in: "query"
+        description: "product"
+        required: true
+        type: "string"
+        enum: 
+          - "ACCOUNT"
+          - "ACD"
+          - "AGENT"
+          - "CHAT_QUEUE"
+          - "OUTBOUND"
+          - "VISUAL_IVR"
+          - "CLOUD_PROFILE"
+          - "CLOUD_DESTINATION"
+          - "TRAC_NUMBER"
+          - "HTTP_SERVICES"
+          - "SCRIPTING"
+          - "TN_MANAGER"
+          - "SURVEY"
+          - "DNIS"
+          - "TEAMS"
+          - "KNOWLEDGE_BASE"
+          - "UTILITIES"
+      -
+        name: "productId"
+        in: "query"
+        description: "productId"
+        required: false
+        type: "integer"
+        format: "int32"
+      -
+        name: "productGroupId"
+        in: "query"
+        description: "productGroupId"
+        required: false
+        type: "integer"
+        format: "int32"
+      -
+        name: "allowActive"
+        in: "query"
+        description: "allowActive"
+        required: false
+        type: "boolean"
+        default: false
+      responses:
+        200:
+          $ref: "#/definitions/ActiveCallListResponse"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Not Found"
+definitions: 
+  ActiveCallListResponse: 
+    type: "object"
+    properties:
+      accountId:
+        type: "string"
+      agentFirstName:
+        type: "string"
+      agentLastName:
+        type: "string"
+      ani:
+        type: "string"
+      archive:
+        type: "boolean"
+      callState:
+        type: "string"
+      dequeueTime:
+        $ref: "#/definitions/DateTime"
+      dnis:
+        type: "string"
+      enqueueTime:
+        $ref: "#/definitions/DateTime"
+      uii:
+        type: "string"
+  DateTime:
+    type: "object"
+    properties:
+      afterNow:
+        type: "boolean"
+      beforeNow:
+        type: "boolean"
+      centuryOfEra:
+        type: "integer"
+        format: "int32"
+      chronology:
+        $ref: "#/definitions/Chronology"
+      dayOfMonth:
+        type: "integer"
+        format: "int32"
+      dayOfWeek:
+        type: "integer"
+        format: "int32"
+      dayOfYear:
+        type: "integer"
+        format: "int32"
+      equalNow:
+        type: "boolean"
+      era:
+        type: "integer"
+        format: "int32"
+      hourOfDay:
+        type: "integer"
+        format: "int32"
+      millis:
+        type: "integer"
+        format: "int64"
+      millisOfDay:
+        type: "integer"
+        format: "int32"
+      millisOfSecond:
+        type: "integer"
+        format: "int32"
+      minuteOfDay:
+        type: "integer"
+        format: "int32"
+      minuteOfHour:
+        type: "integer"
+        format: "int32"
+      monthOfYear:
+        type: "integer"
+        format: "int32"
+      secondOfDay:
+        type: "integer"
+        format: "int32"
+      secondOfMinute:
+        type: "integer"
+        format: "int32"
+      weekOfWeekyear:
+        type: "integer"
+        format: "int32"
+      weekyear:
+        type: "integer"
+        format: "int32"
+      year:
+        type: "integer"
+        format: "int32"
+      yearOfCentury:
+        type: "integer"
+        format: "int32"
+      yearOfEra:
+        type: "integer"
+        format: "int32"
+      zone:
+        $ref: "#/definitions/DateTimeZone"
+  Chronology:
+    type: "object"
+    properties:
+      zone:
+        $ref: "#/definitions/DateTimeZone"
+  DateTimeZone:
+    type: "object"
+    properties:
+      fixed:
+        type: "boolean"
+      id:
+        type: "string"
+
