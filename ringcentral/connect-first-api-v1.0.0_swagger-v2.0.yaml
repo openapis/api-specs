@@ -8,7 +8,7 @@ schemes:
   - "https"
 basePath: "/api"
 produces:
-  - :application/json"
+  - "application/json"
 tags:
 - name: "Active Call API"
   description: "Active Call Agent Controller"
