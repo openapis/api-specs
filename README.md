@@ -23,6 +23,3 @@ Some specifications are provided by API providers and others are built manually 
 
  [build-status-svg]: https://travis-ci.com/grokify/api-specifications.svg?branch=master
  [build-status-link]: https://travis-ci.com/grokify/api-specifications
-
-
- https://travis-ci.com/grokify/api-specifications.svg?branch=master
