@@ -1,5 +1,5 @@
 language: go
-go_import_path: github.com/grokify/api-specifications
+go_import_path: github.com/grokify/api-specs
 go:
   - "1.14.x"
   - "1.13.x"

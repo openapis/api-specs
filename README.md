@@ -1,6 +1,7 @@
 # API Specs
 
 [![Build Status][build-status-svg]][build-status-link]
+
 A collection of API specifications.
 
 Reasons for building a set of API specifications include:
