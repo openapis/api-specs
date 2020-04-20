@@ -1,7 +1,6 @@
 package apispecs
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/grokify/swaggman/openapi3"
@@ -21,9 +20,9 @@ func TestSpecs(t *testing.T) {
 		if err != nil {
 			t.Errorf("openapi3.ReadAndValidateFile('%s') Error [%s]", tt.filepath, err.Error())
 		} else if tt.title != spec.Info.Title {
-			t.Errorf("openapi3.ReadFile('%s', true) Want [%s] Got [%s]", tt.filepath, tt.title, spec.Info.Title)
+			t.Errorf("openapi3.ReadAndValidateFile('%s') Want [%s] Got [%s]", tt.filepath, tt.title, spec.Info.Title)
 		} else {
-			fmt.Printf("SPEC_IS_VALID [%s] TITLE [%s]\n", tt.filepath, spec.Info.Title)
+			t.Logf("SPEC_IS_VALID [%s] TITLE [%s]\n", tt.filepath, spec.Info.Title)
 		}
 	}
 }
