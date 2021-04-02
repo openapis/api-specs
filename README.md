@@ -21,5 +21,10 @@ Some specifications are provided by API providers and others are built manually 
 | Lyft | Official | v1.0.0 | [github.com](https://github.com/lyft/lyft-django-sample/blob/4f7b21926ad8081a0ce2fe79a3849cb6e46f6bf1/lyft-api.yml) |
 | Salesforce IoT | Official | v43.0.0 | [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.api_iot.meta/api_iot/intro_swagger_file.htm)
 
+## Tools
+
+* Validate Spec: https://apitools.dev/swagger-parser/online/
+* Convert Swagger 2.0 to OpenAPI 3.0: https://www.npmjs.com/package/swagger2openapi
+
  [build-status-svg]: https://travis-ci.com/grokify/api-specs.svg?branch=master
  [build-status-link]: https://travis-ci.com/grokify/api-specs
