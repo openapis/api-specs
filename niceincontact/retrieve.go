@@ -18,7 +18,7 @@ import (
 
 func GetBodyBytes(reqURL string) ([]byte, error) {
 	emptyBytes := []byte("")
-	resp, err := http.Get(reqURL)
+	resp, err := http.Get(reqURL) // #nosec G107
 	if err != nil {
 		return emptyBytes, err
 	}
@@ -87,7 +87,7 @@ func main() {
 		fmtutil.MustPrintJSON(subPaths)
 		fmtutil.MustPrintJSON(subDirs)
 
-		for subDir, _ := range subDirs {
+		for subDir := range subDirs {
 			specSubDir := filepath.Join(apiVersionDir, subDir)
 			fmt.Printf("CREATE_DIR: %v\n", specSubDir)
 			err := os.MkdirAll(specSubDir, 0755)
