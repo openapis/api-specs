@@ -94,7 +94,7 @@ func main() {
 			logutil.FatalErr(err)
 		}
 
-		for subPath, _ := range subPaths {
+		for subPath := range subPaths {
 			subURL := fmt.Sprintf(urlFormat, subPath)
 			fmt.Println(subURL)
 			subPathFile := filepath.Join(apiVersionDir, subPath)
