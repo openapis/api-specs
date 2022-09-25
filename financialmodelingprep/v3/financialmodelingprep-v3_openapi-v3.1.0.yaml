@@ -1,0 +1,197 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 2ocig483ctl8u
+info:
+  title: Financial Modeling Prep API
+  version: '3.0'
+  description: FMP provides one of the most accurate data available on the market. Every endpoint is available in JSON format and most of them also in CSV format. Data is coming right from SEC filings after being serialized by us. Our API has over 50 endpoints and we are still growing by adding new endpoints every week. We also provide on demand custom endpoint available for our business clients.
+servers:
+  - url: 'https://financialmodelingprep.com/api/v3'
+tags:
+  - name: Financial Statements
+x-tagGroups:
+  - name: Stock Fundamentals
+    tags:
+      - Financial Statements
+paths:
+  '/income-statement/{symbol}':
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+    get:
+      summary: Get Income Statements
+      description: Retreive income statements for stocks by symbol or CIK.
+      tags:
+        - Financial Statements
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncomeStatementListResponse'
+      operationId: getIncomeStatements
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: limit
+          description: Number of results to return.
+        - schema:
+            type: string
+            enum:
+              - quarter
+          in: query
+          name: period
+          description: Specify a quarterly income statement. Default is annual.
+        - schema:
+            type: string
+          in: query
+          name: apikey
+          description: API key for authn / authz
+        - schema:
+            type: string
+          in: query
+          name: datatype
+          description: Format of data to return
+components:
+  schemas:
+    IncomeStatement:
+      type: object
+      x-examples:
+        example-1:
+          date: '2021-09-25'
+          symbol: AAPL
+          reportedCurrency: USD
+          cik: '0000320193'
+          fillingDate: '2021-10-29'
+          acceptedDate: '2021-10-28 18:04:28'
+          calendarYear: '2021'
+          period: FY
+          revenue: 365817000000
+          costOfRevenue: 212981000000
+          grossProfit: 152836000000
+          grossProfitRatio: 0.4177935962516778
+          researchAndDevelopmentExpenses: 21914000000
+          generalAndAdministrativeExpenses: 0
+          sellingAndMarketingExpenses: 0
+          sellingGeneralAndAdministrativeExpenses: 21973000000
+          otherExpenses: 0
+          operatingExpenses: 43887000000
+          costAndExpenses: 256868000000
+          interestIncome: 2843000000
+          interestExpense: 2645000000
+          depreciationAndAmortization: 11284000000
+          ebitda: 123136000000
+          ebitdaratio: 0.33660546120054563
+          operatingIncome: 108949000000
+          operatingIncomeRatio: 0.2985290459437369
+          totalOtherIncomeExpensesNet: -258000000
+          incomeBeforeTax: 109207000000
+          incomeBeforeTaxRatio: 0.2985290459437369
+          incomeTaxExpense: 14527000000
+          netIncome: 94680000000
+          netIncomeRatio: 0.2588179335569424
+          eps: 5.4563941153239
+          epsdiluted: 5.4563941153239
+          weightedAverageShsOut: 16701272000
+          weightedAverageShsOutDil: 16864919000
+          link: 'https://www.sec.gov/Archives/edgar/data/320193/000032019321000105/0000320193-21-000105-index.htm'
+          finalLink: 'https://www.sec.gov/Archives/edgar/data/320193/000032019321000105/aapl-20210925.htm'
+          interestincome: 2843000000
+      description: Income Statement
+      properties:
+        date:
+          type: string
+          format: date
+        symbol:
+          type: string
+        reportedCurrency:
+          type: string
+        cik:
+          type: string
+        fillingDate:
+          type: string
+        acceptedDate:
+          type: string
+        calendarYear:
+          type: string
+        period:
+          type: string
+        revenue:
+          type: number
+        costOfRevenue:
+          type: number
+        grossProfit:
+          type: number
+        grossProfitRatio:
+          type: number
+        researchAndDevelopmentExpenses:
+          type: number
+        sellingAndMarketingExpenses:
+          type: number
+        generalAndAdministrativeExpenses:
+          type: number
+        sellingGeneralAndAdministrativeExpenses:
+          type: number
+        operatingExpenses:
+          type: number
+        otherExpenses:
+          type: number
+        costAndExpenses:
+          type: number
+        interestIncome:
+          type: number
+        interestExpense:
+          type: number
+        depreciationAndAmortization:
+          type: number
+        ebitda:
+          type: number
+        ebitdaratio:
+          type: number
+        operatingIncome:
+          type: number
+        operatingIncomeRatio:
+          type: number
+        totalOtherIncomeExpensesNet:
+          type: number
+        incomeBeforeTax:
+          type: number
+        incomeBeforeTaxRatio:
+          type: number
+        incomeTaxExpense:
+          type: number
+        netIncome:
+          type: number
+        netIncomeRatio:
+          type: number
+        eps:
+          type: number
+        epsdiluted:
+          type: number
+        weightedAverageShsOut:
+          type: number
+        weightedAverageShsOutDil:
+          type: number
+        link:
+          type: string
+        finalLink:
+          type: string
+        interestincome:
+          type: number
+    IncomeStatementListResponse:
+      title: IncomeStatementListResponse
+      x-stoplight:
+        id: pdz2806lst1kl
+      type: object
+      properties:
+        data:
+          type:
+            - string
+            - array
+          items:
+            $ref: '#/components/schemas/IncomeStatement'
