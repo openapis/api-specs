@@ -10,9 +10,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/grokify/gotilla/bytes/bytesutil"
-	"github.com/grokify/gotilla/fmt/fmtutil"
-	"github.com/grokify/swaggman/swagger2"
+	"github.com/grokify/mogo/bytes/bytesutil"
+	"github.com/grokify/mogo/fmt/fmtutil"
+	"github.com/grokify/spectrum/openapi2"
 )
 
 func GetBodyBytes(reqUrl string) ([]byte, error) {
@@ -57,7 +57,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		spec, err := swagger2.NewSpecificationFromBytes(body)
+		spec, err := openapi2.NewSpecificationFromBytes(body)
 		if err != nil {
 			log.Fatal(err)
 		}
