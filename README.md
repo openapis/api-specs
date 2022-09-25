@@ -1,6 +1,9 @@
 # API Specs
 
-[![Build Status][build-status-svg]][build-status-link]
+[![Build Status][build-status-svg]][build-status-url]
+[![Go Report Card][goreport-svg]][goreport-url]
+[![Docs][docs-godoc-svg]][docs-godoc-url]
+[![License][license-svg]][license-url]
 
 A collection of API specifications.
 
@@ -26,5 +29,15 @@ Some specifications are provided by API providers and others are built manually 
 * Validate Spec: https://apitools.dev/swagger-parser/online/
 * Convert Swagger 2.0 to OpenAPI 3.0: https://www.npmjs.com/package/swagger2openapi
 
- [build-status-svg]: https://travis-ci.com/grokify/api-specs.svg?branch=master
- [build-status-link]: https://travis-ci.com/grokify/api-specs
+ [used-by-svg]: https://sourcegraph.com/github.com/openapis/api-specs/-/badge.svg
+ [used-by-url]: https://sourcegraph.com/github.com/openapis/api-specs?badge
+ [build-status-svg]: https://github.com/openapis/api-specs/workflows/test/badge.svg
+ [build-status-url]: https://github.com/openapis/api-specs/actions
+ [goreport-svg]: https://goreportcard.com/badge/github.com/openapis/api-specs
+ [goreport-url]: https://goreportcard.com/report/github.com/openapis/api-specs
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/openapis/api-specs
+ [docs-godoc-url]: https://pkg.go.dev/github.com/openapis/api-specs
+ [loc-svg]: https://tokei.rs/b1/github/openapis/api-specs
+ [repo-url]: https://github.com/openapis/api-specs
+ [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+ [license-url]: https://github.com/openapis/api-specs/blob/master/LICENSE
