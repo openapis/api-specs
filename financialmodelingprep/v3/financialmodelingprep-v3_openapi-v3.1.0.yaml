@@ -115,6 +115,7 @@ components:
           type: string
         fillingDate:
           type: string
+          format: date
         acceptedDate:
           type: string
         calendarYear:
