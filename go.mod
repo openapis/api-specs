@@ -3,7 +3,7 @@ module github.com/openapis/api-specs
 go 1.19
 
 require (
-	github.com/grokify/mogo v0.40.4
+	github.com/grokify/mogo v0.40.10
 	github.com/grokify/spectrum v1.12.5
 )
 
@@ -30,9 +30,9 @@ require (
 	github.com/xuri/efp v0.0.0-20220407160117-ad0f7a785be8 // indirect
 	github.com/xuri/excelize/v2 v2.6.0 // indirect
 	github.com/xuri/nfp v0.0.0-20220409054826-5e722a1d9e22 // indirect
-	golang.org/x/crypto v0.0.0-20220817201139-bc19a97f63c8 // indirect
-	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/crypto v0.0.0-20221012134737-56aed061732a // indirect
+	golang.org/x/net v0.0.0-20221017152216-f25eb7ecb193 // indirect
+	golang.org/x/text v0.4.0 // indirect
 	gonum.org/v1/gonum v0.11.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
